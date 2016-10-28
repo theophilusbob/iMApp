@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "941377556917",
+    "firebase_url": "https://imapp-99a05.firebaseio.com",
+    "project_id": "imapp-99a05",
+    "storage_bucket": "imapp-99a05.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:941377556917:android:33088ae55e1d7e95",
+        "android_client_info": {
+          "package_name": "com.example.rnd.imapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "941377556917-dfk0c7jjtqeqds77eodupfsh6djqifvo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD34Fgk_iGvyFzWBswW45zzXPUzepCoHbw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
