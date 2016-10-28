@@ -3,12 +3,17 @@ package com.example.rnd.imapp.Fragment;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.rnd.imapp.R;
+
+import me.dm7.barcodescanner.zbar.Result;
+import me.dm7.barcodescanner.zbar.ZBarScannerView;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -18,9 +23,10 @@ import com.example.rnd.imapp.R;
  * Use the {@link HomeFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class HomeFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+public class HomeFragment extends Fragment implements ZBarScannerView.ResultHandler {
+
+    private ZBarScannerView mScannerView;
+
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
@@ -65,7 +71,29 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false);
+        View v = inflater.inflate(R.layout.fragment_home, container, false);
+
+        mScannerView = new ZBarScannerView(getActivity());
+        return v;
+
+    }
+
+    @Override
+    public void handleResult(Result rawResult) {
+        // Do something with the result here
+        Toast.makeText(getActivity(), "Contents = " + rawResult.getContents() +
+                ", Format = " + rawResult.getBarcodeFormat().getName(), Toast.LENGTH_SHORT).show();
+        // Note:
+        // * Wait 2 seconds to resume the preview.
+        // * On older devices continuously stopping and resuming camera preview can result in freezing the app.
+        // * I don't know why this is the case but I don't have the time to figure out.
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mScannerView.resumeCameraPreview(HomeFragment.this);
+            }
+        }, 2000);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
