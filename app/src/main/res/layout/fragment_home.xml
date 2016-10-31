@@ -10,29 +10,36 @@
         android:layout_height="match_parent">
 
         <LinearLayout
+            android:gravity="center_vertical"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="40dp">
             <TextView
-                android:layout_width="200dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingStart="15dp"
-                android:text="Helo, KCU Yogyakarta"/>
+                android:textAlignment="center"
+                android:text="Halo, KCU Yogyakarta"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp">
 
             <TextView
-                android:layout_width="80dp"
+                android:layout_width="180dp"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
                 android:textAlignment="center"
-                android:background="@color/colorAccent"
+                android:background="@color/blue"
                 android:text="SCM"
                 android:textColor="#fff"/>
 
             <TextView
-                android:layout_width="80dp"
+                android:layout_width="180dp"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
-                android:background="@color/colorPrimaryDark"
+                android:background="@color/lightBlue"
                 android:textAlignment="center"
                 android:text="VMI"
                 android:textColor="#fff"/>
@@ -43,7 +50,7 @@
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:background="@color/colorAccent">
+            android:background="@color/blue">
 
             <TextView
                 android:layout_width="160dp"
@@ -80,7 +87,7 @@
         <ListView
             android:id="@+id/last_order_list_view"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"></ListView>
+            android:layout_height="match_parent"/>
 
     </LinearLayout>
 </FrameLayout>
