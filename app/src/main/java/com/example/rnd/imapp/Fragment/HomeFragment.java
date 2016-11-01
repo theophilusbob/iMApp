@@ -1,19 +1,34 @@
 package com.example.rnd.imapp.Fragment;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.TextView;
+import com.android.volley.Response;
+import com.android.volley.VolleyLog;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 
 import com.example.rnd.imapp.R;
+import com.example.rnd.imapp.adapter.CustomListAdapter;
+import com.example.rnd.imapp.app.AppController;
+import com.example.rnd.imapp.model.Orders;
 
-import me.dm7.barcodescanner.zbar.Result;
-import me.dm7.barcodescanner.zbar.ZBarScannerView;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -23,9 +38,16 @@ import me.dm7.barcodescanner.zbar.ZBarScannerView;
  * Use the {@link HomeFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class HomeFragment extends Fragment implements ZBarScannerView.ResultHandler {
+public class HomeFragment extends Fragment {
+    private LinearLayout infoTab;
+    private TextView tabSCM, tabVMI;
 
-    private ZBarScannerView mScannerView;
+    // Orders JSON Url
+    private static String url = "http://192.168.56.1/imapp_api/getLastOrderSCM.php";
+    private ProgressDialog pDialog;
+    private List<Orders> ordersList = new ArrayList<Orders>();
+    private ListView ordersListView;
+    private CustomListAdapter customListAdapter;
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -72,28 +94,87 @@ public class HomeFragment extends Fragment implements ZBarScannerView.ResultHand
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_home, container, false);
+        infoTab = (LinearLayout) v.findViewById(R.id.infoTab);
+        tabSCM = (TextView) v.findViewById(R.id.tabSCM);
+        tabVMI = (TextView) v.findViewById(R.id.tabVMI);
 
-        mScannerView = new ZBarScannerView(getActivity());
+        tabSCM.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                infoTab.setBackgroundResource(R.color.blue);
+            }
+        });
+
+        tabVMI.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                infoTab.setBackgroundResource(R.color.lightBlue);
+            }
+        });
+
+        ordersListView = (ListView) v.findViewById(R.id.ordersList);
+        customListAdapter = new CustomListAdapter(getActivity(), ordersList);
+        ordersListView.setAdapter(customListAdapter);
+
+        pDialog = new ProgressDialog(getActivity());
+        // Showing progress dialog before making http request
+        pDialog.setMessage("Loading...");
+        pDialog.show();
+
         return v;
-
     }
 
-    @Override
-    public void handleResult(Result rawResult) {
-        // Do something with the result here
-        Toast.makeText(getActivity(), "Contents = " + rawResult.getContents() +
-                ", Format = " + rawResult.getBarcodeFormat().getName(), Toast.LENGTH_SHORT).show();
-        // Note:
-        // * Wait 2 seconds to resume the preview.
-        // * On older devices continuously stopping and resuming camera preview can result in freezing the app.
-        // * I don't know why this is the case but I don't have the time to figure out.
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
+    public void volleyRequestObject(String url) {
+
+        // Creating volley request obj
+        JsonArrayRequest lastOrderReq = new JsonArrayRequest(url,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        Log.d("Home Fragment", response.toString());
+                        hidePDialog();
+
+                        // Parsing json
+                        for (int i = 0; i < response.length(); i++) {
+                            try {
+
+                                JSONObject obj = response.getJSONObject(i);
+                                Orders lastOrders = new Orders();
+                                lastOrders.setNama_barang(obj.getString("nama_barang"));
+                                lastOrders.setKode_barang(obj.getString("kode_barang"));
+                                lastOrders.setQty(obj.getInt("qty"));
+                                lastOrders.setSatuan_pack(obj.getString("satuan"));
+
+                                // adding order to order array
+                                ordersList.add(lastOrders);
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+
+                        // notifying list adapter about data changes
+                        // so that it renders the list view with updated data
+                        customListAdapter.notifyDataSetChanged();
+                    }
+                }, new Response.ErrorListener() {
             @Override
-            public void run() {
-                mScannerView.resumeCameraPreview(HomeFragment.this);
+            public void onErrorResponse(VolleyError error) {
+                VolleyLog.d("Home Fragment", "Error: " + error.getMessage());
+                hidePDialog();
+
             }
-        }, 2000);
+        });
+
+        // Adding request to request queue
+        AppController.getInstance().addToRequestQueue(lastOrderReq);
+    }
+
+    private void hidePDialog() {
+        if (pDialog != null) {
+            pDialog.dismiss();
+            pDialog = null;
+        }
     }
 
     // TODO: Rename method, update argument and hook method into UI event

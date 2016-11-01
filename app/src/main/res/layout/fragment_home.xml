@@ -17,9 +17,8 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingStart="15dp"
                 android:textAlignment="center"
-                android:text="Halo, KCU Yogyakarta"/>
+                android:text="@string/welcome_message"/>
         </LinearLayout>
 
         <LinearLayout
@@ -27,21 +26,23 @@
             android:layout_height="40dp">
 
             <TextView
+                android:id="@+id/tabSCM"
                 android:layout_width="180dp"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
                 android:textAlignment="center"
                 android:background="@color/blue"
-                android:text="SCM"
+                android:text="@string/scm"
                 android:textColor="#fff"/>
 
             <TextView
+                android:id="@+id/tabVMI"
                 android:layout_width="180dp"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
                 android:background="@color/lightBlue"
                 android:textAlignment="center"
-                android:text="VMI"
+                android:text="@string/vmi"
                 android:textColor="#fff"/>
         </LinearLayout>
 
@@ -57,7 +58,7 @@
                 android:layout_height="match_parent"
                 android:paddingStart="15dp"
                 android:gravity="center_vertical"
-                android:text="Status: Proses"
+                android:text="@string/status_info"
                 android:textColor="#fff"/>
 
             <LinearLayout
@@ -72,7 +73,7 @@
                     android:paddingEnd="15dp"
                     android:textAlignment="textEnd"
                     android:textColor="#fff"
-                    android:text="No. Order: XX/YY/ZZZZ"/>
+                    android:text="@string/no_order_xx_yy_zzzz"/>
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
@@ -80,14 +81,17 @@
                     android:paddingEnd="15dp"
                     android:textAlignment="textEnd"
                     android:textColor="#fff"
-                    android:text="Tgl kirim: 28/10/2016"/>
+                    android:text="@string/tgl_kirim_28_10_2016"/>
             </LinearLayout>
         </LinearLayout>
 
         <ListView
-            android:id="@+id/last_order_list_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:id="@+id/ordersList"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:divider="@color/list_divider"
+            android:dividerHeight="1dp"
+            android:listSelector="@drawable/list_row_selector" />
 
     </LinearLayout>
 </FrameLayout>

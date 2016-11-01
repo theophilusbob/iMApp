@@ -17,4 +17,10 @@
     <string name="add_item">Add New Item</string>
     <string name="action_logout">Logout</string>
     <string name="scan_information">Center barcode in the viewfinder and hold for a while.</string>
+    <string name="vmi">VMI</string>
+    <string name="scm">SCM</string>
+    <string name="welcome_message">Halo, KCU Yogyakarta</string>
+    <string name="no_order_xx_yy_zzzz">No. Order: XX/YY/ZZZZ</string>
+    <string name="tgl_kirim_28_10_2016">Tgl kirim: 28/10/2016</string>
+    <string name="status_info">Status: Proses</string>
 </resources>

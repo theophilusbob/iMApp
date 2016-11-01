@@ -1,13 +1,12 @@
 package com.example.rnd.imapp;
 
 import android.content.Intent;
-import android.media.Image;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.ImageView;
 
+import com.example.rnd.imapp.adapter.ViewPagerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -86,10 +85,10 @@ public class ViewPagerActivity extends AppCompatActivity{
         mFirebaseAuth = FirebaseAuth.getInstance();
         mFirebaseUser = mFirebaseAuth.getCurrentUser();
 
-        /*if (mFirebaseUser == null) {
+        if (mFirebaseUser == null) {
             // Not logged in, launch the Log In activity
             loadLogInView();
-        }*/
+        }
     }
 
     private void loadLogInView() {

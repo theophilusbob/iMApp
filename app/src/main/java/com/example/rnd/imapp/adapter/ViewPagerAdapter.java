@@ -1,19 +1,18 @@
-package com.example.rnd.imapp;
+package com.example.rnd.imapp.adapter;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
 
 import com.example.rnd.imapp.Fragment.HomeFragment;
 import com.example.rnd.imapp.Fragment.SOFragment;
 
-/**
+/*
  * Created by RND on 10/28/2016.
  */
 
 public class ViewPagerAdapter extends FragmentPagerAdapter{
-    private static int NUM_ITEMS = 4;
+    private static final int NUM_ITEMS = 4;
 
     public ViewPagerAdapter(FragmentManager fragmentManager) {
         super(fragmentManager);
