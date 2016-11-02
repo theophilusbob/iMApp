@@ -25,12 +25,13 @@
     <!-- Quantity -->
     <TextView
         android:id="@+id/qty"
-        android:layout_width="fill_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/kode_barang"
-        android:layout_marginTop="5dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
         android:textColor="@color/qty"
-        android:textSize="@dimen/qty" />
+        android:textSize="@dimen/qty"
+        android:textStyle="bold"/>
 
     <!-- Satuan Pack -->
     <TextView

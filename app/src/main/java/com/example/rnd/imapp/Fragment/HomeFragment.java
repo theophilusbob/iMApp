@@ -43,11 +43,13 @@ public class HomeFragment extends Fragment {
     private TextView tabSCM, tabVMI;
 
     // Orders JSON Url
-    private static String url = "http://192.168.56.1/imapp_api/getLastOrderSCM.php";
+    private static String url_scm = "http://192.168.1.117/imapp_api/getLastOrderSCM.php";
+    private static String url_vmi = "http://192.168.1.117/imapp_api/getLastOrderVMI.php";
     private ProgressDialog pDialog;
     private List<Orders> ordersList = new ArrayList<Orders>();
-    private ListView ordersListView;
-    private CustomListAdapter customListAdapter;
+    private List<Orders> ordersListVMI = new ArrayList<Orders>();
+    private ListView ordersListView,ordersListViewVMI;
+    private CustomListAdapter customListAdapter, customListAdapterVMI;
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -87,51 +89,13 @@ public class HomeFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.fragment_home, container, false);
-        infoTab = (LinearLayout) v.findViewById(R.id.infoTab);
-        tabSCM = (TextView) v.findViewById(R.id.tabSCM);
-        tabVMI = (TextView) v.findViewById(R.id.tabVMI);
-
-        tabSCM.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                infoTab.setBackgroundResource(R.color.blue);
-            }
-        });
-
-        tabVMI.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                infoTab.setBackgroundResource(R.color.lightBlue);
-            }
-        });
-
-        ordersListView = (ListView) v.findViewById(R.id.ordersList);
-        customListAdapter = new CustomListAdapter(getActivity(), ordersList);
-        ordersListView.setAdapter(customListAdapter);
-
-        pDialog = new ProgressDialog(getActivity());
-        // Showing progress dialog before making http request
-        pDialog.setMessage("Loading...");
-        pDialog.show();
-
-        return v;
-    }
-
-    public void volleyRequestObject(String url) {
 
         // Creating volley request obj
-        JsonArrayRequest lastOrderReq = new JsonArrayRequest(url,
+        JsonArrayRequest lastOrderReqSCM = new JsonArrayRequest(url_scm,
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
-                        Log.d("Home Fragment", response.toString());
+                        Log.d("Last order scm", response.toString());
                         hidePDialog();
 
                         // Parsing json
@@ -155,19 +119,110 @@ public class HomeFragment extends Fragment {
 
                         // notifying list adapter about data changes
                         // so that it renders the list view with updated data
-                        customListAdapter.notifyDataSetChanged();
+                        customListAdapterVMI.notifyDataSetChanged();
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 VolleyLog.d("Home Fragment", "Error: " + error.getMessage());
                 hidePDialog();
-
             }
         });
 
         // Adding request to request queue
-        AppController.getInstance().addToRequestQueue(lastOrderReq);
+        AppController.getInstance().addToRequestQueue(lastOrderReqSCM);
+
+        // Creating volley request obj
+        JsonArrayRequest lastOrderReqVMI = new JsonArrayRequest(url_vmi,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        Log.d("Last order VMI", response.toString());
+                        hidePDialog();
+
+                        // Parsing json
+                        for (int i = 0; i < response.length(); i++) {
+                            try {
+
+                                JSONObject obj = response.getJSONObject(i);
+                                Orders lastOrders = new Orders();
+                                lastOrders.setNama_barang(obj.getString("nama_barang"));
+                                lastOrders.setKode_barang(obj.getString("kode_barang"));
+                                lastOrders.setQty(obj.getInt("qty"));
+                                lastOrders.setSatuan_pack(obj.getString("satuan"));
+
+                                // adding order to order array
+                                ordersListVMI.add(lastOrders);
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+
+                        // notifying list adapter about data changes
+                        // so that it renders the list view with updated data
+                        customListAdapterVMI.notifyDataSetChanged();
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                VolleyLog.d("Home Fragment", "Error: " + error.getMessage());
+                hidePDialog();
+            }
+        });
+
+        // Adding request to request queue
+        AppController.getInstance().addToRequestQueue(lastOrderReqVMI);
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View v = inflater.inflate(R.layout.fragment_home, container, false);
+        infoTab = (LinearLayout) v.findViewById(R.id.infoTab);
+        tabSCM = (TextView) v.findViewById(R.id.tabSCM);
+        tabVMI = (TextView) v.findViewById(R.id.tabVMI);
+        ordersListView = (ListView) v.findViewById(R.id.ordersList);
+        ordersListViewVMI = (ListView) v.findViewById(R.id.ordersListVMI);
+
+        pDialog = new ProgressDialog(getActivity());
+        // Showing progress dialog before making http request
+        pDialog.setMessage("Loading your last order...");
+        pDialog.show();
+
+        customListAdapter = new CustomListAdapter(getActivity(), ordersList);
+        customListAdapterVMI =  new CustomListAdapter(getActivity(), ordersListVMI);
+        ordersListViewVMI.setAdapter(customListAdapterVMI);
+        ordersListView.setAdapter(customListAdapter);
+
+        tabSCM.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                infoTab.setBackgroundResource(R.color.blue);
+                ordersListViewVMI.setVisibility(View.INVISIBLE);
+                ordersListView.setVisibility(View.VISIBLE);
+            }
+        });
+
+        tabVMI.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                infoTab.setBackgroundResource(R.color.lightBlue);
+                ordersListView.setVisibility(View.INVISIBLE);
+                ordersListViewVMI.setVisibility(View.VISIBLE);
+            }
+        });
+
+        return v;
+    }
+
+    public void volleyRequestObjectSCM() {
+
+    }
+
+    public void volleyRequestObjectVMI() {
+
     }
 
     private void hidePDialog() {
