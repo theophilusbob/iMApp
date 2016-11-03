@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.rnd.imapp.Fragment.SOFragment">
+    tools:context="com.example.rnd.imapp.Fragment.HistoryOrderFragment">
 
     <LinearLayout
         android:orientation="vertical"
@@ -18,14 +18,14 @@
             <ImageView
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:src="@drawable/icon_stockopname_colour"/>
+                android:src="@drawable/icon_history_colour"/>
             <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/colorPrimary"
-            android:textAlignment="center"
-            android:text="Scan Barcode"
-            android:textSize="21sp"/>
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorPrimary"
+                android:textAlignment="center"
+                android:text="@string/history_order_textview"
+                android:textSize="21sp"/>
 
             <TextView
                 android:paddingStart="60dp"
@@ -43,4 +43,5 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </LinearLayout>
+
 </FrameLayout>

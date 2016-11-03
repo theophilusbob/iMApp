@@ -23,4 +23,10 @@
     <string name="no_order_xx_yy_zzzz">No. Order: XX/YY/ZZZZ</string>
     <string name="tgl_kirim_28_10_2016">Tgl kirim: 28/10/2016</string>
     <string name="status_info">Status: Proses</string>
+    <string name="gambar_barang">Gambar Barang</string>
+    <string name="input_qty">Jumlah (Ukuran Besar)</string>
+    <string name="next_button">LANJUT</string>
+    <string name="input_qty_done_button">SELESAI</string>
+    <string name="ack_info_textview">Scan Barcode Surat Jalan</string>
+    <string name="history_order_textview">History Order</string>
 </resources>

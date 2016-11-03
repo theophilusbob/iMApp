@@ -1,38 +1,26 @@
 package com.example.rnd.imapp.Fragment;
 
 import android.content.Context;
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
-import android.widget.Toast;
 
-import com.example.rnd.imapp.Activity.InputQtyActivity;
 import com.example.rnd.imapp.R;
-
-import me.dm7.barcodescanner.zbar.Result;
-import me.dm7.barcodescanner.zbar.ZBarScannerView;
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link SOFragment.OnFragmentInteractionListener} interface
+ * {@link ACKFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link SOFragment#newInstance} factory method to
+ * Use the {@link ACKFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class SOFragment extends Fragment implements ZBarScannerView.ResultHandler {
-
-    private ZBarScannerView mScannerView;
-    private FrameLayout cameraContainer;
-
+public class ACKFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
-    // the fragent initialization parameters, e.g. ARG_ITEM_NUMBER
+    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
@@ -42,7 +30,7 @@ public class SOFragment extends Fragment implements ZBarScannerView.ResultHandle
 
     private OnFragmentInteractionListener mListener;
 
-    public SOFragment() {
+    public ACKFragment() {
         // Required empty public constructor
     }
 
@@ -52,11 +40,11 @@ public class SOFragment extends Fragment implements ZBarScannerView.ResultHandle
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment SOFragment.
+     * @return A new instance of fragment ACKFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static SOFragment newInstance(String param1, String param2) {
-        SOFragment fragment = new SOFragment();
+    public static ACKFragment newInstance(String param1, String param2) {
+        ACKFragment fragment = new ACKFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -77,51 +65,7 @@ public class SOFragment extends Fragment implements ZBarScannerView.ResultHandle
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.fragment_so, container, false);
-        mScannerView = new ZBarScannerView(getActivity());
-        cameraContainer = (FrameLayout) v.findViewById(R.id.cameraContainer);
-        cameraContainer.addView(mScannerView);
-
-        return v;
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        mScannerView.setResultHandler(this);
-        mScannerView.startCamera();
-    }
-
-    @Override
-    public void handleResult(Result rawResult) {
-        Toast.makeText(getActivity(), "Kode Barang = " + rawResult.getContents() +
-                ", Format = " + rawResult.getBarcodeFormat().getName(), Toast.LENGTH_SHORT).show();
-        // Note:
-        // * Wait 2 seconds to resume the preview.
-        // * On older devices continuously stopping and resuming camera preview can result in freezing the app.
-        // * I don't know why this is the case but I don't have the time to figure out.
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                mScannerView.stopCameraPreview();
-                //mScannerView.resumeCameraPreview(SOFragment.this);
-                Intent intent = new Intent(getActivity(), InputQtyActivity.class);
-                startActivity(intent);
-            }
-        }, 2000);
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        mScannerView.stopCamera();
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        mScannerView.stopCamera();
+        return inflater.inflate(R.layout.fragment_ack, container, false);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -137,8 +81,8 @@ public class SOFragment extends Fragment implements ZBarScannerView.ResultHandle
         if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;
         } else {
-            //throw new RuntimeException(context.toString()
-              //      + " must implement OnFragmentInteractionListener");
+            throw new RuntimeException(context.toString()
+                    + " must implement OnFragmentInteractionListener");
         }
     }
 

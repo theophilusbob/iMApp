@@ -1,4 +1,4 @@
-package com.example.rnd.imapp;
+package com.example.rnd.imapp.Activity;
 
 import android.content.Intent;
 import android.support.v4.view.ViewPager;
@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ImageView;
 
+import com.example.rnd.imapp.R;
 import com.example.rnd.imapp.adapter.ViewPagerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -101,10 +102,15 @@ public class ViewPagerActivity extends AppCompatActivity{
     @Override
     protected void onStop() {
         super.onStop();
-        try {
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        /*try {
             mFirebaseAuth.signOut();
         } catch (Exception e) {
             e.printStackTrace();
-        }
+        }*/
     }
 }

@@ -119,7 +119,7 @@ public class HomeFragment extends Fragment {
 
                         // notifying list adapter about data changes
                         // so that it renders the list view with updated data
-                        customListAdapterVMI.notifyDataSetChanged();
+                        customListAdapter.notifyDataSetChanged();
                     }
                 }, new Response.ErrorListener() {
             @Override

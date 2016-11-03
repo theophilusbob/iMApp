@@ -4,6 +4,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import com.example.rnd.imapp.Fragment.ACKFragment;
+import com.example.rnd.imapp.Fragment.HistoryOrderFragment;
 import com.example.rnd.imapp.Fragment.HomeFragment;
 import com.example.rnd.imapp.Fragment.SOFragment;
 
@@ -31,9 +33,9 @@ public class ViewPagerAdapter extends FragmentPagerAdapter{
             case 1:
                 return SOFragment.newInstance("2", "Stock Opname Page");
             case 2:
-                return SOFragment.newInstance("1", "Home Page");
+                return ACKFragment.newInstance("3", "ACK Page");
             case 3:
-                return SOFragment.newInstance("1", "Home Page");
+                return HistoryOrderFragment.newInstance("4", "History Order Page");
             default:
                 return HomeFragment.newInstance("1","Home Page");
         }
