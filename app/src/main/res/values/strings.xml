@@ -16,7 +16,7 @@
     <string name="title_activity_login">Sign in</string>
     <string name="add_item">Add New Item</string>
     <string name="action_logout">Logout</string>
-    <string name="scan_information">Center barcode in the viewfinder and hold for a while.</string>
+    <string name="scan_information">Tekan button scan barcode di bawah untuk memulai scan barcode.</string>
     <string name="vmi">VMI</string>
     <string name="scm">SCM</string>
     <string name="welcome_message">Halo, KCU Yogyakarta</string>
@@ -29,4 +29,5 @@
     <string name="input_qty_done_button">SELESAI</string>
     <string name="ack_info_textview">Scan Barcode Surat Jalan</string>
     <string name="history_order_textview">History Order</string>
+    <string name="scan_barcode_text_button">Scan Barcode</string>
 </resources>

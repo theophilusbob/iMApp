@@ -217,14 +217,6 @@ public class HomeFragment extends Fragment {
         return v;
     }
 
-    public void volleyRequestObjectSCM() {
-
-    }
-
-    public void volleyRequestObjectVMI() {
-
-    }
-
     private void hidePDialog() {
         if (pDialog != null) {
             pDialog.dismiss();

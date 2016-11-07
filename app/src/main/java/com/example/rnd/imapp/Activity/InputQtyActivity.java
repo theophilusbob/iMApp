@@ -9,20 +9,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.JsonRequest;
 import com.android.volley.toolbox.NetworkImageView;
 import com.example.rnd.imapp.R;
 import com.example.rnd.imapp.app.AppController;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import java.util.Objects;
 
 public class InputQtyActivity extends AppCompatActivity {
     private ImageLoader imageLoader;

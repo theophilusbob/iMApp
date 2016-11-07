@@ -4,19 +4,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
-import android.widget.Toast;
+import android.widget.Button;
 
-import com.example.rnd.imapp.Activity.InputQtyActivity;
+import com.example.rnd.imapp.Activity.ScanStockOpnameActivity;
 import com.example.rnd.imapp.R;
 
-import me.dm7.barcodescanner.zbar.Result;
-import me.dm7.barcodescanner.zbar.ZBarScannerView;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -26,11 +22,9 @@ import me.dm7.barcodescanner.zbar.ZBarScannerView;
  * Use the {@link SOFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class SOFragment extends Fragment implements ZBarScannerView.ResultHandler {
+public class SOFragment extends Fragment {
 
-    private ZBarScannerView mScannerView;
-    private FrameLayout cameraContainer;
-
+    private Button scanStockOpnameBtn;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragent initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -79,51 +73,35 @@ public class SOFragment extends Fragment implements ZBarScannerView.ResultHandle
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_so, container, false);
-        mScannerView = new ZBarScannerView(getActivity());
-        cameraContainer = (FrameLayout) v.findViewById(R.id.cameraContainer);
-        cameraContainer.addView(mScannerView);
 
+        scanStockOpnameBtn = (Button) v.findViewById(R.id.btnScanSO);
+        scanStockOpnameBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), ScanStockOpnameActivity.class);
+                startActivity(intent);
+            }
+        });
         return v;
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        mScannerView.setResultHandler(this);
-        mScannerView.startCamera();
-    }
-
-    @Override
-    public void handleResult(final Result rawResult) {
-        Toast.makeText(getActivity(), "Kode Barang = " + rawResult.getContents() +
-                ", Format = " + rawResult.getBarcodeFormat().getName(), Toast.LENGTH_SHORT).show();
-        // Note:
-        // * Wait 2 seconds to resume the preview.
-        // * On older devices continuously stopping and resuming camera preview can result in freezing the app.
-        // * I don't know why this is the case but I don't have the time to figure out.
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                mScannerView.stopCameraPreview();
-                //mScannerView.resumeCameraPreview(SOFragment.this);
-                Intent intent = new Intent(getActivity(), InputQtyActivity.class);
-                intent.putExtra("KODE_BARANG", rawResult.getContents());
-                startActivity(intent);
-            }
-        }, 2000);
+//        mScannerView.setResultHandler(this);
+       // mScannerView.startCamera();
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        mScannerView.stopCamera();
+        //mScannerView.stopCamera();
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        mScannerView.stopCamera();
+       // mScannerView.stopCamera();
     }
 
     // TODO: Rename method, update argument and hook method into UI event

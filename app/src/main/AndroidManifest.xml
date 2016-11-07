@@ -22,16 +22,26 @@
         </activity>
         <activity
             android:name=".Activity.LoginActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        </activity>
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name=".Activity.InputQtyActivity"
+            android:parentActivityName=".Activity.ScanStockOpnameActivity">
+
+            <!-- The meta-data element is needed for versions lower than 4.1 -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Activity.ScanStockOpnameActivity" />
+        </activity>
+        <activity android:name=".Activity.ScanStockOpnameActivity"
             android:parentActivityName=".Activity.ViewPagerActivity">
+
             <!-- The meta-data element is needed for versions lower than 4.1 -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".Activity.ViewPagerActivity" />
         </activity>
+
+        <activity android:name=".Activity.BaseScannerActivity"></activity>
     </application>
 
 </manifest>
