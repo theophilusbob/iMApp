@@ -31,6 +31,7 @@ public class SOFragment extends Fragment implements ZBarScannerView.ResultHandle
     private ZBarScannerView mScannerView;
     private FrameLayout cameraContainer;
 
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragent initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -93,7 +94,7 @@ public class SOFragment extends Fragment implements ZBarScannerView.ResultHandle
     }
 
     @Override
-    public void handleResult(Result rawResult) {
+    public void handleResult(final Result rawResult) {
         Toast.makeText(getActivity(), "Kode Barang = " + rawResult.getContents() +
                 ", Format = " + rawResult.getBarcodeFormat().getName(), Toast.LENGTH_SHORT).show();
         // Note:
@@ -107,6 +108,7 @@ public class SOFragment extends Fragment implements ZBarScannerView.ResultHandle
                 mScannerView.stopCameraPreview();
                 //mScannerView.resumeCameraPreview(SOFragment.this);
                 Intent intent = new Intent(getActivity(), InputQtyActivity.class);
+                intent.putExtra("KODE_BARANG", rawResult.getContents());
                 startActivity(intent);
             }
         }, 2000);

@@ -5,16 +5,17 @@ package com.example.rnd.imapp.model;
  */
 
 public class Orders {
-    private String kode_barang, nama_barang, satuan_pack;
+    private String kode_barang, nama_barang, satuan_pack, img_url;
     private int qty;
 
     public Orders() {
     }
 
-    public Orders(String kode_barang, String nama_barang, String satuan_pack, int qty) {
+    public Orders(String kode_barang, String nama_barang, String satuan_pack, String img_url, int qty) {
         this.kode_barang = kode_barang;
         this.nama_barang = nama_barang;
         this.satuan_pack = satuan_pack;
+        this.img_url = img_url;
         this.qty = qty;
     }
 
@@ -44,6 +45,14 @@ public class Orders {
 
     public int getQty() {
         return qty;
+    }
+
+    public String getImg_url() {
+        return img_url;
+    }
+
+    public void setImg_url(String img_url) {
+        this.img_url = img_url;
     }
 
     public void setQty(int qty) {
