@@ -22,6 +22,8 @@ import com.example.rnd.imapp.R;
 import com.example.rnd.imapp.adapter.CustomListAdapter;
 import com.example.rnd.imapp.app.AppController;
 import com.example.rnd.imapp.model.Orders;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -40,7 +42,9 @@ import java.util.List;
  */
 public class HomeFragment extends Fragment {
     private LinearLayout infoTab;
-    private TextView tabSCM, tabVMI;
+    private TextView tabSCM, tabVMI, txtHalo;
+    FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+    FirebaseUser user = firebaseAuth.getCurrentUser();
 
     // Orders JSON Url
     private static String url_scm = "http://192.168.1.117/imapp_api/getLastOrderSCM.php";
@@ -180,11 +184,14 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_home, container, false);
+        txtHalo = (TextView) v.findViewById(R.id.haloTxt);
         infoTab = (LinearLayout) v.findViewById(R.id.infoTab);
         tabSCM = (TextView) v.findViewById(R.id.tabSCM);
         tabVMI = (TextView) v.findViewById(R.id.tabVMI);
         ordersListView = (ListView) v.findViewById(R.id.ordersList);
         ordersListViewVMI = (ListView) v.findViewById(R.id.ordersListVMI);
+
+        txtHalo.setText("Halo, " + user.getEmail());
 
         pDialog = new ProgressDialog(getActivity());
         // Showing progress dialog before making http request

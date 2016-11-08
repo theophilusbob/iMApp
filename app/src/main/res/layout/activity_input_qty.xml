@@ -22,6 +22,7 @@
             android:contentDescription="@string/gambar_barang"/>
 
         <EditText
+            android:id="@+id/qtyField"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="number"

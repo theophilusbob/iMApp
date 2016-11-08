@@ -107,10 +107,10 @@ public class ViewPagerActivity extends AppCompatActivity{
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        /*try {
+        try {
             mFirebaseAuth.signOut();
         } catch (Exception e) {
             e.printStackTrace();
-        }*/
+        }
     }
 }

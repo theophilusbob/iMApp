@@ -1,5 +1,6 @@
 package com.example.rnd.imapp.Activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v4.app.FragmentManager;
@@ -8,17 +9,27 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 import com.example.rnd.imapp.R;
 import com.example.rnd.imapp.app.AppController;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class InputQtyActivity extends AppCompatActivity {
     private ImageLoader imageLoader;
     private NetworkImageView networkImageView;
     private String imgUrl;
     private Button btnLanjut, btnSelesai;
+    private EditText fieldQty;
+
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +37,7 @@ public class InputQtyActivity extends AppCompatActivity {
         setContentView(R.layout.activity_input_qty);
 
         Intent intent = getIntent();
-        String kode_barang = intent.getStringExtra("KODE_BARANG");
+        final String kode_barang = intent.getStringExtra("KODE_BARANG");
         Log.i("Kode Barang", kode_barang);
 
        /* Uri.Builder builder = new Uri.Builder();
@@ -56,14 +67,27 @@ public class InputQtyActivity extends AppCompatActivity {
 
         btnLanjut = (Button) findViewById(R.id.input_qty_next_button);
         btnSelesai = (Button) findViewById(R.id.input_qty_done_button);
+        fieldQty = (EditText) findViewById(R.id.qtyField);
 
         btnLanjut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FragmentManager fm = getSupportFragmentManager();
-                fm.popBackStack();
+                Toast.makeText(InputQtyActivity.this, "Kode Barang: " + kode_barang + "Qty: " +fieldQty.getText().toString(), Toast.LENGTH_SHORT).show();
             }
         });
+
+        btnSelesai.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(InputQtyActivity.this, StockOpnameQtyActivity.class);
+                intent.putExtra("QUANTITY",fieldQty.getText().toString());
+                startActivity(intent);
+            }
+        });
+
+        // Write a message to the database
+        DatabaseReference myRef = database.getReference("message");
+        myRef.setValue("Hello, World!");
 
     }
 }

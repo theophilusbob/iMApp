@@ -30,4 +30,5 @@
     <string name="ack_info_textview">Scan Barcode Surat Jalan</string>
     <string name="history_order_textview">History Order</string>
     <string name="scan_barcode_text_button">Scan Barcode</string>
+    <string name="so_text_title">Scan Barcode Barang</string>
 </resources>

@@ -22,7 +22,9 @@
         </activity>
         <activity
             android:name=".Activity.LoginActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" >
+        </activity>
+
         <activity
             android:name=".Activity.InputQtyActivity"
             android:parentActivityName=".Activity.ScanStockOpnameActivity">
@@ -32,7 +34,8 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".Activity.ScanStockOpnameActivity" />
         </activity>
-        <activity android:name=".Activity.ScanStockOpnameActivity"
+        <activity
+            android:name=".Activity.ScanStockOpnameActivity"
             android:parentActivityName=".Activity.ViewPagerActivity">
 
             <!-- The meta-data element is needed for versions lower than 4.1 -->
@@ -40,8 +43,8 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".Activity.ViewPagerActivity" />
         </activity>
-
-        <activity android:name=".Activity.BaseScannerActivity"></activity>
+        <activity android:name=".Activity.BaseScannerActivity" />
+        <activity android:name=".Activity.StockOpnameQtyActivity"></activity>
     </application>
 
 </manifest>

@@ -18,13 +18,14 @@
             <ImageView
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:src="@drawable/icon_stockopname_colour"/>
+                android:src="@drawable/icon_stockopname_colour" />
+
             <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/colorPrimary"
             android:textAlignment="center"
-            android:text="@string/scan_barcode_text_button"
+            android:text="@string/so_text_title"
             android:textSize="21sp"/>
 
             <TextView
