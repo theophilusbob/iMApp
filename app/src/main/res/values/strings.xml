@@ -31,4 +31,6 @@
     <string name="history_order_textview">History Order</string>
     <string name="scan_barcode_text_button">Scan Barcode</string>
     <string name="so_text_title">Scan Barcode Barang</string>
+    <string name="nama_barang_column_name">Nama Barang</string>
+    <string name="qty_column_name">Qty</string>
 </resources>

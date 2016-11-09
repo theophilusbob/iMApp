@@ -1,9 +1,7 @@
 package com.example.rnd.imapp.Activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,11 +14,8 @@ import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 import com.example.rnd.imapp.R;
 import com.example.rnd.imapp.app.AppController;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 public class InputQtyActivity extends AppCompatActivity {
     private ImageLoader imageLoader;
@@ -81,6 +76,7 @@ public class InputQtyActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(InputQtyActivity.this, StockOpnameQtyActivity.class);
                 intent.putExtra("QUANTITY",fieldQty.getText().toString());
+                intent.putExtra("KODE_BARANG", kode_barang);
                 startActivity(intent);
             }
         });

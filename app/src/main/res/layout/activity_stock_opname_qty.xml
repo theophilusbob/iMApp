@@ -10,11 +10,24 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.rnd.imapp.Activity.StockOpnameQtyActivity">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:text="@string/nama_barang_column_name"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:text="@string/qty_column_name"/>
+
     <ListView
         android:id="@+id/qtyListView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp">
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="20dp">
     </ListView>
 
     <TextView
