@@ -26,15 +26,24 @@
         android:id="@+id/qtyListView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="60dp"
         android:layout_marginTop="20dp">
     </ListView>
 
-    <TextView
-        android:id="@+id/sampleTxt"
-        android:layout_width="match_parent"
+    <Button
+        android:layout_width="160dp"
         android:layout_height="wrap_content"
-        android:text="@string/app_name"
-        android:layout_alignParentBottom="true"/>
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:text="@string/rescan_button"
+        android:textColor="@color/list_row_end_color" />
+
+    <Button
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:text="@string/input_qty_done_button"
+        android:textColor="@color/list_row_end_color" />
 
 </RelativeLayout>
