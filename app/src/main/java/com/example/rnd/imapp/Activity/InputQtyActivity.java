@@ -81,9 +81,7 @@ public class InputQtyActivity extends AppCompatActivity {
             }
         });
 
-        // Write a message to the database
-        DatabaseReference myRef = database.getReference("message");
-        myRef.setValue("Hello, World!");
+        Log.i("Path: ", getApplicationInfo().dataDir);
 
     }
 }

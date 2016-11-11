@@ -14,20 +14,20 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".Activity.ViewPagerActivity">
+        </activity>
+        <activity
+            android:name=".Activity.LoginActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".Activity.LoginActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" >
-
-        </activity>
 
         <activity
             android:name=".Activity.InputQtyActivity"
+            android:label="@string/so_input_qty"
             android:parentActivityName=".Activity.ScanStockOpnameActivity">
 
             <!-- The meta-data element is needed for versions lower than 4.1 -->
@@ -37,6 +37,7 @@
         </activity>
         <activity
             android:name=".Activity.ScanStockOpnameActivity"
+            android:label="@string/so_scan_barcode"
             android:parentActivityName=".Activity.ViewPagerActivity">
 
             <!-- The meta-data element is needed for versions lower than 4.1 -->
@@ -47,6 +48,7 @@
         <activity android:name=".Activity.BaseScannerActivity" />
         <activity
             android:name=".Activity.StockOpnameQtyActivity"
+            android:label="@string/so_sisa_stok"
             android:parentActivityName=".Activity.ScanStockOpnameActivity">
 
             <!-- The meta-data element is needed for versions lower than 4.1 -->

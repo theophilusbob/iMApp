@@ -23,6 +23,15 @@ public class ViewPagerActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_pager);
 
+        // Initialize Firebase Auth
+        mFirebaseAuth = FirebaseAuth.getInstance();
+        mFirebaseUser = mFirebaseAuth.getCurrentUser();
+
+        if (mFirebaseUser == null) {
+            // Not logged in, launch the Log In activity
+            loadLogInView();
+        }
+
         // ViewPager
         vpAdapter = new ViewPagerAdapter(getSupportFragmentManager());
         vpPager = (ViewPager) findViewById(R.id.vpPager);
@@ -81,15 +90,6 @@ public class ViewPagerActivity extends AppCompatActivity{
         soIcon = (ImageView) findViewById(R.id.soIcon);
         ackIcon = (ImageView) findViewById(R.id.ackIcon);
         historyIcon = (ImageView) findViewById(R.id.historyIcon);
-
-        // Initialize Firebase Auth
-        mFirebaseAuth = FirebaseAuth.getInstance();
-        mFirebaseUser = mFirebaseAuth.getCurrentUser();
-
-        if (mFirebaseUser == null) {
-            // Not logged in, launch the Log In activity
-            loadLogInView();
-        }
     }
 
     private void loadLogInView() {

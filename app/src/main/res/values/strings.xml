@@ -34,4 +34,7 @@
     <string name="nama_barang_column_name">Nama Barang</string>
     <string name="qty_column_name">Qty</string>
     <string name="rescan_button">Rescan</string>
+    <string name="so_input_qty">Stock Opname: Input Sisa Stok</string>
+    <string name="so_scan_barcode">Stock Opname: Scan Barcode Barang</string>
+    <string name="so_sisa_stok">Stock Opname: Sisa Stok</string>
 </resources>

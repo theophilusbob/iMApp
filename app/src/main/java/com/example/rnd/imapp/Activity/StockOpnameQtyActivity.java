@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -23,6 +24,7 @@ public class StockOpnameQtyActivity extends AppCompatActivity {
     private TextView txtSample;
     private String sisaStok, kodeBarang, childBarang;
     private ListView listViewQty;
+    private Button btnRescan,btnCalculate;
     DatabaseReference myRootRef = FirebaseDatabase.getInstance().getReferenceFromUrl("https://imapp-99a05.firebaseio.com/stockopname");
 
 
@@ -87,6 +89,24 @@ public class StockOpnameQtyActivity extends AppCompatActivity {
         };
 
         listViewQty.setAdapter(fireSisaStokList);
+
+        btnRescan = (Button) findViewById(R.id.rescanButton);
+        btnCalculate = (Button) findViewById(R.id.calculateButton);
+
+        btnRescan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent backToScanIntent = new Intent(StockOpnameQtyActivity.this, ScanStockOpnameActivity.class);
+                startActivity(backToScanIntent);
+            }
+        });
+
+        btnCalculate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
     }
 
     @Override

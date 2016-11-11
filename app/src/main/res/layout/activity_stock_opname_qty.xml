@@ -31,19 +31,21 @@
     </ListView>
 
     <Button
+        android:id="@+id/rescanButton"
         android:layout_width="160dp"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:text="@string/rescan_button"
-        android:textColor="@color/list_row_end_color" />
+        android:textColor="@color/blueGrey" />
 
     <Button
+        android:id="@+id/calculateButton"
         android:layout_width="160dp"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:text="@string/input_qty_done_button"
-        android:textColor="@color/list_row_end_color" />
+        android:textColor="@color/colorPrimary" />
 
 </RelativeLayout>

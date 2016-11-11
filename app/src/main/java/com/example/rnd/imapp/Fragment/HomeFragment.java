@@ -24,6 +24,8 @@ import com.example.rnd.imapp.app.AppController;
 import com.example.rnd.imapp.model.Orders;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -45,6 +47,7 @@ public class HomeFragment extends Fragment {
     private TextView tabSCM, tabVMI, txtHalo;
     FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     FirebaseUser user = firebaseAuth.getCurrentUser();
+    DatabaseReference myRootRef = FirebaseDatabase.getInstance().getReferenceFromUrl("https://imapp-99a05.firebaseio.com/last_orders");
 
     // Orders JSON Url
     private static String url_scm = "http://192.168.1.117/imapp_api/getLastOrderSCM.php";
