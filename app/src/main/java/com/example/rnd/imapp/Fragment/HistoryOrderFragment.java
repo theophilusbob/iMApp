@@ -12,8 +12,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.rnd.imapp.R;
-import com.example.rnd.imapp.model.Orders;
-import com.example.rnd.imapp.model.StockOpname;
+import com.example.rnd.imapp.model.cobaOrder;
+import com.firebase.ui.database.FirebaseListAdapter;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -88,7 +88,7 @@ public class HistoryOrderFragment extends Fragment {
         qty = (TextView) v.findViewById(R.id.qty);
         satuan = (TextView) v.findViewById(R.id.satuan_pack);
 
-        DatabaseReference lastOrderRef = FirebaseDatabase.getInstance().getReferenceFromUrl("https://imapp-99a05.firebaseio.com/orders");
+        final DatabaseReference lastOrderRef = FirebaseDatabase.getInstance().getReferenceFromUrl("https://imapp-99a05.firebaseio.com/orders");
 
         // Read from the database
         lastOrderRef.addValueEventListener(new ValueEventListener() {
@@ -98,7 +98,7 @@ public class HistoryOrderFragment extends Fragment {
                 // whenever data at this location is updated.
 
                 for (DataSnapshot soSnapshot: dataSnapshot.getChildren()) {
-                    Orders lastOrder = soSnapshot.getValue(Orders.class);
+                    cobaOrder lastOrder = soSnapshot.getValue(cobaOrder.class);
                     Log.i("Nama Barang: ", lastOrder.getNama_barang() + "Qty:  " + lastOrder.getQty());
                 }
             }
@@ -109,6 +109,23 @@ public class HistoryOrderFragment extends Fragment {
                 Log.w("InputQTYAct", "Failed to read value.", error.toException());
             }
         });
+
+        FirebaseListAdapter<cobaOrder> fireSisaStokList = new FirebaseListAdapter<cobaOrder>(
+                getActivity(), cobaOrder.class, R.layout.list_qty_stock_opname, lastOrderRef
+        ) {
+            @Override
+            protected void populateView(View v, cobaOrder lastOrders, int position) {
+                ((TextView)v.findViewById(R.id.nama_barang_text)).setText(lastOrders.getNama_barang());
+                ((TextView)v.findViewById(R.id.qty_text)).setText(lastOrders.getQty());
+
+                /*if (soReview.getQuantity().equals("0")) {
+                    ((TextView)v.findViewById(R.id.nama_barang_text)).setTextColor(Color.parseColor("#C62828"));
+                    ((TextView)v.findViewById(R.id.qty_text)).setTextColor(Color.parseColor("#C62828"));
+                }*/
+            }
+        };
+
+        listViewLastOrder.setAdapter(fireSisaStokList);
         return v;
     }
 

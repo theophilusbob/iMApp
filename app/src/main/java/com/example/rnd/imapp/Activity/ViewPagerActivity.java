@@ -2,6 +2,7 @@ package com.example.rnd.imapp.Activity;
 
 import android.content.Intent;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ImageView;
@@ -17,7 +18,6 @@ public class ViewPagerActivity extends AppCompatActivity{
     private ViewPagerAdapter vpAdapter;
     private ViewPager vpPager;
     private ImageView homeIcon, soIcon, ackIcon, historyIcon;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,30 +51,35 @@ public class ViewPagerActivity extends AppCompatActivity{
                         soIcon.setImageResource(R.drawable.icon_stockopname);
                         ackIcon.setImageResource(R.drawable.icon_ack);
                         historyIcon.setImageResource(R.drawable.icon_history);
+                        getSupportActionBar().setTitle("Home");
                         break;
                     case 1:
                         homeIcon.setImageResource(R.drawable.icon_home);
                         soIcon.setImageResource(R.drawable.icon_stockopname_active);
                         ackIcon.setImageResource(R.drawable.icon_ack);
                         historyIcon.setImageResource(R.drawable.icon_history);
+                        getSupportActionBar().setTitle("Stock Opname");
                         break;
                     case 2:
                         homeIcon.setImageResource(R.drawable.icon_home);
                         soIcon.setImageResource(R.drawable.icon_stockopname);
                         ackIcon.setImageResource(R.drawable.icon_ack_active);
                         historyIcon.setImageResource(R.drawable.icon_history);
+                        getSupportActionBar().setTitle("ACK");
                         break;
                     case 3:
                         homeIcon.setImageResource(R.drawable.icon_home);
                         soIcon.setImageResource(R.drawable.icon_stockopname);
                         ackIcon.setImageResource(R.drawable.icon_ack);
                         historyIcon.setImageResource(R.drawable.icon_history_active);
+                        getSupportActionBar().setTitle("History Order");
                         break;
                     default:
                         homeIcon.setImageResource(R.drawable.icon_home_active);
                         soIcon.setImageResource(R.drawable.icon_stockopname);
                         ackIcon.setImageResource(R.drawable.icon_ack);
                         historyIcon.setImageResource(R.drawable.icon_history);
+                        getSupportActionBar().setTitle("Home");
                         break;
                 }
             }
