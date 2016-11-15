@@ -46,7 +46,7 @@ public class HomeFragment extends Fragment {
     private LinearLayout infoTab;
     private TextView tabSCM, tabVMI, txtHalo;
     FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-    FirebaseUser user = firebaseAuth.getCurrentUser();
+
     DatabaseReference myRootRef = FirebaseDatabase.getInstance().getReferenceFromUrl("https://imapp-99a05.firebaseio.com/last_orders");
 
     // Orders JSON Url
@@ -194,7 +194,7 @@ public class HomeFragment extends Fragment {
         ordersListView = (ListView) v.findViewById(R.id.ordersList);
         ordersListViewVMI = (ListView) v.findViewById(R.id.ordersListVMI);
 
-        txtHalo.setText("Halo, " + user.getEmail());
+        txtHalo.setText("Halo, " + firebaseAuth.getCurrentUser().getEmail());
 
         pDialog = new ProgressDialog(getActivity());
         // Showing progress dialog before making http request

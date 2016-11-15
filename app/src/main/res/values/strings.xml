@@ -37,4 +37,11 @@
     <string name="so_input_qty">Stock Opname: Input Sisa Stok</string>
     <string name="so_scan_barcode">Stock Opname: Scan Barcode Barang</string>
     <string name="so_sisa_stok">Stock Opname: Sisa Stok</string>
+    <string name="sort_by_order_button_text">SORT BY ORDER</string>
+    <string name="sort_by_item_button_text">SORT BY ITEM</string>
+    <string name="history_order_information">Pilih history order berdasarkan pesanan atau nama barang</string>
+    <string name="button_3_bulan_text">3 BULAN</string>
+    <string name="btn_6_bulan_text">6 BULAN</string>
+    <string name="button_1_tahun_text">1 TAHUN</string>
+    <string name="button_2_tahun_text">2 TAHUN</string>
 </resources>

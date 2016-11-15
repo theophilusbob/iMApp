@@ -58,6 +58,8 @@ public class InputQtyActivity extends AppCompatActivity {
         if (kode_barang.equals("IDS-208/11")) {
             imgUrl = "http://192.168.1.117/imapp_api/foto_barang/img_3.png";
         }
+
+
         networkImageView.setImageUrl(imgUrl, imageLoader);
 
         btnLanjut = (Button) findViewById(R.id.input_qty_next_button);

@@ -39,7 +39,9 @@ public class LoginActivity extends AppCompatActivity {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user != null) {
                     // User is signed in
-                    Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
+                    Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getEmail());
+                    Intent intent = new Intent(LoginActivity.this, ViewPagerActivity.class);
+                    startActivity(intent);
                 } else {
                     // User is signed out
                     Log.d(TAG, "onAuthStateChanged:signed_out");
@@ -47,7 +49,6 @@ public class LoginActivity extends AppCompatActivity {
                 // ...
             }
         };
-        // ...
 
         // Find view
         emailEditText = (EditText) findViewById(R.id.usernameField);

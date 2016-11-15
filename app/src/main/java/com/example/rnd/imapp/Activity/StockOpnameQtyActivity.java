@@ -1,7 +1,9 @@
 package com.example.rnd.imapp.Activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -104,7 +106,22 @@ public class StockOpnameQtyActivity extends AppCompatActivity {
         btnCalculate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                final AlertDialog.Builder builder = new AlertDialog.Builder(StockOpnameQtyActivity.this);
+                builder.setTitle("Estimasi Pesanan: ")
+                    .setMessage("Sekian items")
+                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                Intent backToHomeIntent = new Intent(StockOpnameQtyActivity.this, ViewPagerActivity.class);
+                                startActivity(backToHomeIntent);
+                            }
+                        })
+                    .setNegativeButton("Batal", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.cancel();
+                        }
+                    });
             }
         });
     }

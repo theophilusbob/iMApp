@@ -33,19 +33,25 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAlignment="center"
-                android:text="@string/scan_information"
+                android:text="@string/history_order_information"
                 android:maxLines="2"/>
 
         </LinearLayout>
 
-        <ListView
-            android:id="@+id/lastOrderListView"
-            android:layout_width="fill_parent"
+        <Button
+            android:id="@+id/btnByOrder"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:divider="@color/list_divider"
-            android:dividerHeight="1dp"
-            android:listSelector="@drawable/list_row_selector"
-            android:visibility="visible"/>
+            android:layout_marginTop="60dp"
+            android:layout_gravity="center"
+            android:text="@string/sort_by_order_button_text"/>
+        <Button
+            android:id="@+id/btnByItem"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_gravity="center"
+            android:text="@string/sort_by_item_button_text"/>
     </LinearLayout>
 
 </FrameLayout>

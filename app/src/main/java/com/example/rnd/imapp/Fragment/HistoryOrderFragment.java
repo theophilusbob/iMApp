@@ -1,6 +1,7 @@
 package com.example.rnd.imapp.Fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -8,9 +9,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.rnd.imapp.Activity.HistoryByItemActivity;
+import com.example.rnd.imapp.Activity.HistoryByOrderActivity;
 import com.example.rnd.imapp.R;
 import com.example.rnd.imapp.model.cobaOrder;
 import com.firebase.ui.database.FirebaseListAdapter;
@@ -33,6 +37,7 @@ import org.w3c.dom.Text;
 public class HistoryOrderFragment extends Fragment {
     private ListView listViewLastOrder;
     private TextView kode_barang, nama_barang, qty, satuan;
+    private Button by_order_button, by_item_button;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -82,7 +87,7 @@ public class HistoryOrderFragment extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_history_order, container, false);
 
-        listViewLastOrder = (ListView) v.findViewById(R.id.lastOrderListView);
+        /*listViewLastOrder = (ListView) v.findViewById(R.id.lastOrderListView);
         kode_barang = (TextView) v.findViewById(R.id.kode_barang);
         nama_barang = (TextView) v.findViewById(R.id.nama_barang);
         qty = (TextView) v.findViewById(R.id.qty);
@@ -118,14 +123,34 @@ public class HistoryOrderFragment extends Fragment {
                 ((TextView)v.findViewById(R.id.nama_barang_text)).setText(lastOrders.getNama_barang());
                 ((TextView)v.findViewById(R.id.qty_text)).setText(lastOrders.getQty());
 
-                /*if (soReview.getQuantity().equals("0")) {
+                *//*if (soReview.getQuantity().equals("0")) {
                     ((TextView)v.findViewById(R.id.nama_barang_text)).setTextColor(Color.parseColor("#C62828"));
                     ((TextView)v.findViewById(R.id.qty_text)).setTextColor(Color.parseColor("#C62828"));
-                }*/
+                }*//*
             }
         };
 
-        listViewLastOrder.setAdapter(fireSisaStokList);
+        listViewLastOrder.setAdapter(fireSisaStokList);*/
+
+        by_order_button = (Button) v.findViewById(R.id.btnByOrder);
+        by_item_button = (Button) v.findViewById(R.id.btnByItem);
+
+        by_order_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), HistoryByOrderActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        by_item_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), HistoryByItemActivity.class);
+                startActivity(intent);
+            }
+        });
+
         return v;
     }
 

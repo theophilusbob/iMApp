@@ -17,7 +17,7 @@ public class ScanStockOpnameActivity extends BaseScannerActivity implements ZBar
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setupToolbar();
+
         setContentView(R.layout.activity_scan_stock_opname);
 
         ViewGroup contentFrame = (ViewGroup) findViewById(R.id.content_frame);
