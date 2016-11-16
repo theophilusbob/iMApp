@@ -7,12 +7,16 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.rnd.imapp.R;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import me.dm7.barcodescanner.zbar.Result;
 import me.dm7.barcodescanner.zbar.ZBarScannerView;
 
 public class ScanStockOpnameActivity extends BaseScannerActivity implements ZBarScannerView.ResultHandler {
     private ZBarScannerView mScannerView;
+    private String sisaStok, kodeBarang, childBarang;
+    DatabaseReference myRootRef = FirebaseDatabase.getInstance().getReferenceFromUrl("https://imapp-99a05.firebaseio.com/stockopname");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +27,32 @@ public class ScanStockOpnameActivity extends BaseScannerActivity implements ZBar
         ViewGroup contentFrame = (ViewGroup) findViewById(R.id.content_frame);
         mScannerView = new ZBarScannerView(this);
         contentFrame.addView(mScannerView);
+
+        Intent intent = getIntent();
+        sisaStok = intent.getStringExtra("QUANTITY");
+        kodeBarang = intent.getStringExtra("KODE_BARANG");
+
+        if (kodeBarang != null && !kodeBarang.isEmpty()) {
+            if (kodeBarang.equals("CCC.901/15"))
+                childBarang = "barang1";
+            if (kodeBarang.equals("IDS-206/11"))
+                childBarang = "barang2";
+            if (kodeBarang.equals("IDS-208/11"))
+                childBarang = "barang3";
+            if (kodeBarang.equals("IDS.134/99"))
+                childBarang = "barang6";
+            if (kodeBarang.equals("IDS.203/12"))
+                childBarang = "barang7";
+
+            DatabaseReference myQuantityRef = myRootRef.child(childBarang).child("quantity");
+
+            if ( sisaStok == null && sisaStok.isEmpty()) {
+                myQuantityRef.setValue("0");
+            }
+            else {
+                myQuantityRef.setValue(sisaStok);
+            }
+        }
     }
 
     @Override

@@ -52,11 +52,14 @@ public class InputQtyActivity extends AppCompatActivity {
         if (kode_barang.equals("CCC.901/15")) {
             imgUrl = "http://192.168.1.117/imapp_api/foto_barang/img_1.png";
         }
-        if (kode_barang.equals("IDS-206/11")) {
-            imgUrl = "http://192.168.1.117/imapp_api/foto_barang/img_2.png";
+        if (kode_barang.equals("IDS.134/99")) {
+            imgUrl = "http://192.168.1.117/imapp_api/foto_barang/img_6.png";
         }
         if (kode_barang.equals("IDS-208/11")) {
             imgUrl = "http://192.168.1.117/imapp_api/foto_barang/img_3.png";
+        }
+        if (kode_barang.equals("IDS.203/12")) {
+            imgUrl = "http://192.168.1.117/imapp_api/foto_barang/img_7.png";
         }
 
 
@@ -69,7 +72,12 @@ public class InputQtyActivity extends AppCompatActivity {
         btnLanjut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(InputQtyActivity.this, "Kode Barang: " + kode_barang + "Qty: " +fieldQty.getText().toString(), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(InputQtyActivity.this, "Kode Barang: " + kode_barang + "Qty: " +fieldQty.getText().toString(), Toast.LENGTH_SHORT).show();
+                Intent backToScanIntent = new Intent(InputQtyActivity.this, ScanStockOpnameActivity.class);
+                backToScanIntent.putExtra("QUANTITY",fieldQty.getText().toString());
+                backToScanIntent.putExtra("KODE_BARANG", kode_barang);
+                startActivity(backToScanIntent);
+
             }
         });
 

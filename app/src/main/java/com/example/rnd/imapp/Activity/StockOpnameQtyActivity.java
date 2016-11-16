@@ -3,6 +3,7 @@ package com.example.rnd.imapp.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.provider.Settings;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,7 +14,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.rnd.imapp.R;
-import com.example.rnd.imapp.model.Orders;
+import com.example.rnd.imapp.model.Rerata;
 import com.example.rnd.imapp.model.StockOpname;
 import com.firebase.ui.database.FirebaseListAdapter;
 import com.google.firebase.database.DataSnapshot;
@@ -27,7 +28,9 @@ public class StockOpnameQtyActivity extends AppCompatActivity {
     private String sisaStok, kodeBarang, childBarang;
     private ListView listViewQty;
     private Button btnRescan,btnCalculate;
+    private StockOpname[] stockArray = new StockOpname[27];
     DatabaseReference myRootRef = FirebaseDatabase.getInstance().getReferenceFromUrl("https://imapp-99a05.firebaseio.com/stockopname");
+    DatabaseReference myAverageRef = FirebaseDatabase.getInstance().getReferenceFromUrl("https://imapp-99a05.firebaseio.com/average");
 
 
     @Override
@@ -47,24 +50,36 @@ public class StockOpnameQtyActivity extends AppCompatActivity {
             childBarang = "barang2";
         if (kodeBarang.equals("IDS-208/11"))
             childBarang = "barang3";
+        if (kodeBarang.equals("IDS.134/99"))
+            childBarang = "barang6";
+        if (kodeBarang.equals("IDS.203/12"))
+            childBarang = "barang7";
 
-        Log.i("Nama child: ", childBarang);
+        //Log.i("Nama child: ", childBarang);
 
         DatabaseReference barangRef = FirebaseDatabase.getInstance().getReferenceFromUrl("https://imapp-99a05.firebaseio.com/stockopname");
         DatabaseReference myQuantityRef = myRootRef.child(childBarang).child("quantity");
 
         myQuantityRef.setValue(sisaStok);
 
-        // Read from the database
+        // Read from the stock opname database
         myRootRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
 
+                int i = 0;
+
                 for (DataSnapshot soSnapshot: dataSnapshot.getChildren()) {
                     StockOpname soRekap = soSnapshot.getValue(StockOpname.class);
-                    Log.i("Nama Barang: ", soRekap.getNama_barang()+ "Qty:  "+soRekap.getQuantity());
+                    //Log.i("Nama Barang: ", soRekap.getNama_barang()+ "Qty:  "+soRekap.getQuantity());
+
+                    i++;
+                    stockArray[i] = new StockOpname();
+                    stockArray[i].setQuantity(soRekap.getQuantity());
+                    stockArray[i].setKode_barang(soRekap.getKode_barang());
+                    //Log.i("Quantity: ", stockArray[i].getQuantity());
                 }
             }
 
@@ -74,6 +89,38 @@ public class StockOpnameQtyActivity extends AppCompatActivity {
                 Log.w("InputQTYAct", "Failed to read value.", error.toException());
             }
         });
+
+        //Read from the average database
+        myAverageRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                int i = 0;
+                double qty_order = 0;
+
+                for (DataSnapshot avgSnapshot: dataSnapshot.getChildren()) {
+                    Rerata rerataRekap = avgSnapshot.getValue(Rerata.class);
+                    //Log.i("Rerata ", rerataRekap.getrerata() + "   Kode barang: " + rerataRekap.getKode_barang());
+
+                    i++;
+                    if (rerataRekap.getKode_barang().equals(stockArray[i].getKode_barang())) {
+                        qty_order = (((8.0 / 3.0)*Double.parseDouble(rerataRekap.getrerata())) - Integer.parseInt(stockArray[i].getQuantity()));
+                        //Integer.parseInt(rerataRekap.getrerata())
+                        if (qty_order < 0){
+                            qty_order = 0;
+                        }
+                        System.out.println(qty_order);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                Log.w("InputQTYAct", "Failed to read value.", error.toException());
+            }
+        });
+
 
         FirebaseListAdapter<StockOpname> fireSisaStokList = new FirebaseListAdapter<StockOpname>(
                 this, StockOpname.class, R.layout.list_qty_stock_opname, barangRef
@@ -107,11 +154,35 @@ public class StockOpnameQtyActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 final AlertDialog.Builder builder = new AlertDialog.Builder(StockOpnameQtyActivity.this);
-                builder.setTitle("Estimasi Pesanan: ")
-                    .setMessage("Sekian items")
+                builder.setTitle("Konfirmasi Order")
+                    .setMessage("Apakah Anda yakin ingin melakukan order sesuai stock opname yang telah Anda masukkan?")
                         .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
+                                // CALCULATION
+                                // Write to database
+                                myRootRef.addValueEventListener(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                        // This method is called once with the initial value and again
+                                        // whenever data at this location is updated.
+
+                                        for (DataSnapshot soSnapshot: dataSnapshot.getChildren()) {
+                                            StockOpname soRekap = soSnapshot.getValue(StockOpname.class);
+                                            Log.i("Nama Barang: ", soRekap.getNama_barang()+ "Qty:  "+soRekap.getQuantity());
+
+                                            //if (soRekap.getKode_barang().equals("CCC.901/15"))
+
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(DatabaseError error) {
+                                        // Failed to read value
+                                        Log.w("InputQTYAct", "Failed to read value.", error.toException());
+                                    }
+                                });
+                                // Back to home and display last orders
                                 Intent backToHomeIntent = new Intent(StockOpnameQtyActivity.this, ViewPagerActivity.class);
                                 startActivity(backToHomeIntent);
                             }
@@ -122,6 +193,7 @@ public class StockOpnameQtyActivity extends AppCompatActivity {
                             dialogInterface.cancel();
                         }
                     });
+                builder.show();
             }
         });
     }

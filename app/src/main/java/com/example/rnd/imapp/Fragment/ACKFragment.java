@@ -1,13 +1,16 @@
 package com.example.rnd.imapp.Fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
+import com.example.rnd.imapp.Activity.ScanAckActivity;
 import com.example.rnd.imapp.R;
 
 /**
@@ -19,6 +22,8 @@ import com.example.rnd.imapp.R;
  * create an instance of this fragment.
  */
 public class ACKFragment extends Fragment {
+    private Button btnACK;
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -65,7 +70,18 @@ public class ACKFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_ack, container, false);
+        View v = inflater.inflate(R.layout.fragment_ack, container, false);
+
+        btnACK = (Button) v.findViewById(R.id.btnScanACK);
+
+        btnACK.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), ScanAckActivity.class);
+                startActivity(intent);
+            }
+        });
+        return v;
     }
 
     // TODO: Rename method, update argument and hook method into UI event

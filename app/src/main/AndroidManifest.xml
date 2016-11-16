@@ -15,8 +15,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".Activity.ViewPagerActivity"
-            android:launchMode="singleTop">
-        </activity>
+            android:launchMode="singleTop" />
         <activity
             android:name=".Activity.LoginActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
@@ -62,7 +61,7 @@
         <activity
             android:name=".Activity.HistoryByOrderActivity"
             android:launchMode="singleTop"
-            android:parentActivityName=".Activity.ViewPagerActivity" >
+            android:parentActivityName=".Activity.ViewPagerActivity">
 
             <!-- The meta-data element is needed for versions lower than 4.1 -->
             <meta-data
@@ -71,12 +70,43 @@
         </activity>
         <activity
             android:name=".Activity.HistoryByItemActivity"
+            android:label="@string/history_by_item_label"
             android:parentActivityName=".Activity.ViewPagerActivity">
 
             <!-- The meta-data element is needed for versions lower than 4.1 -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".Activity.ViewPagerActivity" />
+        </activity>
+        <activity
+            android:name=".Activity.ScanAckActivity"
+            android:label="@string/ack_scan_label"
+            android:parentActivityName=".Activity.ViewPagerActivity">
+
+            <!-- The meta-data element is needed for versions lower than 4.1 -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Activity.ViewPagerActivity" />
+        </activity>
+        <activity
+            android:name=".Activity.DisplayGraphicsActivity"
+            android:label="@string/history_by_item_label"
+            android:parentActivityName=".Activity.HistoryByItemActivity">
+
+            <!-- The meta-data element is needed for versions lower than 4.1 -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Activity.HistoryByItemActivity" />
+        </activity>
+        <activity
+            android:name=".Activity.AckActivity"
+            android:label="@string/ack_check_list"
+            android:parentActivityName=".Activity.ScanAckActivity">
+
+            <!-- The meta-data element is needed for versions lower than 4.1 -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Activity.ScanAckActivity" />
         </activity>
     </application>
 
