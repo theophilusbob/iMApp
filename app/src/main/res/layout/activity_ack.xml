@@ -31,12 +31,12 @@
     </ListView>
 
     <Button
-        android:id="@+id/rescanButton"
+        android:id="@+id/konfirmasiACKButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:text="Konfirmasi"
+        android:text="@string/konfirmasi_button_txt"
         android:textColor="@color/colorPrimary" />
 
 </RelativeLayout>

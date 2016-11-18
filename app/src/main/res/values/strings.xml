@@ -48,4 +48,6 @@
     <string name="history_by_item_label">History By Item</string>
     <string name="ack_check_list">ACK List</string>
     <string name="ack_scan_label">ACK: Scan Surat Jalan</string>
+    <string name="konfirmasi_button_txt">Konfirmasi</string>
+    <string name="pilih_periode_text">Pilih Periode:</string>
 </resources>

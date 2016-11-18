@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="6dp">
+
+    <CheckBox
+        android:id="@+id/checkBoxAck"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:focusable="false"
+    />
+
+    <TextView
+        android:id="@+id/namaBarangACK"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/checkBoxAck"
+        android:layout_alignParentBottom="@+id/checkBoxAck"
+        android:layout_toRightOf="@+id/checkBoxAck"
+        android:text="TextView"/>
+
+    <TextView
+        android:id="@+id/code"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/namaBarangACK"
+        android:layout_alignBaseline="@+id/checkBoxAck"
+        android:textSize="11sp" />
+
+    <TextView
+        android:id="@+id/satuanACK"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/checkBoxAck"
+        android:layout_alignParentRight="true"
+        android:textStyle="bold"
+        android:text="7"/>
+          
+</RelativeLayout>

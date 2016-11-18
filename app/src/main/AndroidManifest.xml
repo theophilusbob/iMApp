@@ -108,6 +108,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".Activity.ScanAckActivity" />
         </activity>
+        <activity
+            android:name=".Activity.HistoryPeriodsActivity"
+            android:parentActivityName=".Activity.HistoryByOrderActivity">
+
+            <!-- The meta-data element is needed for versions lower than 4.1 -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Activity.HistoryByOrderActivity" />
+        </activity>
     </application>
 
 </manifest>
