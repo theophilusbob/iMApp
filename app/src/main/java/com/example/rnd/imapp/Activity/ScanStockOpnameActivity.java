@@ -83,6 +83,7 @@ public class ScanStockOpnameActivity extends BaseScannerActivity implements ZBar
                 mScannerView.stopCameraPreview();
                 //mScannerView.resumeCameraPreview(SOFragment.this);
                 Intent intent = new Intent(ScanStockOpnameActivity.this, InputQtyActivity.class);
+
                 intent.putExtra("KODE_BARANG", rawResult.getContents());
                 startActivity(intent);
             }

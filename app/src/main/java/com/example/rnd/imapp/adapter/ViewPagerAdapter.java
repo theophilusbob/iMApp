@@ -29,13 +29,13 @@ public class ViewPagerAdapter extends FragmentPagerAdapter{
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                return HomeFragment.newInstance("1", "Home Page");
+                return HomeFragment.newInstance("0", "Home Page");
             case 1:
-                return SOFragment.newInstance("2", "Stock Opname Page");
+                return SOFragment.newInstance("1", "Stock Opname Page");
             case 2:
-                return ACKFragment.newInstance("3", "ACK Page");
+                return ACKFragment.newInstance("2", "ACK Page");
             case 3:
-                return HistoryOrderFragment.newInstance("4", "History Order Page");
+                return HistoryOrderFragment.newInstance("3", "History Order Page");
             default:
                 return HomeFragment.newInstance("1","Home Page");
         }

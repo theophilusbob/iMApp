@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.example.rnd.imapp.R;
 import com.example.rnd.imapp.model.Orders;
+import com.example.rnd.imapp.model.cobaLastOrder;
 
 import java.util.List;
 
@@ -20,9 +21,9 @@ import java.util.List;
 public class CustomListAdapter extends BaseAdapter {
     private Activity activity;
     private LayoutInflater layoutInflater;
-    private List<Orders> orderItems;
+    private List<cobaLastOrder> orderItems;
 
-    public CustomListAdapter(Activity activity, List<Orders> orderItems) {
+    public CustomListAdapter(Activity activity, List<cobaLastOrder> orderItems) {
         this.activity = activity;
         this.orderItems = orderItems;
     }
@@ -58,19 +59,19 @@ public class CustomListAdapter extends BaseAdapter {
         TextView satuan_pack = (TextView) convertView.findViewById(R.id.satuan_pack);
 
         // Getting Order data for the row
-        Orders  o = orderItems.get(position);
+        cobaLastOrder cobaLastOrder = orderItems.get(position);
 
         // Nama Barang
-        nama_barang.setText(o.getNama_barang());
+        nama_barang.setText(cobaLastOrder.getNama_barang());
 
         // Kode Barang
-        kode_barang.setText(o.getKode_barang());
+        kode_barang.setText(cobaLastOrder.getKode_barang());
 
         // Quantity
-        qty.setText(String.valueOf(o.getQty()));
+        qty.setText(String.valueOf(cobaLastOrder.getQty()));
 
         // Satuan
-        satuan_pack.setText(o.getSatuan_pack());
+        satuan_pack.setText(cobaLastOrder.getStatus());
 
         return convertView;
     }

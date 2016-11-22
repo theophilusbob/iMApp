@@ -22,10 +22,14 @@ import com.example.rnd.imapp.R;
 import com.example.rnd.imapp.adapter.CustomListAdapter;
 import com.example.rnd.imapp.app.AppController;
 import com.example.rnd.imapp.model.Orders;
+import com.example.rnd.imapp.model.StockOpname;
+import com.example.rnd.imapp.model.cobaLastOrder;
+import com.firebase.ui.database.FirebaseListAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -44,10 +48,12 @@ import java.util.List;
  */
 public class HomeFragment extends Fragment {
     private LinearLayout infoTab;
-    private TextView tabSCM, tabVMI, txtHalo;
+    private TextView tabSCM, tabVMI, txtHalo, txtNoOrder;
     FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
 
-    DatabaseReference myRootRef = FirebaseDatabase.getInstance().getReferenceFromUrl("https://imapp-99a05.firebaseio.com/last_orders");
+    DatabaseReference myRootRef = FirebaseDatabase.getInstance().getReferenceFromUrl("https://imapp-99a05.firebaseio.com/orders");
+    DatabaseReference mySCMLastOrderRef = myRootRef.child("SCM");
+    DatabaseReference myVMILastOrderRef = myRootRef.child("VMI");
 
     // Orders JSON Url
     private static String url_scm = "http://192.168.1.117/imapp_api/getLastOrderSCM.php";
@@ -55,8 +61,9 @@ public class HomeFragment extends Fragment {
     private ProgressDialog pDialog;
     private List<Orders> ordersList = new ArrayList<Orders>();
     private List<Orders> ordersListVMI = new ArrayList<Orders>();
-    private ListView ordersListView,ordersListViewVMI;
-    private CustomListAdapter customListAdapter, customListAdapterVMI;
+    private List<cobaLastOrder> list_coba_order_scm = new ArrayList<>();
+    private ListView list_view_last_order_scm, list_view_last_order_vmi, ordersListView,ordersListViewVMI;
+    private CustomListAdapter cobaLastOrderSCM, customListAdapter, customListAdapterVMI;
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -96,8 +103,7 @@ public class HomeFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-
-        // Creating volley request obj
+        /*// Creating volley request obj
         JsonArrayRequest lastOrderReqSCM = new JsonArrayRequest(url_scm,
                 new Response.Listener<JSONArray>() {
                     @Override
@@ -179,7 +185,7 @@ public class HomeFragment extends Fragment {
         });
 
         // Adding request to request queue
-        AppController.getInstance().addToRequestQueue(lastOrderReqVMI);
+        AppController.getInstance().addToRequestQueue(lastOrderReqVMI);*/
     }
 
     @Override
@@ -188,30 +194,36 @@ public class HomeFragment extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_home, container, false);
         txtHalo = (TextView) v.findViewById(R.id.haloTxt);
+        txtNoOrder = (TextView)  v.findViewById(R.id.txtNoOrder);
         infoTab = (LinearLayout) v.findViewById(R.id.infoTab);
         tabSCM = (TextView) v.findViewById(R.id.tabSCM);
         tabVMI = (TextView) v.findViewById(R.id.tabVMI);
-        ordersListView = (ListView) v.findViewById(R.id.ordersList);
-        ordersListViewVMI = (ListView) v.findViewById(R.id.ordersListVMI);
+        //ordersListView = (ListView) v.findViewById(R.id.ordersList);
+        //ordersListViewVMI = (ListView) v.findViewById(R.id.ordersListVMI);
 
         txtHalo.setText("Halo, " + firebaseAuth.getCurrentUser().getEmail());
 
         pDialog = new ProgressDialog(getActivity());
         // Showing progress dialog before making http request
-        pDialog.setMessage("Loading your last order...");
+        pDialog.setMessage("Loading your last order. Click anywhere to dismiss.");
         pDialog.show();
 
-        customListAdapter = new CustomListAdapter(getActivity(), ordersList);
-        customListAdapterVMI =  new CustomListAdapter(getActivity(), ordersListVMI);
-        ordersListViewVMI.setAdapter(customListAdapterVMI);
-        ordersListView.setAdapter(customListAdapter);
+        //customListAdapter = new CustomListAdapter(getActivity(), ordersList);
+        //customListAdapterVMI =  new CustomListAdapter(getActivity(), ordersListVMI);
+       // ordersListViewVMI.setAdapter(customListAdapterVMI);
+        //ordersListView.setAdapter(customListAdapter);
 
         tabSCM.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+               /* String no_order = myRootRef
+                                        .orderByChild("no_order")
+                                        .limitToFirst(1);*/
+
                 infoTab.setBackgroundResource(R.color.blue);
-                ordersListViewVMI.setVisibility(View.INVISIBLE);
-                ordersListView.setVisibility(View.VISIBLE);
+                list_view_last_order_vmi.setVisibility(View.INVISIBLE);
+                list_view_last_order_scm.setVisibility(View.VISIBLE);
+                txtNoOrder.setText("A0/16/04/3079");
             }
         });
 
@@ -219,10 +231,42 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 infoTab.setBackgroundResource(R.color.lightBlue);
-                ordersListView.setVisibility(View.INVISIBLE);
-                ordersListViewVMI.setVisibility(View.VISIBLE);
+                list_view_last_order_scm.setVisibility(View.INVISIBLE);
+                list_view_last_order_vmi.setVisibility(View.VISIBLE);
             }
         });
+
+        // Firebase List
+
+        list_view_last_order_scm = (ListView) v.findViewById(R.id.lastOrderSCMList);
+        list_view_last_order_vmi = (ListView) v.findViewById(R.id.lastOrderVMIList) ;
+
+        FirebaseListAdapter<cobaLastOrder> lastOrderFireList = new FirebaseListAdapter<cobaLastOrder>(
+                getActivity(), cobaLastOrder.class, R.layout.list_row, mySCMLastOrderRef
+        ) {
+            @Override
+            protected void populateView(View v, cobaLastOrder cobaLastOrderSCM, int position) {
+                ((TextView)v.findViewById(R.id.nama_barang)).setText(cobaLastOrderSCM.getNama_barang());
+                ((TextView)v.findViewById(R.id.kode_barang)).setText(cobaLastOrderSCM.getKode_barang());
+                ((TextView)v.findViewById(R.id.qty)).setText(cobaLastOrderSCM.getQty());
+                ((TextView)v.findViewById(R.id.satuan_pack)).setText(cobaLastOrderSCM.getSatuan());
+            }
+        };
+
+        FirebaseListAdapter<cobaLastOrder> lastOrderVMIFireList = new FirebaseListAdapter<cobaLastOrder>(
+                getActivity(), cobaLastOrder.class, R.layout.list_row, myVMILastOrderRef
+        ) {
+            @Override
+            protected void populateView(View v, cobaLastOrder cobaLastOrderVMI, int position) {
+                ((TextView)v.findViewById(R.id.nama_barang)).setText(cobaLastOrderVMI.getNama_barang());
+                ((TextView)v.findViewById(R.id.kode_barang)).setText(cobaLastOrderVMI.getKode_barang());
+                ((TextView)v.findViewById(R.id.qty)).setText(cobaLastOrderVMI.getQty());
+                ((TextView)v.findViewById(R.id.satuan_pack)).setText(cobaLastOrderVMI.getSatuan());
+            }
+        };
+
+        list_view_last_order_scm.setAdapter(lastOrderFireList);
+        list_view_last_order_vmi.setAdapter(lastOrderVMIFireList);
 
         return v;
     }

@@ -68,6 +68,7 @@
                 android:layout_height="match_parent">
 
                 <TextView
+                    android:id="@+id/txtNoOrder"
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
                     android:gravity="center_vertical"
@@ -97,7 +98,7 @@
                 android:divider="@color/list_divider"
                 android:dividerHeight="1dp"
                 android:listSelector="@drawable/list_row_selector"
-                android:visibility="visible"/>
+                android:visibility="invisible"/>
 
             <ListView
                 android:id="@+id/ordersListVMI"
@@ -108,7 +109,16 @@
                 android:listSelector="@drawable/list_row_selector"
                 android:visibility="invisible"/>
             <ListView
-                android:id="@+id/lastOrderListView"
+                android:id="@+id/lastOrderSCMList"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:divider="@color/list_divider"
+                android:dividerHeight="1dp"
+                android:listSelector="@drawable/list_row_selector"
+                android:visibility="visible"/>
+
+            <ListView
+                android:id="@+id/lastOrderVMIList"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:divider="@color/list_divider"
