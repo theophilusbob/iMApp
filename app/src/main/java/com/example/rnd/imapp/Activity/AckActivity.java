@@ -1,15 +1,21 @@
 package com.example.rnd.imapp.Activity;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.rnd.imapp.R;
@@ -29,9 +35,9 @@ public class AckActivity extends AppCompatActivity {
         setContentView(R.layout.activity_ack);
 
         // Sample data
-        ACK ack = new ACK("2","CCC.901/15", "Struk Thermal Paper EDC", "PAK", false);
+        ACK ack = new ACK("2","CCC.901/15", "Struk Thermal Paper EDC", "PAK", true);
         ackList.add(ack);
-        ack = new ACK("0","IDS.134/99", "Buku Tahapan BCA", "PAK", false);
+        ack = new ACK("0","IDS.134/99", "Buku Tahapan BCA", "PAK", true);
         ackList.add(ack);
         ack = new ACK("4","IDS.203/12", "Buku Tahapan Gold", "PAK", false);
         ackList.add(ack);
@@ -44,6 +50,12 @@ public class AckActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 ACK ack = (ACK) adapterView.getItemAtPosition(i);
+
+                /*if (ack.isSelected())
+                    ack.setSelected(false);
+                else
+                    ack.setSelected(true);*/
+
                 Toast.makeText(getApplicationContext(), "Barang yang dipilih: " + ack.getNama_barang(), Toast.LENGTH_LONG).show();
             }
         });

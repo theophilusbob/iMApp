@@ -2,7 +2,6 @@ package com.example.rnd.imapp.adapter;
 
 import android.app.Activity;
 import android.content.Context;
-import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,20 +24,19 @@ import java.util.ArrayList;
 public class ACKListAdapter extends ArrayAdapter<ACK> {
     private ArrayList<ACK> ackArrayList;
     private LayoutInflater layoutInflater;
-    private Activity activity;
-    private Context context;
+    private final Activity context;
 
-    public ACKListAdapter(Context context, int resource, ArrayList<ACK> ackArrayList) {
+    public ACKListAdapter(Activity context, int resource, ArrayList<ACK> ackArrayList) {
         super(context, resource, ackArrayList);
         this.context = context;
-        this.ackArrayList = new ArrayList<ACK>();
-        this.ackArrayList.addAll(ackArrayList);
+        this.ackArrayList = ackArrayList;
+        //this.ackArrayList.addAll(ackArrayList);
     }
 
     private class ViewHolder {
-        TextView code;
+        TextView name;
         TextView satuan;
-        CheckBox name;
+        CheckBox checkBox;
     }
 
     @Override
@@ -52,31 +50,25 @@ public class ACKListAdapter extends ArrayAdapter<ACK> {
             convertView = layoutInflater.inflate(R.layout.ack_list, null);
 
             holder = new ViewHolder();
-            holder.code = (TextView) convertView.findViewById(R.id.namaBarangACK);
-            holder.name = (CheckBox) convertView.findViewById(R.id.checkBoxAck);
+            holder.name = (TextView) convertView.findViewById(R.id.namaBarangACK);
+            holder.checkBox = (CheckBox) convertView.findViewById(R.id.checkBoxAck);
             holder.satuan = (TextView) convertView.findViewById(R.id.satuanACK);
             convertView.setTag(holder);
 
-            holder.name.setOnClickListener(new View.OnClickListener() {
+            holder.checkBox.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     CheckBox cb = (CheckBox) v;
-                    //ACK ack = (ACK) cb.getTag();
-                    if (cb.isSelected())
-                        cb.setSelected(true);
-                    else
-                        cb.setSelected(false);
+                    ACK ack = (ACK) cb.getTag();
+                    ack.setSelected(cb.isChecked());
                 }
             });
-        }
-        else {
-            holder = (ViewHolder) convertView.getTag();
-        }
 
-        ACK ack = ackArrayList.get(position);
-        holder.code.setText(" ( " + ack.getKode_barang() + " ) ");
-        holder.name.setText(ack.getNama_barang());
-        holder.name.setChecked(ack.isSelected());
-        holder.satuan.setText(ack.getJml_order());
+            ACK ack = ackArrayList.get(position);
+            holder.name.setText(" ( " + ack.getKode_barang() + " ) ");
+            holder.checkBox.setText(ack.getNama_barang());
+            holder.checkBox.setChecked(ack.isSelected());
+            holder.satuan.setText(ack.getJml_order());
+        }
 
         return convertView;
     }

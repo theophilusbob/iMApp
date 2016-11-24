@@ -241,18 +241,19 @@ public class HomeFragment extends Fragment {
         list_view_last_order_scm = (ListView) v.findViewById(R.id.lastOrderSCMList);
         list_view_last_order_vmi = (ListView) v.findViewById(R.id.lastOrderVMIList) ;
 
-        FirebaseListAdapter<cobaLastOrder> lastOrderFireList = new FirebaseListAdapter<cobaLastOrder>(
-                getActivity(), cobaLastOrder.class, R.layout.list_row, mySCMLastOrderRef
+        FirebaseListAdapter<StockOpname> lastOrderFireList = new FirebaseListAdapter<StockOpname>(
+                getActivity(), StockOpname.class, R.layout.list_row, mySCMLastOrderRef
         ) {
             @Override
-            protected void populateView(View v, cobaLastOrder cobaLastOrderSCM, int position) {
-                ((TextView)v.findViewById(R.id.nama_barang)).setText(cobaLastOrderSCM.getNama_barang());
-                ((TextView)v.findViewById(R.id.kode_barang)).setText(cobaLastOrderSCM.getKode_barang());
-                ((TextView)v.findViewById(R.id.qty)).setText(cobaLastOrderSCM.getQty());
-                ((TextView)v.findViewById(R.id.satuan_pack)).setText(cobaLastOrderSCM.getSatuan());
+            protected void populateView(View v, StockOpname stockOpnameSCM, int position) {
+                ((TextView)v.findViewById(R.id.nama_barang)).setText(stockOpnameSCM.getNama_barang());
+                ((TextView)v.findViewById(R.id.kode_barang)).setText(stockOpnameSCM.getKode_barang());
+                ((TextView)v.findViewById(R.id.qty)).setText(stockOpnameSCM.getQuantity());
+                ((TextView)v.findViewById(R.id.satuan_pack)).setText("PAK");
             }
         };
 
+        /*
         FirebaseListAdapter<cobaLastOrder> lastOrderVMIFireList = new FirebaseListAdapter<cobaLastOrder>(
                 getActivity(), cobaLastOrder.class, R.layout.list_row, myVMILastOrderRef
         ) {
@@ -263,10 +264,10 @@ public class HomeFragment extends Fragment {
                 ((TextView)v.findViewById(R.id.qty)).setText(cobaLastOrderVMI.getQty());
                 ((TextView)v.findViewById(R.id.satuan_pack)).setText(cobaLastOrderVMI.getSatuan());
             }
-        };
+        };*/
 
         list_view_last_order_scm.setAdapter(lastOrderFireList);
-        list_view_last_order_vmi.setAdapter(lastOrderVMIFireList);
+        //list_view_last_order_vmi.setAdapter(lastOrderVMIFireList);
 
         return v;
     }

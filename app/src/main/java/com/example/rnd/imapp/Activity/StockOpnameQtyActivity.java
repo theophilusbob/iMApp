@@ -14,6 +14,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.rnd.imapp.R;
+import com.example.rnd.imapp.model.Barang;
 import com.example.rnd.imapp.model.Rerata;
 import com.example.rnd.imapp.model.StockOpname;
 import com.firebase.ui.database.FirebaseListAdapter;
@@ -29,9 +30,12 @@ public class StockOpnameQtyActivity extends AppCompatActivity {
     private ListView listViewQty;
     private Button btnRescan,btnCalculate;
     private StockOpname[] stockArray = new StockOpname[27];
+
+    // Firebase database reference
     DatabaseReference myRootRef = FirebaseDatabase.getInstance().getReferenceFromUrl("https://imapp-99a05.firebaseio.com/stockopname");
     DatabaseReference myAverageRef = FirebaseDatabase.getInstance().getReferenceFromUrl("https://imapp-99a05.firebaseio.com/average");
-
+    DatabaseReference myBarangRef = FirebaseDatabase.getInstance().getReferenceFromUrl("https://imapp-99a05.firebaseio.com/barang");
+    DatabaseReference myOrderRef = FirebaseDatabase.getInstance().getReferenceFromUrl("https://imapp-99a05.firebaseio.com/orders");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,40 +81,11 @@ public class StockOpnameQtyActivity extends AppCompatActivity {
 
                     i++;
                     stockArray[i] = new StockOpname();
-                    stockArray[i].setQuantity(soRekap.getQuantity());
+                    stockArray[i].setId_jenis_barang(soRekap.getId_jenis_barang());
+                    stockArray[i].setNama_barang(soRekap.getNama_barang());
                     stockArray[i].setKode_barang(soRekap.getKode_barang());
+                    stockArray[i].setQuantity(soRekap.getQuantity());
                     //Log.i("Quantity: ", stockArray[i].getQuantity());
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-                Log.w("InputQTYAct", "Failed to read value.", error.toException());
-            }
-        });
-
-        //Read from the average database
-        myAverageRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-                int i = 0;
-                double qty_order = 0;
-
-                for (DataSnapshot avgSnapshot: dataSnapshot.getChildren()) {
-                    Rerata rerataRekap = avgSnapshot.getValue(Rerata.class);
-                    //Log.i("Rerata ", rerataRekap.getrerata() + "   Kode barang: " + rerataRekap.getKode_barang());
-
-                    i++;
-                    if (rerataRekap.getKode_barang().equals(stockArray[i].getKode_barang())) {
-                        qty_order = (((8.0 / 3.0)*Double.parseDouble(rerataRekap.getrerata())) - Integer.parseInt(stockArray[i].getQuantity()));
-                        //Integer.parseInt(rerataRekap.getrerata())
-                        if (qty_order < 0){
-                            qty_order = 0;
-                        }
-                        System.out.println(qty_order);
-                    }
                 }
             }
 
@@ -159,20 +134,55 @@ public class StockOpnameQtyActivity extends AppCompatActivity {
                         .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
+
                                 // CALCULATION
-                                // Write to database
-                                myRootRef.addValueEventListener(new ValueEventListener() {
+                                // Read from the average database
+                                myAverageRef.addValueEventListener(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(DataSnapshot dataSnapshot) {
-                                        // This method is called once with the initial value and again
-                                        // whenever data at this location is updated.
 
-                                        for (DataSnapshot soSnapshot: dataSnapshot.getChildren()) {
-                                            StockOpname soRekap = soSnapshot.getValue(StockOpname.class);
-                                            Log.i("Nama Barang: ", soRekap.getNama_barang()+ "Qty:  "+soRekap.getQuantity());
+                                        int i = 0;
+                                        double qty_order = 0;
 
-                                            //if (soRekap.getKode_barang().equals("CCC.901/15"))
+                                        for (DataSnapshot avgSnapshot: dataSnapshot.getChildren()) {
+                                            Rerata rerataRekap = avgSnapshot.getValue(Rerata.class);
 
+                                            i++;
+                                            if (rerataRekap.getKode_barang().equals(stockArray[i].getKode_barang())) {
+                                                qty_order = (((8.0 / 3.0)*Double.parseDouble(rerataRekap.getrerata())) - Integer.parseInt(stockArray[i].getQuantity()));
+
+                                                if (qty_order < 0){
+                                                    qty_order = 0;
+                                                }
+                                                System.out.println(qty_order);
+
+                                                DatabaseReference mySCMOrder = myOrderRef.child("SCM");
+                                                mySCMOrder.push().setValue(stockArray[i]);
+
+                                                // WRITE TO DATABASE
+                                                /*myBarangRef.addValueEventListener(new ValueEventListener() {
+                                                    @Override
+                                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                                        int j = 0;
+                                                        DatabaseReference mySCMOrder = myOrderRef.child("SCM");
+                                                        DatabaseReference myVMIOrder = myOrderRef.child("VMI");
+
+
+                                                        for (DataSnapshot barangSnapshot : dataSnapshot.getChildren()) {
+                                                            Barang barangRekap = barangSnapshot.getValue(Barang.class);
+
+                                                            for (int i = 0; i < 27; i++) {
+                                                                System.out.println(stockArray[i].getKode_barang());
+                                                            }
+                                                        }
+                                                    }
+
+                                                    @Override
+                                                    public void onCancelled(DatabaseError databaseError) {
+
+                                                    }
+                                                });*/
+                                            }
                                         }
                                     }
 
