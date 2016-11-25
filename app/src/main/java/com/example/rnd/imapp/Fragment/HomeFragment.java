@@ -21,15 +21,19 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.example.rnd.imapp.R;
 import com.example.rnd.imapp.adapter.CustomListAdapter;
 import com.example.rnd.imapp.app.AppController;
+import com.example.rnd.imapp.model.Barang;
 import com.example.rnd.imapp.model.Orders;
 import com.example.rnd.imapp.model.StockOpname;
 import com.example.rnd.imapp.model.cobaLastOrder;
 import com.firebase.ui.database.FirebaseListAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -54,6 +58,7 @@ public class HomeFragment extends Fragment {
     DatabaseReference myRootRef = FirebaseDatabase.getInstance().getReferenceFromUrl("https://imapp-99a05.firebaseio.com/orders");
     DatabaseReference mySCMLastOrderRef = myRootRef.child("SCM");
     DatabaseReference myVMILastOrderRef = myRootRef.child("VMI");
+    DatabaseReference myBarangRef = FirebaseDatabase.getInstance().getReferenceFromUrl("https://imapp-99a05.firebaseio.com/barang");
 
     // Orders JSON Url
     private static String url_scm = "http://192.168.1.117/imapp_api/getLastOrderSCM.php";
@@ -62,8 +67,7 @@ public class HomeFragment extends Fragment {
     private List<Orders> ordersList = new ArrayList<Orders>();
     private List<Orders> ordersListVMI = new ArrayList<Orders>();
     private List<cobaLastOrder> list_coba_order_scm = new ArrayList<>();
-    private ListView list_view_last_order_scm, list_view_last_order_vmi, ordersListView,ordersListViewVMI;
-    private CustomListAdapter cobaLastOrderSCM, customListAdapter, customListAdapterVMI;
+    private ListView list_view_last_order_scm, list_view_last_order_vmi;
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -253,21 +257,40 @@ public class HomeFragment extends Fragment {
             }
         };
 
-        /*
-        FirebaseListAdapter<cobaLastOrder> lastOrderVMIFireList = new FirebaseListAdapter<cobaLastOrder>(
-                getActivity(), cobaLastOrder.class, R.layout.list_row, myVMILastOrderRef
+        FirebaseListAdapter<StockOpname> lastOrderVMIFireList = new FirebaseListAdapter<StockOpname>(
+                getActivity(), StockOpname.class, R.layout.list_row, myVMILastOrderRef
         ) {
+            String satuanTemp;
+
             @Override
-            protected void populateView(View v, cobaLastOrder cobaLastOrderVMI, int position) {
-                ((TextView)v.findViewById(R.id.nama_barang)).setText(cobaLastOrderVMI.getNama_barang());
-                ((TextView)v.findViewById(R.id.kode_barang)).setText(cobaLastOrderVMI.getKode_barang());
-                ((TextView)v.findViewById(R.id.qty)).setText(cobaLastOrderVMI.getQty());
-                ((TextView)v.findViewById(R.id.satuan_pack)).setText(cobaLastOrderVMI.getSatuan());
+            protected void populateView(View v, final StockOpname stockOpnameSCM, int position) {
+               /* myBarangRef.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+
+                        for (DataSnapshot barangSnapshot: dataSnapshot.getChildren()) {
+                            Barang barang = barangSnapshot.getValue(Barang.class);
+
+                            if (stockOpnameSCM.getKode_barang().equals(barang.getKode_barang()))
+                                satuanTemp = barang.getSatuan();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });*/
+
+                ((TextView)v.findViewById(R.id.nama_barang)).setText(stockOpnameSCM.getNama_barang());
+                ((TextView)v.findViewById(R.id.kode_barang)).setText(stockOpnameSCM.getKode_barang());
+                ((TextView)v.findViewById(R.id.qty)).setText(stockOpnameSCM.getQuantity());
+                ((TextView)v.findViewById(R.id.satuan_pack)).setText("PAK");
             }
-        };*/
+        };
 
         list_view_last_order_scm.setAdapter(lastOrderFireList);
-        //list_view_last_order_vmi.setAdapter(lastOrderVMIFireList);
+        list_view_last_order_vmi.setAdapter(lastOrderVMIFireList);
 
         return v;
     }

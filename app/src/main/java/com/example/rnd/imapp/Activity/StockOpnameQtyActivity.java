@@ -154,34 +154,16 @@ public class StockOpnameQtyActivity extends AppCompatActivity {
                                                 if (qty_order < 0){
                                                     qty_order = 0;
                                                 }
-                                                System.out.println(qty_order);
+
+                                                stockArray[i].setQuantity(String.valueOf(Math.round(qty_order)));
 
                                                 DatabaseReference mySCMOrder = myOrderRef.child("SCM");
-                                                mySCMOrder.push().setValue(stockArray[i]);
+                                                DatabaseReference myVMIOrder = myOrderRef.child("VMI");
 
-                                                // WRITE TO DATABASE
-                                                /*myBarangRef.addValueEventListener(new ValueEventListener() {
-                                                    @Override
-                                                    public void onDataChange(DataSnapshot dataSnapshot) {
-                                                        int j = 0;
-                                                        DatabaseReference mySCMOrder = myOrderRef.child("SCM");
-                                                        DatabaseReference myVMIOrder = myOrderRef.child("VMI");
-
-
-                                                        for (DataSnapshot barangSnapshot : dataSnapshot.getChildren()) {
-                                                            Barang barangRekap = barangSnapshot.getValue(Barang.class);
-
-                                                            for (int i = 0; i < 27; i++) {
-                                                                System.out.println(stockArray[i].getKode_barang());
-                                                            }
-                                                        }
-                                                    }
-
-                                                    @Override
-                                                    public void onCancelled(DatabaseError databaseError) {
-
-                                                    }
-                                                });*/
+                                                if (stockArray[i].getId_jenis_barang().equals("1"))
+                                                    mySCMOrder.push().setValue(stockArray[i]);
+                                                else
+                                                    myVMIOrder.push().setValue(stockArray[i]);
                                             }
                                         }
                                     }

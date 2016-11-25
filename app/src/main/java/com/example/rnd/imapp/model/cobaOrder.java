@@ -11,6 +11,12 @@ public class cobaOrder {
     public cobaOrder() {
     }
 
+    public cobaOrder(String tgl_order, String status_kirim, String estimasi_terima) {
+        this.tgl_order = tgl_order;
+        this.status_kirim = status_kirim;
+        this.estimasi_terima = estimasi_terima;
+    }
+
     public cobaOrder(String email_cabang, String estimasi_terima, String id_jenis_barang, String kode_barang, String nama_barang, String no_order, String qty, String satuan, String status_kirim, String tgl_order) {
         this.email_cabang = email_cabang;
         this.estimasi_terima = estimasi_terima;
