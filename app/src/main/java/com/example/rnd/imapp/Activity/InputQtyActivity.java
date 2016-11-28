@@ -9,13 +9,18 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
+import com.bumptech.glide.Glide;
 import com.example.rnd.imapp.R;
 import com.example.rnd.imapp.app.AppController;
+import com.example.rnd.imapp.model.Barang;
 import com.example.rnd.imapp.model.StockData;
+import com.example.rnd.imapp.util.FirebaseImageLoader;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -32,15 +37,14 @@ import java.io.File;
 import java.io.IOException;
 
 public class InputQtyActivity extends AppCompatActivity {
-    private ImageLoader imageLoader;
-    private NetworkImageView networkImageView;
-    private String imgUrl;
+    private ImageView imageView;
+    private TextView txtSatuan;
+    private String imgChild;
     private Button btnLanjut, btnSelesai;
     private EditText fieldQty;
-    private StorageReference mStorageRef;
 
-    FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     DatabaseReference myStockDataRef = FirebaseDatabase.getInstance().getReferenceFromUrl("https://imapp-99a05.firebaseio.com");
+    DatabaseReference myBarangRef = FirebaseDatabase.getInstance().getReferenceFromUrl("https://imapp-99a05.firebaseio.com/barang");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,60 +53,50 @@ public class InputQtyActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         final String kode_barang = intent.getStringExtra("KODE_BARANG");
-        Log.i("Kode Barang", kode_barang);
 
-       /* Uri.Builder builder = new Uri.Builder();
-        builder.scheme("http")
-                .authority("192.168.1.117")
-                .appendPath("imapp_api")
-                .appendPath("getImageUrl.php")
-                .appendQueryParameter("kodeBarang",kode_barang.toString());
-        String imageUrl = builder.build().toString();
+        imageView = (ImageView) findViewById(R.id.productImageContainer);
+        txtSatuan = (TextView) findViewById(R.id.satuanTextView);
 
-        Log.i("API url:", imageUrl);
-*/
-        networkImageView = (NetworkImageView) findViewById(R.id.productImageContainer);
-
-        imageLoader = AppController.getInstance().getImageLoader();
+        StorageReference storageReference = FirebaseStorage.getInstance().getReferenceFromUrl("gs://imapp-99a05.appspot.com/");
 
         if (kode_barang.equals("CCC.901/15")) {
-            imgUrl = "https://firebasestorage.googleapis.com/v0/b/imapp-99a05.appspot.com/o/foto_barang%2Fimg_1.png?alt=media&token=726488f5-ab1b-4837-ad71-71189e8c782f";
+            imgChild = "foto_barang/img_1.png";
         }
         if (kode_barang.equals("IDS.134/99")) {
-            imgUrl = "https://firebasestorage.googleapis.com/v0/b/imapp-99a05.appspot.com/o/foto_barang%2Fimg_6.png?alt=media&token=bfb049c5-31e2-4383-8f28-42ebcbe399e0";
+            imgChild = "foto_barang/img_6.png";
         }
         if (kode_barang.equals("IDS-208/11")) {
-            imgUrl = "http://192.168.1.117/imapp_api/foto_barang/img_3.png";
+            imgChild = "foto_barang/img_3.png";
         }
         if (kode_barang.equals("IDS.203/12")) {
-            imgUrl = "https://firebasestorage.googleapis.com/v0/b/imapp-99a05.appspot.com/o/foto_barang%2Fimg_7.png?alt=media&token=e1e8cda2-5b7e-4734-a7db-81582ef1797f";
+            imgChild = "foto_barang/img_7.png";
         }
 
-        /*// Firebase Storage
-        mStorageRef = FirebaseStorage.getInstance().getReference();
+        StorageReference imageRef = storageReference.child(imgChild);
 
-        File localFile = null;
-        try {
-            localFile = File.createTempFile("images", "jpg");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        mStorageRef.getFile(localFile)
-                .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-                        // Successfully downloaded data to local file
-                        // ...
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
+        Glide.with(this)
+                .using(new FirebaseImageLoader())
+                .load(imageRef)
+                .into(imageView);
+
+
+        myBarangRef.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onFailure(@NonNull Exception exception) {
-                // Handle failed download
-                // ...
-            }
-        });*/
+            public void onDataChange(DataSnapshot dataSnapshot) {
 
-        networkImageView.setImageUrl(imgUrl, imageLoader);
+                for (DataSnapshot barangSnapshot: dataSnapshot.getChildren()) {
+                    Barang barangValue= barangSnapshot.getValue(Barang.class);
+
+                    if (kode_barang.equals(barangValue.getKode_barang()))
+                        txtSatuan.setText(barangValue.getSatuan());
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
         btnLanjut = (Button) findViewById(R.id.input_qty_next_button);
         btnSelesai = (Button) findViewById(R.id.input_qty_done_button);
@@ -131,6 +125,5 @@ public class InputQtyActivity extends AppCompatActivity {
         });
 
         Log.i("Path: ", getApplicationInfo().dataDir);
-
     }
 }

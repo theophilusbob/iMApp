@@ -1,6 +1,8 @@
 package com.example.rnd.imapp.Activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -19,6 +21,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "" ;
+    private String strEmail;
     protected EditText emailEditText;
     protected EditText passwordEditText;
     protected Button logInButton;
@@ -30,6 +33,9 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        // Shared preferences
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+
         // Initialize FirebaseAuth
         mFirebaseAuth = FirebaseAuth.getInstance();
 
@@ -38,7 +44,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user != null) {
-                    // User is signed in
+                    // User is signed i n
                     Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getEmail());
                     Intent intent = new Intent(LoginActivity.this, ViewPagerActivity.class);
                     startActivity(intent);
@@ -54,6 +60,8 @@ public class LoginActivity extends AppCompatActivity {
         emailEditText = (EditText) findViewById(R.id.usernameField);
         passwordEditText = (EditText) findViewById(R.id.passwordField);
         logInButton = (Button) findViewById(R.id.loginButton);
+
+        //strEmail = sharedPreferences.getString("emailEditText", "");
 
         logInButton.setOnClickListener(new View.OnClickListener() {
             @Override

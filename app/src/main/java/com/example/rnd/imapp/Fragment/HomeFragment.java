@@ -144,52 +144,7 @@ public class HomeFragment extends Fragment {
                 VolleyLog.d("Home Fragment", "Error: " + error.getMessage());
                 hidePDialog();
             }
-        });
-
-        // Adding request to request queue
-        AppController.getInstance().addToRequestQueue(lastOrderReqSCM);
-
-        // Creating volley request obj
-        JsonArrayRequest lastOrderReqVMI = new JsonArrayRequest(url_vmi,
-                new Response.Listener<JSONArray>() {
-                    @Override
-                    public void onResponse(JSONArray response) {
-                        Log.d("Last order VMI", response.toString());
-                        hidePDialog();
-
-                        // Parsing json
-                        for (int i = 0; i < response.length(); i++) {
-                            try {
-
-                                JSONObject obj = response.getJSONObject(i);
-                                Orders lastOrders = new Orders();
-                                lastOrders.setNama_barang(obj.getString("nama_barang"));
-                                lastOrders.setKode_barang(obj.getString("kode_barang"));
-                                lastOrders.setQty(obj.getInt("qty"));
-                                lastOrders.setSatuan_pack(obj.getString("satuan"));
-
-                                // adding order to order array
-                                ordersListVMI.add(lastOrders);
-
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }
-
-                        // notifying list adapter about data changes
-                        // so that it renders the list view with updated data
-                        customListAdapterVMI.notifyDataSetChanged();
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                VolleyLog.d("Home Fragment", "Error: " + error.getMessage());
-                hidePDialog();
-            }
-        });
-
-        // Adding request to request queue
-        AppController.getInstance().addToRequestQueue(lastOrderReqVMI);*/
+        });*/
     }
 
     @Override
@@ -211,11 +166,6 @@ public class HomeFragment extends Fragment {
         // Showing progress dialog before making http request
         pDialog.setMessage("Loading your last order. Click anywhere to dismiss.");
         pDialog.show();
-
-        //customListAdapter = new CustomListAdapter(getActivity(), ordersList);
-        //customListAdapterVMI =  new CustomListAdapter(getActivity(), ordersListVMI);
-       // ordersListViewVMI.setAdapter(customListAdapterVMI);
-        //ordersListView.setAdapter(customListAdapter);
 
         tabSCM.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -264,24 +214,6 @@ public class HomeFragment extends Fragment {
 
             @Override
             protected void populateView(View v, final StockOpname stockOpnameSCM, int position) {
-               /* myBarangRef.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-
-                        for (DataSnapshot barangSnapshot: dataSnapshot.getChildren()) {
-                            Barang barang = barangSnapshot.getValue(Barang.class);
-
-                            if (stockOpnameSCM.getKode_barang().equals(barang.getKode_barang()))
-                                satuanTemp = barang.getSatuan();
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });*/
-
                 ((TextView)v.findViewById(R.id.nama_barang)).setText(stockOpnameSCM.getNama_barang());
                 ((TextView)v.findViewById(R.id.kode_barang)).setText(stockOpnameSCM.getKode_barang());
                 ((TextView)v.findViewById(R.id.qty)).setText(stockOpnameSCM.getQuantity());

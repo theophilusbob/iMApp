@@ -37,7 +37,7 @@ public class AckActivity extends AppCompatActivity {
         // Sample data
         ACK ack = new ACK("2","CCC.901/15", "Struk Thermal Paper EDC", "PAK", true);
         ackList.add(ack);
-        ack = new ACK("0","IDS.134/99", "Buku Tahapan BCA", "PAK", true);
+        ack = new ACK("3","IDS.134/99", "Buku Tahapan BCA", "PAK", true);
         ackList.add(ack);
         ack = new ACK("4","IDS.203/12", "Buku Tahapan Gold", "PAK", false);
         ackList.add(ack);

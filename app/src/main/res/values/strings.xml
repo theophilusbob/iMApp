@@ -50,4 +50,5 @@
     <string name="ack_scan_label">ACK: Scan Surat Jalan</string>
     <string name="konfirmasi_button_txt">Konfirmasi</string>
     <string name="pilih_periode_text">Pilih Periode:</string>
+    <string name="satuan_text">PAK</string>
 </resources>

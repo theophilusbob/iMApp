@@ -10,26 +10,31 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.rnd.imapp.Activity.InputQtyActivity">
 
-    <LinearLayout
-        android:orientation="vertical"
+    <ImageView
+        android:id="@+id/productImageContainer"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="320dp"
+        android:contentDescription="@string/gambar_barang"/>
 
-        <com.android.volley.toolbox.NetworkImageView
-            android:id="@+id/productImageContainer"
-            android:layout_width="match_parent"
-            android:layout_height="320dp"
-            android:contentDescription="@string/gambar_barang"/>
+    <EditText
+        android:id="@+id/qtyField"
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:hint="@string/input_qty"
+        android:layout_below="@+id/productImageContainer"/>
 
-        <EditText
-            android:id="@+id/qtyField"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="number"
-            android:hint="@string/input_qty"/>
+    <TextView
+        android:id="@+id/satuanTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_toEndOf="@+id/qtyField"
+        android:layout_below="@+id/productImageContainer"
+        android:layout_alignBaseline="@+id/qtyField"
+        android:text="@string/satuan_text"
+        android:textSize="@dimen/nama_barang"/>
 
-
-    </LinearLayout>
     <Button
         android:id="@+id/input_qty_done_button"
         android:layout_width="wrap_content"

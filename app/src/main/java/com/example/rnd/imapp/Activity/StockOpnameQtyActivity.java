@@ -77,15 +77,14 @@ public class StockOpnameQtyActivity extends AppCompatActivity {
 
                 for (DataSnapshot soSnapshot: dataSnapshot.getChildren()) {
                     StockOpname soRekap = soSnapshot.getValue(StockOpname.class);
-                    //Log.i("Nama Barang: ", soRekap.getNama_barang()+ "Qty:  "+soRekap.getQuantity());
 
+                    // Input data to array
                     i++;
                     stockArray[i] = new StockOpname();
                     stockArray[i].setId_jenis_barang(soRekap.getId_jenis_barang());
                     stockArray[i].setNama_barang(soRekap.getNama_barang());
                     stockArray[i].setKode_barang(soRekap.getKode_barang());
                     stockArray[i].setQuantity(soRekap.getQuantity());
-                    //Log.i("Quantity: ", stockArray[i].getQuantity());
                 }
             }
 
@@ -102,13 +101,19 @@ public class StockOpnameQtyActivity extends AppCompatActivity {
         ) {
             @Override
             protected void populateView(View v, StockOpname soReview, int position) {
-                ((TextView)v.findViewById(R.id.nama_barang_text)).setText(soReview.getNama_barang());
-                ((TextView)v.findViewById(R.id.qty_text)).setText(soReview.getQuantity());
 
-                /*if (soReview.getQuantity().equals("0")) {
+                if (soReview.getQuantity().equals("0")) {
+                    ((TextView)v.findViewById(R.id.nama_barang_text)).setText(soReview.getNama_barang());
                     ((TextView)v.findViewById(R.id.nama_barang_text)).setTextColor(Color.parseColor("#C62828"));
+                    ((TextView)v.findViewById(R.id.qty_text)).setText(soReview.getQuantity());
                     ((TextView)v.findViewById(R.id.qty_text)).setTextColor(Color.parseColor("#C62828"));
-                }*/
+                }
+                else {
+                    ((TextView)v.findViewById(R.id.nama_barang_text)).setText(soReview.getNama_barang());
+                    ((TextView)v.findViewById(R.id.nama_barang_text)).setTextColor(Color.parseColor("#000000"));
+                    ((TextView)v.findViewById(R.id.qty_text)).setText(soReview.getQuantity());
+                    ((TextView)v.findViewById(R.id.qty_text)).setTextColor(Color.parseColor("#000000"));
+                }
             }
         };
 
@@ -129,8 +134,9 @@ public class StockOpnameQtyActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 final AlertDialog.Builder builder = new AlertDialog.Builder(StockOpnameQtyActivity.this);
-                builder.setTitle("Konfirmasi Order")
-                    .setMessage("Apakah Anda yakin ingin melakukan order sesuai stock opname yang telah Anda masukkan?")
+                builder.setTitle("Konfirmasi")
+                    .setMessage("Apakah Anda yakin data stock opname yang telah Anda masukkan sudah benar? " +
+                            "(iMapp akan melakukan order secara otomatis berdasarkan sisa stok yang Anda masukkan)")
                         .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
