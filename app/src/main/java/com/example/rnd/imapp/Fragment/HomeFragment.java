@@ -4,43 +4,20 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-import com.android.volley.Response;
-import com.android.volley.VolleyLog;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
 
 import com.example.rnd.imapp.R;
-import com.example.rnd.imapp.adapter.CustomListAdapter;
-import com.example.rnd.imapp.app.AppController;
-import com.example.rnd.imapp.model.Barang;
-import com.example.rnd.imapp.model.Orders;
 import com.example.rnd.imapp.model.StockOpname;
-import com.example.rnd.imapp.model.cobaLastOrder;
 import com.firebase.ui.database.FirebaseListAdapter;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -52,23 +29,21 @@ import java.util.List;
  */
 public class HomeFragment extends Fragment {
     private LinearLayout infoTab;
-    private TextView tabSCM, tabVMI, txtHalo, txtNoOrder;
+    protected TextView tabSCM, tabVMI, txtHalo, txtNoOrder;
     FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
 
     DatabaseReference myRootRef = FirebaseDatabase.getInstance().getReferenceFromUrl("https://imapp-99a05.firebaseio.com/orders");
     DatabaseReference mySCMLastOrderRef = myRootRef.child("SCM");
     DatabaseReference myVMILastOrderRef = myRootRef.child("VMI");
-    DatabaseReference myBarangRef = FirebaseDatabase.getInstance().getReferenceFromUrl("https://imapp-99a05.firebaseio.com/barang");
 
     // Orders JSON Url
-    private static String url_scm = "http://192.168.1.117/imapp_api/getLastOrderSCM.php";
-    private static String url_vmi = "http://192.168.1.117/imapp_api/getLastOrderVMI.php";
+    //private static String url_scm = "http://192.168.1.117/imapp_api/getLastOrderSCM.php";
+    //private static String url_vmi = "http://192.168.1.117/imapp_api/getLastOrderVMI.php";
     private ProgressDialog pDialog;
-    private List<Orders> ordersList = new ArrayList<Orders>();
-    private List<Orders> ordersListVMI = new ArrayList<Orders>();
-    private List<cobaLastOrder> list_coba_order_scm = new ArrayList<>();
+    //private List<Orders> ordersList = new ArrayList<Orders>();
+    //private List<Orders> ordersListVMI = new ArrayList<Orders>();
+    //private List<cobaLastOrder> list_coba_order_scm = new ArrayList<>();
     private ListView list_view_last_order_scm, list_view_last_order_vmi;
-
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
@@ -157,8 +132,6 @@ public class HomeFragment extends Fragment {
         infoTab = (LinearLayout) v.findViewById(R.id.infoTab);
         tabSCM = (TextView) v.findViewById(R.id.tabSCM);
         tabVMI = (TextView) v.findViewById(R.id.tabVMI);
-        //ordersListView = (ListView) v.findViewById(R.id.ordersList);
-        //ordersListViewVMI = (ListView) v.findViewById(R.id.ordersListVMI);
 
         txtHalo.setText("Halo, " + firebaseAuth.getCurrentUser().getEmail());
 
@@ -203,21 +176,20 @@ public class HomeFragment extends Fragment {
                 ((TextView)v.findViewById(R.id.nama_barang)).setText(stockOpnameSCM.getNama_barang());
                 ((TextView)v.findViewById(R.id.kode_barang)).setText(stockOpnameSCM.getKode_barang());
                 ((TextView)v.findViewById(R.id.qty)).setText(stockOpnameSCM.getQuantity());
-                ((TextView)v.findViewById(R.id.satuan_pack)).setText("PAK");
+                ((TextView)v.findViewById(R.id.satuan_pack)).setText(stockOpnameSCM.getSatuan());
             }
         };
 
         FirebaseListAdapter<StockOpname> lastOrderVMIFireList = new FirebaseListAdapter<StockOpname>(
                 getActivity(), StockOpname.class, R.layout.list_row, myVMILastOrderRef
         ) {
-            String satuanTemp;
 
             @Override
-            protected void populateView(View v, final StockOpname stockOpnameSCM, int position) {
-                ((TextView)v.findViewById(R.id.nama_barang)).setText(stockOpnameSCM.getNama_barang());
-                ((TextView)v.findViewById(R.id.kode_barang)).setText(stockOpnameSCM.getKode_barang());
-                ((TextView)v.findViewById(R.id.qty)).setText(stockOpnameSCM.getQuantity());
-                ((TextView)v.findViewById(R.id.satuan_pack)).setText("PAK");
+            protected void populateView(View v, final StockOpname stockOpnameVMI, int position) {
+                ((TextView)v.findViewById(R.id.nama_barang)).setText(stockOpnameVMI.getNama_barang());
+                ((TextView)v.findViewById(R.id.kode_barang)).setText(stockOpnameVMI.getKode_barang());
+                ((TextView)v.findViewById(R.id.qty)).setText(stockOpnameVMI.getQuantity());
+                ((TextView)v.findViewById(R.id.satuan_pack)).setText(stockOpnameVMI.getSatuan());
             }
         };
 

@@ -1,42 +1,44 @@
 package com.example.rnd.imapp.Activity;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ListView;
-import android.widget.TextView;
+import android.widget.Button;
 
 import com.example.rnd.imapp.R;
-import com.example.rnd.imapp.model.HistoryOrder;
-import com.example.rnd.imapp.model.StockOpname;
-import com.firebase.ui.database.FirebaseListAdapter;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 public class HistoryByOrderActivity extends AppCompatActivity {
-    private ListView listHistoryPeriods;
-    DatabaseReference historyRef = FirebaseDatabase.getInstance().getReferenceFromUrl("https://imapp-99a05.firebaseio.com/historybyorder");
-    DatabaseReference historyOneYearRef = historyRef.child("1tahun");
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history_by_order);
-/*
-        listHistoryPeriods = (ListView) findViewById(R.id.historyPeriodsList);
 
-        FirebaseListAdapter<HistoryOrder> fireHistoryList = new FirebaseListAdapter<HistoryOrder>(
-                this, HistoryOrder.class, R.layout.list_qty_stock_opname, historyOneYearRef
-        ) {
+        Button btn3bulan = (Button) findViewById(R.id.btn3bulan);
+        Button btn6bulan = (Button) findViewById(R.id.btn6bulan);
+        Button btn12bulan = (Button) findViewById(R.id.btn12bulan);
+
+        btn3bulan.setOnClickListener(new View.OnClickListener() {
             @Override
-            protected void populateView(View v, HistoryOrder hoReview, int position) {
-                ((TextView)v.findViewById(R.id.nama_barang_text)).setText(hoReview.getKode_barang());
-                ((TextView)v.findViewById(R.id.qty_text)).setText(hoReview.getQty());
+            public void onClick(View view) {
+                Intent intent = new Intent(HistoryByOrderActivity.this, HistoryPeriodsActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        btn6bulan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
             }
-        };
+        });
 
-        listHistoryPeriods.setAdapter(fireHistoryList);*/
+        btn12bulan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
 
     }
 }

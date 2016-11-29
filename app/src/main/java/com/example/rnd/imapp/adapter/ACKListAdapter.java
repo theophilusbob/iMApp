@@ -2,35 +2,32 @@ package com.example.rnd.imapp.adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.rnd.imapp.R;
 import com.example.rnd.imapp.model.ACK;
 
 import java.util.ArrayList;
 
-/**
- * Created by RND on 11/17/2016.
+/*
+ * Created by RND BCA on 11/17/2016.
  */
 
 public class ACKListAdapter extends ArrayAdapter<ACK> {
     private ArrayList<ACK> ackArrayList;
-    private LayoutInflater layoutInflater;
     private final Activity context;
 
     public ACKListAdapter(Activity context, int resource, ArrayList<ACK> ackArrayList) {
         super(context, resource, ackArrayList);
         this.context = context;
         this.ackArrayList = ackArrayList;
-        //this.ackArrayList.addAll(ackArrayList);
     }
 
     private class ViewHolder {
@@ -39,14 +36,15 @@ public class ACKListAdapter extends ArrayAdapter<ACK> {
         CheckBox checkBox;
     }
 
+    @NonNull
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        ViewHolder holder = null;
+        ViewHolder holder;
         Log.v("ConvertView", String.valueOf(position));
 
         if (convertView == null) {
-            layoutInflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            LayoutInflater layoutInflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = layoutInflater.inflate(R.layout.ack_list, null);
 
             holder = new ViewHolder();

@@ -79,7 +79,7 @@ public class InputQtyActivity extends AppCompatActivity {
                 .load(imageRef)
                 .into(imageView);
 
-
+        // Retrieve satuan barang
         myBarangRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

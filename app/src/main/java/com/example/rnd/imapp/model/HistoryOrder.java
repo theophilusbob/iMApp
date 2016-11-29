@@ -5,18 +5,25 @@ package com.example.rnd.imapp.model;
  */
 
 public class HistoryOrder {
-    private String kode_barang, no_order, satuan_besar, tgl_order;
-    private int qty;
+    private String id_jenis_barang, kode_barang, nama_barang, quantity, satuan;
 
     public HistoryOrder() {
     }
 
-    public HistoryOrder(String kode_barang, String no_order, String satuan_besar, String tgl_order, int qty) {
+    public HistoryOrder(String id_jenis_barang, String kode_barang, String nama_barang, String quantity, String satuan) {
+        this.id_jenis_barang = id_jenis_barang;
         this.kode_barang = kode_barang;
-        this.no_order = no_order;
-        this.satuan_besar = satuan_besar;
-        this.tgl_order = tgl_order;
-        this.qty = qty;
+        this.nama_barang = nama_barang;
+        this.quantity = quantity;
+        this.satuan = satuan;
+    }
+
+    public String getId_jenis_barang() {
+        return id_jenis_barang;
+    }
+
+    public void setId_jenis_barang(String id_jenis_barang) {
+        this.id_jenis_barang = id_jenis_barang;
     }
 
     public String getKode_barang() {
@@ -27,35 +34,27 @@ public class HistoryOrder {
         this.kode_barang = kode_barang;
     }
 
-    public String getNo_order() {
-        return no_order;
+    public String getNama_barang() {
+        return nama_barang;
     }
 
-    public void setNo_order(String no_order) {
-        this.no_order = no_order;
+    public void setNama_barang(String nama_barang) {
+        this.nama_barang = nama_barang;
     }
 
-    public String getSatuan_besar() {
-        return satuan_besar;
+    public String getQuantity() {
+        return quantity;
     }
 
-    public void setSatuan_besar(String satuan_besar) {
-        this.satuan_besar = satuan_besar;
+    public void setQuantity(String quantity) {
+        this.quantity = quantity;
     }
 
-    public String getTgl_order() {
-        return tgl_order;
+    public String getSatuan() {
+        return satuan;
     }
 
-    public void setTgl_order(String tgl_order) {
-        this.tgl_order = tgl_order;
-    }
-
-    public int getQty() {
-        return qty;
-    }
-
-    public void setQty(int qty) {
-        this.qty = qty;
+    public void setSatuan(String satuan) {
+        this.satuan = satuan;
     }
 }

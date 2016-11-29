@@ -3,7 +3,6 @@ package com.example.rnd.imapp.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
-import android.provider.Settings;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,7 +13,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.rnd.imapp.R;
-import com.example.rnd.imapp.model.Barang;
 import com.example.rnd.imapp.model.Rerata;
 import com.example.rnd.imapp.model.StockOpname;
 import com.firebase.ui.database.FirebaseListAdapter;
@@ -25,7 +23,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class StockOpnameQtyActivity extends AppCompatActivity {
-    private TextView txtSample;
     private String sisaStok, kodeBarang, childBarang;
     private ListView listViewQty;
     private Button btnRescan,btnCalculate;
@@ -34,7 +31,6 @@ public class StockOpnameQtyActivity extends AppCompatActivity {
     // Firebase database reference
     DatabaseReference myRootRef = FirebaseDatabase.getInstance().getReferenceFromUrl("https://imapp-99a05.firebaseio.com/stockopname");
     DatabaseReference myAverageRef = FirebaseDatabase.getInstance().getReferenceFromUrl("https://imapp-99a05.firebaseio.com/average");
-    DatabaseReference myBarangRef = FirebaseDatabase.getInstance().getReferenceFromUrl("https://imapp-99a05.firebaseio.com/barang");
     DatabaseReference myOrderRef = FirebaseDatabase.getInstance().getReferenceFromUrl("https://imapp-99a05.firebaseio.com/orders");
 
     @Override
@@ -59,8 +55,6 @@ public class StockOpnameQtyActivity extends AppCompatActivity {
         if (kodeBarang.equals("IDS.203/12"))
             childBarang = "barang7";
 
-        //Log.i("Nama child: ", childBarang);
-
         DatabaseReference barangRef = FirebaseDatabase.getInstance().getReferenceFromUrl("https://imapp-99a05.firebaseio.com/stockopname");
         DatabaseReference myQuantityRef = myRootRef.child(childBarang).child("quantity");
 
@@ -68,12 +62,12 @@ public class StockOpnameQtyActivity extends AppCompatActivity {
 
         // Read from the stock opname database
         myRootRef.addValueEventListener(new ValueEventListener() {
+            int i = 0;
+
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
-
-                int i = 0;
 
                 for (DataSnapshot soSnapshot: dataSnapshot.getChildren()) {
                     StockOpname soRekap = soSnapshot.getValue(StockOpname.class);
@@ -85,6 +79,7 @@ public class StockOpnameQtyActivity extends AppCompatActivity {
                     stockArray[i].setNama_barang(soRekap.getNama_barang());
                     stockArray[i].setKode_barang(soRekap.getKode_barang());
                     stockArray[i].setQuantity(soRekap.getQuantity());
+                    stockArray[i].setSatuan(soRekap.getSatuan());
                 }
             }
 
@@ -148,7 +143,7 @@ public class StockOpnameQtyActivity extends AppCompatActivity {
                                     public void onDataChange(DataSnapshot dataSnapshot) {
 
                                         int i = 0;
-                                        double qty_order = 0;
+                                        double qty_order;
 
                                         for (DataSnapshot avgSnapshot: dataSnapshot.getChildren()) {
                                             Rerata rerataRekap = avgSnapshot.getValue(Rerata.class);
