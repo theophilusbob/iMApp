@@ -1,6 +1,8 @@
 package com.example.rnd.imapp.Activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
@@ -20,6 +22,7 @@ public class ViewPagerActivity extends AppCompatActivity{
     private ViewPagerAdapter vpAdapter;
     private ViewPager vpPager;
     private ImageView homeIcon, soIcon, ackIcon, historyIcon;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,10 +35,15 @@ public class ViewPagerActivity extends AppCompatActivity{
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
-                if (user == null) {
-                    // user auth state is changed - user is null
-                    // launch login activity
-                    startActivity(new Intent(ViewPagerActivity.this, LoginActivity.class));
+                if (user != null) {
+                    // User is signed in
+                    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(ViewPagerActivity.this);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString("domain_email",  user.getEmail());
+                    editor.apply();
+                } else {
+                    // User is signed out
+                    startActivity(new Intent(ViewPagerActivity.this, LoginActivity.class).putExtra("last_email_logged_in", user.getEmail()));
                     finish();
                 }
             }
@@ -113,16 +121,18 @@ public class ViewPagerActivity extends AppCompatActivity{
         startActivity(intent);
     }
 
+
     @Override
     protected void onStop() {
         super.onStop();
+        FirebaseAuth.getInstance().signOut();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         try {
-            mFirebaseAuth.signOut();
+            FirebaseAuth.getInstance().signOut();
         } catch (Exception e) {
             e.printStackTrace();
         }

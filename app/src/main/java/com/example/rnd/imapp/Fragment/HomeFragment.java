@@ -2,9 +2,12 @@ package com.example.rnd.imapp.Fragment;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,10 +15,13 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.rnd.imapp.Activity.LoginActivity;
+import com.example.rnd.imapp.Activity.ViewPagerActivity;
 import com.example.rnd.imapp.R;
 import com.example.rnd.imapp.model.StockOpname;
 import com.firebase.ui.database.FirebaseListAdapter;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -31,6 +37,7 @@ public class HomeFragment extends Fragment {
     private LinearLayout infoTab;
     protected TextView tabSCM, tabVMI, txtHalo, txtNoOrder;
     FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+    private FirebaseAuth.AuthStateListener mAuthListener;
 
     DatabaseReference myRootRef = FirebaseDatabase.getInstance().getReferenceFromUrl("https://imapp-99a05.firebaseio.com/orders");
     DatabaseReference mySCMLastOrderRef = myRootRef.child("SCM");
@@ -133,7 +140,16 @@ public class HomeFragment extends Fragment {
         tabSCM = (TextView) v.findViewById(R.id.tabSCM);
         tabVMI = (TextView) v.findViewById(R.id.tabVMI);
 
-        txtHalo.setText("Halo, " + firebaseAuth.getCurrentUser().getEmail());
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            // User is signed in
+            txtHalo.setText("Halo, " + user.getEmail());
+        } else {
+            // No user is signed in
+            txtHalo.setText("Halo, " + "No user!");
+        }
+
+        //String getUserEmail = getArguments().getString("getuser");
 
         pDialog = new ProgressDialog(getActivity());
         // Showing progress dialog before making http request

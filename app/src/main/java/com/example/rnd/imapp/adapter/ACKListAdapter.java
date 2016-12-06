@@ -55,9 +55,7 @@ public class ACKListAdapter extends ArrayAdapter<ACK> {
 
             holder.checkBox.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    CheckBox cb = (CheckBox) v;
-                    ACK ack = (ACK) cb.getTag();
-                    ack.setSelected(cb.isChecked());
+
                 }
             });
 

@@ -51,4 +51,5 @@
     <string name="konfirmasi_button_txt">Konfirmasi</string>
     <string name="pilih_periode_text">Pilih Periode:</string>
     <string name="satuan_text">PAK</string>
+    <string name="historybyitem_item_text">BUKU TAHAPAN BCA</string>
 </resources>

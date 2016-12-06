@@ -11,6 +11,10 @@ public class Barang {
     public Barang() {
     }
 
+    public Barang(String nama_barang) {
+        this.nama_barang = nama_barang;
+    }
+
     public Barang(String id_jenis_barang, String kode_barang, String nama_barang, String satuan, String url_gambar_barang) {
         this.id_jenis_barang = id_jenis_barang;
         this.kode_barang = kode_barang;

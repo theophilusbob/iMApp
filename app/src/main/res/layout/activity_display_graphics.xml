@@ -10,4 +10,17 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.rnd.imapp.Activity.DisplayGraphicsActivity">
 
+    <TextView
+        android:id="@+id/nama_item"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/historybyitem_item_text"
+        android:textStyle="bold" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="210dp"
+        android:layout_below="@+id/nama_item"
+        android:src="@drawable/grafikids134"/>
+
 </RelativeLayout>
