@@ -28,6 +28,7 @@ public class HistoryByItemActivity extends AppCompatActivity {
     DatabaseReference barangRef = FirebaseDatabase.getInstance().getReferenceFromUrl("https://imapp-99a05.firebaseio.com/stockopname");
 
     private ArrayList<Barang> barangArrayList;
+    private String nama_barang;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,9 +40,39 @@ public class HistoryByItemActivity extends AppCompatActivity {
         barangArrayList = new ArrayList<>();
 
         // Sample data
-        Barang barang = new Barang("BUKU TAHAPAN BCA");
+        Barang barang = new Barang("STRUK THERMAL PAPER EDC");
         barangArrayList.add(barang);
-        barang = new Barang("BUKU TAHAPAN BCA GOLD");
+        barang = new Barang("CEK PERSONALISASI (BLANKO) C/F");
+        barangArrayList.add(barang);
+        barang = new Barang("GIRO PERSONALISASI (BLANKO)C/F");
+        barangArrayList.add(barang);
+        barang = new Barang("BUKU TAHAPAN BCA");
+        barangArrayList.add(barang);
+        barang = new Barang("BUKU TAHAPAN BCA (NEW)");
+        barangArrayList.add(barang);
+        barang = new Barang("BUKU TAHAPAN BCA GOLD (HVS)");
+        barangArrayList.add(barang);
+        barang = new Barang("BUKU TAHAPAN BCA GOLD (NEW)");
+        barangArrayList.add(barang);
+        barang = new Barang("GIRO-NON PERSONALISASI(BUKU)");
+        barangArrayList.add(barang);
+        barang = new Barang("DEPOSITO BERJANGKA");
+        barangArrayList.add(barang);
+        barang = new Barang("PAPER ATM NCR 5670 (7,9X21CM)");
+        barangArrayList.add(barang);
+        barang = new Barang("PAPER ATM NON TUNAI(7,9X18 CM)");
+        barangArrayList.add(barang);
+        barang = new Barang("PAPER ATM DIAMETER KECIL");
+        barangArrayList.add(barang);
+        barang = new Barang("AMPLOP COKLAT KECIL-ALMT WSA2");
+        barangArrayList.add(barang);
+        barang = new Barang("AMPLOP COKLAT BESAR-ALMT WSA2");
+        barangArrayList.add(barang);
+        barang = new Barang("AMPLOP COKLAT KECIL-ALMT GI");
+        barangArrayList.add(barang);
+        barang = new Barang("AMPLOP COKLAT BESAR-ALMT GI");
+        barangArrayList.add(barang);
+        barang = new Barang("BOX ARSIP BCA");
         barangArrayList.add(barang);
 
         SingleCheckListAdapter adapter = new SingleCheckListAdapter(this, R.layout.item_listview, barangArrayList);
@@ -54,21 +85,10 @@ public class HistoryByItemActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(HistoryByItemActivity.this, DisplayGraphicsActivity.class);
+                intent.putExtra("NAMA_BARANG", nama_barang);
                 startActivity(intent);
             }
         });
-
-        /*FirebaseListAdapter<StockOpname> barangList = new FirebaseListAdapter<StockOpname>(
-                this, StockOpname.class, R.layout.list_qty_stock_opname, barangRef
-        ) {
-            @Override
-            protected void populateView(View v, StockOpname soReview, int position) {
-                ((TextView)v.findViewById(R.id.nama_barang_text)).setText(soReview.getNama_barang());
-            }
-        };
-
-        checkListView.setChoiceMode(checkListView.CHOICE_MODE_MULTIPLE);
-        checkListView.setAdapter(barangList);*/
     }
 
     private AdapterView.OnItemClickListener onItemClickListener() {
@@ -85,7 +105,7 @@ public class HistoryByItemActivity extends AppCompatActivity {
 
                 friendID.setText("Position: " + (position + 1));
                 friendName.setText("Name: " + ((Barang) parent.getItemAtPosition(position)).getNama_barang());
-
+                nama_barang = ((Barang) parent.getItemAtPosition(position)).getNama_barang();
                 dialog.show();
             }
         };

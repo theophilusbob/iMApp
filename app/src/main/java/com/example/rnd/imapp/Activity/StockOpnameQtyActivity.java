@@ -3,6 +3,7 @@ package com.example.rnd.imapp.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,7 +16,10 @@ import android.widget.TextView;
 import com.example.rnd.imapp.R;
 import com.example.rnd.imapp.model.Rerata;
 import com.example.rnd.imapp.model.StockOpname;
+import com.example.rnd.imapp.model.User;
 import com.firebase.ui.database.FirebaseListAdapter;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -24,14 +28,19 @@ import com.google.firebase.database.ValueEventListener;
 
 public class StockOpnameQtyActivity extends AppCompatActivity {
     private String sisaStok, kodeBarang, childBarang;
+    public String nama_cabang;
     private ListView listViewQty;
     private Button btnRescan,btnCalculate;
     private StockOpname[] stockArray = new StockOpname[27];
+    private FirebaseAuth mAuth;
+    private FirebaseAuth.AuthStateListener mAuthListener;
 
     // Firebase database reference
     DatabaseReference myRootRef = FirebaseDatabase.getInstance().getReferenceFromUrl("https://imapp-99a05.firebaseio.com/stockopname");
+    DatabaseReference myUserRef = FirebaseDatabase.getInstance().getReferenceFromUrl("https://imapp-99a05.firebaseio.com/users");
     DatabaseReference myAverageRef = FirebaseDatabase.getInstance().getReferenceFromUrl("https://imapp-99a05.firebaseio.com/average");
     DatabaseReference myOrderRef = FirebaseDatabase.getInstance().getReferenceFromUrl("https://imapp-99a05.firebaseio.com/orders");
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +84,7 @@ public class StockOpnameQtyActivity extends AppCompatActivity {
                     // Input data to array
                     i++;
                     stockArray[i] = new StockOpname();
+                    stockArray[i].setNama_cabang(user.getEmail());
                     stockArray[i].setId_jenis_barang(soRekap.getId_jenis_barang());
                     stockArray[i].setNama_barang(soRekap.getNama_barang());
                     stockArray[i].setKode_barang(soRekap.getKode_barang());
@@ -190,6 +200,31 @@ public class StockOpnameQtyActivity extends AppCompatActivity {
             }
         });
     }
+
+    /*public String getNamaCabang() {
+        // Retrieve nama cabang
+        myUserRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot userSnapshot: dataSnapshot.getChildren()) {
+                    User userValue= userSnapshot.getValue(User.class);
+                    if (user != null) {
+                        if (user.getEmail().equals(userValue.getEmail_cabang())){
+                            // User is signed in
+                            nama_cabang = userValue.getNama_cabang();
+                        }
+                    } else {
+                        // No user is signed in
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+        return nama_cabang;
+    }*/
 
     @Override
     protected void onStart() {

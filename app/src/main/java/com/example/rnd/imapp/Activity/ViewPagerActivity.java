@@ -125,7 +125,7 @@ public class ViewPagerActivity extends AppCompatActivity{
     @Override
     protected void onStop() {
         super.onStop();
-        FirebaseAuth.getInstance().signOut();
+        //FirebaseAuth.getInstance().signOut();
     }
 
     @Override

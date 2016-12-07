@@ -5,17 +5,26 @@ package com.example.rnd.imapp.model;
  */
 
 public class StockOpname {
-    private String id_jenis_barang, kode_barang, nama_barang, quantity, satuan;
+    private String nama_cabang, id_jenis_barang, kode_barang, nama_barang, quantity, satuan;
 
     public StockOpname() {
     }
 
-    public StockOpname(String id_jenis_barang, String kode_barang, String nama_barang, String quantity, String satuan) {
+    public StockOpname(String nama_cabang, String id_jenis_barang, String kode_barang, String nama_barang, String quantity, String satuan) {
+        this.nama_cabang = nama_cabang;
         this.id_jenis_barang = id_jenis_barang;
         this.kode_barang = kode_barang;
         this.nama_barang = nama_barang;
         this.quantity = quantity;
         this.satuan = satuan;
+    }
+
+    public String getNama_cabang() {
+        return nama_cabang;
+    }
+
+    public void setNama_cabang(String nama_cabang) {
+        this.nama_cabang = nama_cabang;
     }
 
     public String getKode_barang() {

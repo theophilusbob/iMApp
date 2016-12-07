@@ -18,12 +18,18 @@ import android.widget.TextView;
 import com.example.rnd.imapp.Activity.LoginActivity;
 import com.example.rnd.imapp.Activity.ViewPagerActivity;
 import com.example.rnd.imapp.R;
+import com.example.rnd.imapp.model.Barang;
 import com.example.rnd.imapp.model.StockOpname;
+import com.example.rnd.imapp.model.User;
 import com.firebase.ui.database.FirebaseListAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -40,8 +46,10 @@ public class HomeFragment extends Fragment {
     private FirebaseAuth.AuthStateListener mAuthListener;
 
     DatabaseReference myRootRef = FirebaseDatabase.getInstance().getReferenceFromUrl("https://imapp-99a05.firebaseio.com/orders");
+    DatabaseReference myUserRef = FirebaseDatabase.getInstance().getReferenceFromUrl("https://imapp-99a05.firebaseio.com/users");
     DatabaseReference mySCMLastOrderRef = myRootRef.child("SCM");
     DatabaseReference myVMILastOrderRef = myRootRef.child("VMI");
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
     // Orders JSON Url
     //private static String url_scm = "http://192.168.1.117/imapp_api/getLastOrderSCM.php";
@@ -140,14 +148,29 @@ public class HomeFragment extends Fragment {
         tabSCM = (TextView) v.findViewById(R.id.tabSCM);
         tabVMI = (TextView) v.findViewById(R.id.tabVMI);
 
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if (user != null) {
-            // User is signed in
-            txtHalo.setText("Halo, " + user.getEmail());
-        } else {
-            // No user is signed in
-            txtHalo.setText("Halo, " + "No user!");
-        }
+        // Retrieve nama cabang
+        myUserRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                for (DataSnapshot userSnapshot: dataSnapshot.getChildren()) {
+                    User userValue= userSnapshot.getValue(User.class);
+
+                    if (user != null) {
+                        if (user.getEmail().equals(userValue.getEmail_cabang()))
+                        // User is signed in
+                        txtHalo.setText("Halo, " + userValue.getNama_cabang());
+                    } else {
+                        // No user is signed in
+                        txtHalo.setText("Halo, " + "No user!");
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
 
         //String getUserEmail = getArguments().getString("getuser");
 
@@ -184,11 +207,21 @@ public class HomeFragment extends Fragment {
         list_view_last_order_scm = (ListView) v.findViewById(R.id.lastOrderSCMList);
         list_view_last_order_vmi = (ListView) v.findViewById(R.id.lastOrderVMIList) ;
 
+        //Query mySCMUserLastOrder = mySCMLastOrderRef.child("nama_cabang").equalTo(user.getEmail());
         FirebaseListAdapter<StockOpname> lastOrderFireList = new FirebaseListAdapter<StockOpname>(
-                getActivity(), StockOpname.class, R.layout.list_row, mySCMLastOrderRef
+                getActivity(), StockOpname.class, R.layout.list_row, mySCMLastOrderRef.orderByChild("nama_cabang").equalTo(user.getEmail())
         ) {
             @Override
             protected void populateView(View v, StockOpname stockOpnameSCM, int position) {
+                /*if (stockOpnameSCM.getNama_cabang().equals(user.getEmail())) {
+                    ((TextView)v.findViewById(R.id.nama_barang)).setText(stockOpnameSCM.getNama_barang());
+                    ((TextView)v.findViewById(R.id.kode_barang)).setText(stockOpnameSCM.getKode_barang());
+                    ((TextView)v.findViewById(R.id.qty)).setText(stockOpnameSCM.getQuantity());
+                    ((TextView)v.findViewById(R.id.satuan_pack)).setText(stockOpnameSCM.getSatuan());
+                }
+                else {
+                    System.out.println("No data found");
+                }*/
                 ((TextView)v.findViewById(R.id.nama_barang)).setText(stockOpnameSCM.getNama_barang());
                 ((TextView)v.findViewById(R.id.kode_barang)).setText(stockOpnameSCM.getKode_barang());
                 ((TextView)v.findViewById(R.id.qty)).setText(stockOpnameSCM.getQuantity());
@@ -197,7 +230,7 @@ public class HomeFragment extends Fragment {
         };
 
         FirebaseListAdapter<StockOpname> lastOrderVMIFireList = new FirebaseListAdapter<StockOpname>(
-                getActivity(), StockOpname.class, R.layout.list_row, myVMILastOrderRef
+                getActivity(), StockOpname.class, R.layout.list_row, myVMILastOrderRef.orderByChild("nama_cabang").equalTo(user.getEmail())
         ) {
 
             @Override
