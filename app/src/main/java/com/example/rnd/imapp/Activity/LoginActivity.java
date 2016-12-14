@@ -27,18 +27,26 @@ public class LoginActivity extends AppCompatActivity {
     protected EditText emailEditText;
     protected EditText passwordEditText;
     protected Button logInButton;
-    private FirebaseAuth mFirebaseAuth;
-    private FirebaseAuth.AuthStateListener mAuthListener;
     private ProgressDialog pDialog;
+
+    // [START declare_auth]
+    private FirebaseAuth mAuth;
+    // [END declare_auth]
+
+    // [START declare_auth_listener]
+    private FirebaseAuth.AuthStateListener mAuthListener;
+    // [END declare_auth_listener]
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        // Initialize FirebaseAuth
-        mFirebaseAuth = FirebaseAuth.getInstance();
+        // [START initialize_auth]
+        mAuth = FirebaseAuth.getInstance();
+        // [END initialize_auth]
 
+        // [START auth_state_listener]
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
@@ -56,7 +64,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         };
 
-        // Find view
+        // View
         emailEditText = (EditText) findViewById(R.id.usernameField);
         passwordEditText = (EditText) findViewById(R.id.passwordField);
         logInButton = (Button) findViewById(R.id.loginButton);
@@ -67,9 +75,6 @@ public class LoginActivity extends AppCompatActivity {
 
         // Shared preferences
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        //SharedPreferences.Editor editor = sharedPreferences.edit();
-        //editor.putString("domain_email", getLastEmail);
-        //editor.apply();
 
         //Retrieve data
         String autoCompleteMail = sharedPreferences.getString("domain_email", "");
@@ -104,7 +109,8 @@ public class LoginActivity extends AppCompatActivity {
                     pDialog.setMessage("Logging in...");
                     pDialog.show();
 
-                    mFirebaseAuth.signInWithEmailAndPassword(email, password)
+                    // [START sign_in_with_email]
+                    mAuth.signInWithEmailAndPassword(email, password)
                             .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
@@ -125,6 +131,7 @@ public class LoginActivity extends AppCompatActivity {
                                     }
                                 }
                             });
+                    // [END sign_in_with_email]
                 }
             }
         });
@@ -133,14 +140,14 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
-        mFirebaseAuth.addAuthStateListener(mAuthListener);
+        mAuth.addAuthStateListener(mAuthListener);
     }
 
     @Override
     public void onStop() {
         super.onStop();
         if (mAuthListener != null) {
-            mFirebaseAuth.removeAuthStateListener(mAuthListener);
+            mAuth.removeAuthStateListener(mAuthListener);
         }
     }
 

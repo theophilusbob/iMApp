@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,24 +12,34 @@ import android.widget.ImageView;
 
 import com.example.rnd.imapp.R;
 import com.example.rnd.imapp.adapter.ViewPagerAdapter;
+import com.example.rnd.imapp.util.LogoutTimer;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 public class ViewPagerActivity extends AppCompatActivity{
-    private FirebaseAuth mFirebaseAuth;
-    private FirebaseAuth.AuthStateListener mAuthListener;
     private ViewPagerAdapter vpAdapter;
     private ViewPager vpPager;
     private ImageView homeIcon, soIcon, ackIcon, historyIcon;
+    private LogoutTimer logoutTimer;
+
+    // [START declare_auth]
+    private FirebaseAuth mAuth;
+    // [END declare_auth]
+
+    // [START declare_auth_listener]
+    private FirebaseAuth.AuthStateListener mAuthListener;
+    // [END declare_auth_listener]
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_pager);
 
-        // Initialize Firebase Auth
-        mFirebaseAuth = FirebaseAuth.getInstance();
+        // [START initialize_auth]
+        mAuth = FirebaseAuth.getInstance();
+        // [END initialize_auth]
 
+        // [START auth_state_listener]
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
@@ -48,6 +57,7 @@ public class ViewPagerActivity extends AppCompatActivity{
                 }
             }
         };
+        // [END auth_state_listener]
 
         // ViewPager
         vpAdapter = new ViewPagerAdapter(getSupportFragmentManager());
@@ -112,6 +122,9 @@ public class ViewPagerActivity extends AppCompatActivity{
         soIcon = (ImageView) findViewById(R.id.soIcon);
         ackIcon = (ImageView) findViewById(R.id.ackIcon);
         historyIcon = (ImageView) findViewById(R.id.historyIcon);
+
+        // Countdown timer
+        logoutTimer = new LogoutTimer(10000, 1000);
     }
 
     private void loadLogInView() {
@@ -121,20 +134,56 @@ public class ViewPagerActivity extends AppCompatActivity{
         startActivity(intent);
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mAuth.addAuthStateListener(mAuthListener);
+       // logoutTimer.cancel();
+        Log.i("Timer: ", "Cancelled");
+
+        /*if (user == null) {
+            loadLogInView();
+        }*/
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+       // logoutTimer.start();
+        Log.i("Timer: ", "Started");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //logoutTimer.cancel();
+        Log.i("Timer: ", "Cancelled");
+
+        /*if (user == null) {
+            Intent intent = new Intent(ViewPagerActivity.this, LoginActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+        }*/
+    }
 
     @Override
     protected void onStop() {
         super.onStop();
-        //FirebaseAuth.getInstance().signOut();
+        if (mAuthListener != null) {
+            mAuth.removeAuthStateListener(mAuthListener);
+        }
+        //logoutTimer.start();
+        Log.i("Timer: ", "Started");
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        try {
+        /*try {
             FirebaseAuth.getInstance().signOut();
+            Log.i("iMApp: ", "Destroyed");
         } catch (Exception e) {
             e.printStackTrace();
-        }
+        }*/
     }
 }

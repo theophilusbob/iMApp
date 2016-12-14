@@ -44,12 +44,13 @@ public class HomeFragment extends Fragment {
     protected TextView tabSCM, tabVMI, txtHalo, txtNoOrder;
     FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     private FirebaseAuth.AuthStateListener mAuthListener;
+    private String getCurrentUser;
 
     DatabaseReference myRootRef = FirebaseDatabase.getInstance().getReferenceFromUrl("https://imapp-99a05.firebaseio.com/orders");
     DatabaseReference myUserRef = FirebaseDatabase.getInstance().getReferenceFromUrl("https://imapp-99a05.firebaseio.com/users");
     DatabaseReference mySCMLastOrderRef = myRootRef.child("SCM");
     DatabaseReference myVMILastOrderRef = myRootRef.child("VMI");
-    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    //private FirebaseUser user;
 
     // Orders JSON Url
     //private static String url_scm = "http://192.168.1.117/imapp_api/getLastOrderSCM.php";
@@ -97,6 +98,7 @@ public class HomeFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
         /*// Creating volley request obj
         JsonArrayRequest lastOrderReqSCM = new JsonArrayRequest(url_scm,
                 new Response.Listener<JSONArray>() {
@@ -148,36 +150,51 @@ public class HomeFragment extends Fragment {
         tabSCM = (TextView) v.findViewById(R.id.tabSCM);
         tabVMI = (TextView) v.findViewById(R.id.tabVMI);
 
-        // Retrieve nama cabang
-        myUserRef.addValueEventListener(new ValueEventListener() {
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+        if (user != null) {
+            txtHalo.setText("Halo, " + user.getEmail());
+        } else {
+            txtHalo.setText("Halo, " + "no user found!");
+        }
+
+        /*mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                final FirebaseUser user = firebaseAuth.getCurrentUser();
+                if (user == null) {
+                    // User is signed in
+                    // Retrieve nama cabang
+                    myUserRef.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            for (DataSnapshot userSnapshot: dataSnapshot.getChildren()) {
+                                User userValue= userSnapshot.getValue(User.class);
+                                if (user.getEmail().equals(userValue.getEmail_cabang())) {
+                                    // User is signed in
+                                    getCurrentUser = user.getEmail();
+                                    txtHalo.setText("Halo, " + userValue.getNama_cabang());
+                                }
+                            }
+                        }
 
-                for (DataSnapshot userSnapshot: dataSnapshot.getChildren()) {
-                    User userValue= userSnapshot.getValue(User.class);
-
-                    if (user != null) {
-                        if (user.getEmail().equals(userValue.getEmail_cabang()))
-                        // User is signed in
-                        txtHalo.setText("Halo, " + userValue.getNama_cabang());
-                    } else {
-                        // No user is signed in
-                        txtHalo.setText("Halo, " + "No user!");
-                    }
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+                        }
+                    });
+                } else {
+                    // No user is signed in
+                    txtHalo.setText("Halo, " + "No user!");
                 }
+                // ...
             }
+        };*/
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-            }
-        });
 
-        //String getUserEmail = getArguments().getString("getuser");
 
-        pDialog = new ProgressDialog(getActivity());
+        /*pDialog = new ProgressDialog(getActivity());
         // Showing progress dialog before making http request
         pDialog.setMessage("Loading your last order. Click anywhere to dismiss.");
-        pDialog.show();
+        pDialog.show();*/
 
         tabSCM.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -207,7 +224,6 @@ public class HomeFragment extends Fragment {
         list_view_last_order_scm = (ListView) v.findViewById(R.id.lastOrderSCMList);
         list_view_last_order_vmi = (ListView) v.findViewById(R.id.lastOrderVMIList) ;
 
-        //Query mySCMUserLastOrder = mySCMLastOrderRef.child("nama_cabang").equalTo(user.getEmail());
         FirebaseListAdapter<StockOpname> lastOrderFireList = new FirebaseListAdapter<StockOpname>(
                 getActivity(), StockOpname.class, R.layout.list_row, mySCMLastOrderRef.orderByChild("nama_cabang").equalTo(user.getEmail())
         ) {
@@ -292,5 +308,11 @@ public class HomeFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
     }
 }
