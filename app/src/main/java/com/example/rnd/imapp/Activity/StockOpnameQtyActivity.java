@@ -53,7 +53,6 @@ public class StockOpnameQtyActivity extends AppCompatActivity {
         Intent intent = getIntent();
         sisaStok = intent.getStringExtra("QUANTITY");
         kodeBarang = intent.getStringExtra("KODE_BARANG");
-
         listViewQty = (ListView) findViewById(R.id.qtyListView);
 
         // [START initialize_auth]
@@ -194,7 +193,11 @@ public class StockOpnameQtyActivity extends AppCompatActivity {
     }
 
     public void calculationFormula() {
-        myAverageRef.addValueEventListener(new ValueEventListener() {
+        String kodeCabang = "0015";
+
+        DatabaseReference myCabangAvg = myAverageRef.child(kodeCabang);
+
+        myCabangAvg.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 

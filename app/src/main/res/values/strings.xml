@@ -52,4 +52,7 @@
     <string name="pilih_periode_text">Pilih Periode:</string>
     <string name="satuan_text">PAK</string>
     <string name="historybyitem_item_text">BUKU TAHAPAN BCA</string>
+    <string name="tampilkan_surat_jalan">Tampilkan surat jalan</string>
+    <string name="ack">ACK</string>
+    <string name="ack_info">Klik button di bawah untuk menampilkan data surat jalan yang ada</string>
 </resources>

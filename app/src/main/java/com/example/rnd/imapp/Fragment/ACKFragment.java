@@ -10,7 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.example.rnd.imapp.Activity.ScanAckActivity;
+import com.example.rnd.imapp.Activity.AckActivity;
 import com.example.rnd.imapp.R;
 
 /**
@@ -77,7 +77,7 @@ public class ACKFragment extends Fragment {
         btnACK.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), ScanAckActivity.class);
+                Intent intent = new Intent(getActivity(), AckActivity.class);
                 startActivity(intent);
             }
         });

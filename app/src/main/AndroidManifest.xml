@@ -101,12 +101,12 @@
         <activity
             android:name=".Activity.AckActivity"
             android:label="@string/ack_check_list"
-            android:parentActivityName=".Activity.ScanAckActivity">
+            android:parentActivityName=".Activity.ViewPagerActivity">
 
             <!-- The meta-data element is needed for versions lower than 4.1 -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".Activity.ScanAckActivity" />
+                android:value=".Activity.ViewPagerActivity" />
         </activity>
         <activity
             android:name=".Activity.HistoryPeriodsActivity"
