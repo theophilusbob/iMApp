@@ -127,6 +127,12 @@ public class ViewPagerActivity extends AppCompatActivity{
         logoutTimer = new LogoutTimer(10000, 1000);
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
+
     private void loadLogInView() {
         Intent intent = new Intent(this, LoginActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

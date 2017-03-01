@@ -62,14 +62,29 @@ public class InputQtyActivity extends AppCompatActivity {
         if (kode_barang.equals("CCC.901/15")) {
             imgChild = "foto_barang/img_1.png";
         }
-        if (kode_barang.equals("IDS.134/99")) {
+        if (kode_barang.equals("IDS.220/15")) {
             imgChild = "foto_barang/img_6.png";
         }
         if (kode_barang.equals("IDS-208/11")) {
             imgChild = "foto_barang/img_3.png";
         }
-        if (kode_barang.equals("IDS.203/12")) {
+        if (kode_barang.equals("IDS.221/15")) {
             imgChild = "foto_barang/img_7.png";
+        }
+        if (kode_barang.equals("IDS.175/05")) {
+            imgChild = "foto_barang/img_17.png";
+        }
+        if (kode_barang.equals("IDS.219/09")) {
+            imgChild = "foto_barang/img_16.png";
+        }
+        if (kode_barang.equals("IDS.226/10")) {
+            imgChild = "foto_barang/img_23.png";
+        }
+        if (kode_barang.equals("ITS.501/15")) {
+            imgChild = "foto_barang/img_27.png";
+        }
+        if (kode_barang.equals("UMM.742/07")) {
+            imgChild = "foto_barang/img_11.png";
         }
 
         StorageReference imageRef = storageReference.child(imgChild);

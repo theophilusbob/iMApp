@@ -73,10 +73,22 @@ public class StockOpnameQtyActivity extends AppCompatActivity {
                         childBarang = "barang2";
                     if (kodeBarang.equals("IDS-208/11"))
                         childBarang = "barang3";
-                    if (kodeBarang.equals("IDS.134/99"))
+                    if (kodeBarang.equals("IDS.220/15"))
                         childBarang = "barang6";
-                    if (kodeBarang.equals("IDS.203/12"))
+                    if (kodeBarang.equals("IDS.221/15"))
                         childBarang = "barang7";
+                    if (kodeBarang.equals("IDS.175/05"))
+                        childBarang = "barang13";
+                    if (kodeBarang.equals("IDS.219/09"))
+                        childBarang = "barang14";
+                    if (kodeBarang.equals("IDS.226/10"))
+                        childBarang = "barang15";
+                    if (kodeBarang.equals("ITS.501/15"))
+                        childBarang = "barang16";
+                    if (kodeBarang.equals("UMM.742/07"))
+                        childBarang = "barang11";
+                    if (kodeBarang.equals("IDS.744/07"))
+                        childBarang = "barang12";
 
                     // Read & write to firebase database
                     DatabaseReference myQuantityRef = myRootRef.child(childBarang).child("quantity");
@@ -193,7 +205,7 @@ public class StockOpnameQtyActivity extends AppCompatActivity {
     }
 
     public void calculationFormula() {
-        String kodeCabang = "0015";
+        String kodeCabang = "0084";
 
         DatabaseReference myCabangAvg = myAverageRef.child(kodeCabang);
 

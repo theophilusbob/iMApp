@@ -226,6 +226,7 @@ public class HomeFragment extends Fragment {
         FirebaseListAdapter<StockOpname> lastOrderFireList = new FirebaseListAdapter<StockOpname>(
                 getActivity(), StockOpname.class, R.layout.list_row, mySCMLastOrderRef.orderByChild("nama_cabang").equalTo(user.getEmail())
         ) {
+
             @Override
             protected void populateView(View v, StockOpname stockOpnameSCM, int position) {
                 /*if (stockOpnameSCM.getNama_cabang().equals(user.getEmail())) {
@@ -237,10 +238,12 @@ public class HomeFragment extends Fragment {
                 else {
                     System.out.println("No data found");
                 }*/
-                ((TextView)v.findViewById(R.id.nama_barang)).setText(stockOpnameSCM.getNama_barang());
-                ((TextView)v.findViewById(R.id.kode_barang)).setText(stockOpnameSCM.getKode_barang());
-                ((TextView)v.findViewById(R.id.qty)).setText(stockOpnameSCM.getQuantity());
-                ((TextView)v.findViewById(R.id.satuan_pack)).setText(stockOpnameSCM.getSatuan());
+
+                    ((TextView)v.findViewById(R.id.nama_barang)).setText(stockOpnameSCM.getNama_barang());
+                    ((TextView)v.findViewById(R.id.kode_barang)).setText(stockOpnameSCM.getKode_barang());
+                    ((TextView)v.findViewById(R.id.qty)).setText(stockOpnameSCM.getQuantity());
+                    ((TextView)v.findViewById(R.id.satuan_pack)).setText(stockOpnameSCM.getSatuan());
+
             }
         };
 
@@ -250,10 +253,12 @@ public class HomeFragment extends Fragment {
 
             @Override
             protected void populateView(View v, final StockOpname stockOpnameVMI, int position) {
-                ((TextView)v.findViewById(R.id.nama_barang)).setText(stockOpnameVMI.getNama_barang());
-                ((TextView)v.findViewById(R.id.kode_barang)).setText(stockOpnameVMI.getKode_barang());
-                ((TextView)v.findViewById(R.id.qty)).setText(stockOpnameVMI.getQuantity());
-                ((TextView)v.findViewById(R.id.satuan_pack)).setText(stockOpnameVMI.getSatuan());
+
+                    ((TextView)v.findViewById(R.id.nama_barang)).setText(stockOpnameVMI.getNama_barang());
+                    ((TextView)v.findViewById(R.id.kode_barang)).setText(stockOpnameVMI.getKode_barang());
+                    ((TextView)v.findViewById(R.id.qty)).setText(stockOpnameVMI.getQuantity());
+                    ((TextView)v.findViewById(R.id.satuan_pack)).setText(stockOpnameVMI.getSatuan());
+
             }
         };
 

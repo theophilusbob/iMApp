@@ -71,7 +71,7 @@ public class LoginActivity extends AppCompatActivity {
 
         // Get intent
         Intent intent = getIntent();
-        String getLastEmail = intent.getStringExtra("last_email_logged_in");
+       // String getLastEmail = intent.getStringExtra("last_email_logged_in");
 
         // Shared preferences
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
