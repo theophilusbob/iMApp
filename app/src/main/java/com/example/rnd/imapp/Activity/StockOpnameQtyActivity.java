@@ -69,26 +69,58 @@ public class StockOpnameQtyActivity extends AppCompatActivity {
 
                     if (kodeBarang.equals("CCC.901/15"))
                         childBarang = "barang1";
-                    if (kodeBarang.equals("IDS-206/11"))
+                    if (kodeBarang.equals("KK0048"))
                         childBarang = "barang2";
-                    if (kodeBarang.equals("IDS-208/11"))
+                    if (kodeBarang.equals("KK0049"))
                         childBarang = "barang3";
                     if (kodeBarang.equals("IDS.220/15"))
-                        childBarang = "barang6";
+                        childBarang = "barang4";
                     if (kodeBarang.equals("IDS.221/15"))
+                        childBarang = "barang5";
+                    if (kodeBarang.equals("IDS.207/11"))
+                        childBarang = "barang6";
+                    if (kodeBarang.equals("IDS.209/11"))
                         childBarang = "barang7";
-                    if (kodeBarang.equals("IDS.175/05"))
-                        childBarang = "barang13";
-                    if (kodeBarang.equals("IDS.219/09"))
-                        childBarang = "barang14";
+                    if (kodeBarang.equals("IDS.601/94"))
+                        childBarang = "barang8";
                     if (kodeBarang.equals("IDS.226/10"))
-                        childBarang = "barang15";
-                    if (kodeBarang.equals("ITS.501/15"))
-                        childBarang = "barang16";
-                    if (kodeBarang.equals("UMM.742/07"))
+                        childBarang = "barang9";
+                    if (kodeBarang.equals("IDS.229/10"))
+                        childBarang = "barang10";
+                    if (kodeBarang.equals("IDS.401/94"))
                         childBarang = "barang11";
-                    if (kodeBarang.equals("IDS.744/07"))
+                    if (kodeBarang.equals("ITS.501/15"))
                         childBarang = "barang12";
+                    if (kodeBarang.equals("IDS-206/11"))
+                        childBarang = "barang13";
+                    if (kodeBarang.equals("IDS-208/11"))
+                        childBarang = "barang14";
+                    if (kodeBarang.equals("UMM.742/07"))
+                        childBarang = "barang15";
+                    if (kodeBarang.equals("UMM.744/07"))
+                        childBarang = "barang16";
+                    if (kodeBarang.equals("UMM.749/07"))
+                        childBarang = "barang17";
+                    if (kodeBarang.equals("UMM.751/07"))
+                        childBarang = "barang18";
+                    if (kodeBarang.equals("UMM913A/06"))
+                        childBarang = "barang19";
+                    if (kodeBarang.equals("IDS.175/05"))
+                        childBarang = "barang20";
+                    if (kodeBarang.equals("IDS.176/05"))
+                        childBarang = "barang21";
+                    if (kodeBarang.equals("IDS.177/05"))
+                        childBarang = "barang22";
+                    if (kodeBarang.equals("IDS.178/05"))
+                        childBarang = "barang23";
+                    if (kodeBarang.equals("IDS.179/05"))
+                        childBarang = "barang24";
+                    if (kodeBarang.equals("IDS.202/11"))
+                        childBarang = "barang25";
+                    if (kodeBarang.equals("IDS.219/09"))
+                        childBarang = "barang26";
+                    if (kodeBarang.equals("IDS135A/01"))
+                        childBarang = "barang27";
 
                     // Read & write to firebase database
                     DatabaseReference myQuantityRef = myRootRef.child(childBarang).child("quantity");

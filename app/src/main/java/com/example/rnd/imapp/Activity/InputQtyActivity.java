@@ -62,30 +62,85 @@ public class InputQtyActivity extends AppCompatActivity {
         if (kode_barang.equals("CCC.901/15")) {
             imgChild = "foto_barang/img_1.png";
         }
+        if (kode_barang.equals("KK0048")) {
+            imgChild = "foto_barang/img_9.png";
+        }
+        if (kode_barang.equals("KK0049")) {
+            imgChild = "foto_barang/img_9.png"; //Image 10 belum ada
+        }
         if (kode_barang.equals("IDS.220/15")) {
             imgChild = "foto_barang/img_6.png";
         }
-        if (kode_barang.equals("IDS-208/11")) {
-            imgChild = "foto_barang/img_3.png";
-        }
-        if (kode_barang.equals("IDS.221/15")) {
+        if (kode_barang.equals("IDS.221/7")) {
             imgChild = "foto_barang/img_7.png";
         }
-        if (kode_barang.equals("IDS.175/05")) {
-            imgChild = "foto_barang/img_17.png";
+        if (kode_barang.equals("IDS.207/11")) {
+            imgChild = "foto_barang/img_4.png";
         }
-        if (kode_barang.equals("IDS.219/09")) {
-            imgChild = "foto_barang/img_16.png";
+        if (kode_barang.equals("IDS.209/11")) {
+            imgChild = "foto_barang/img_5.png";
+        }
+        if (kode_barang.equals("IDS.601/94")) {
+            imgChild = "foto_barang/img_8.png";
         }
         if (kode_barang.equals("IDS.226/10")) {
             imgChild = "foto_barang/img_23.png";
         }
+        if (kode_barang.equals("IDS.229/10")) {
+            imgChild = "foto_barang/img_23.png"; // Image 24 belum ada
+        }
+        if (kode_barang.equals("IDS.401/94")) {
+            imgChild = "foto_barang/img_25.png";
+        }
         if (kode_barang.equals("ITS.501/15")) {
             imgChild = "foto_barang/img_27.png";
+        }
+        if (kode_barang.equals("IDS-206/11")) {
+            imgChild = "foto_barang/img_2.png";
+        }
+        if (kode_barang.equals("IDS-208/11")) {
+            imgChild = "foto_barang/img_3.png";
         }
         if (kode_barang.equals("UMM.742/07")) {
             imgChild = "foto_barang/img_11.png";
         }
+        if (kode_barang.equals("UMM.744/07")) {
+            imgChild = "foto_barang/img_12.png";
+        }
+        if (kode_barang.equals("UMM.749/07")) {
+            imgChild = "foto_barang/img_13.png";
+        }
+        if (kode_barang.equals("UMM.751/07")) {
+            imgChild = "foto_barang/img_14.png";
+        }
+        if (kode_barang.equals("UMM913A/06")) {
+            imgChild = "foto_barang/img_15.png";
+        }
+        if (kode_barang.equals("IDS.175/05")) {
+            imgChild = "foto_barang/img_17.png";
+        }
+        if (kode_barang.equals("IDS.176/05")) {
+            imgChild = "foto_barang/img_18.png";
+        }
+        if (kode_barang.equals("IDS.177/05")) {
+            imgChild = "foto_barang/img_19.png";
+        }
+        if (kode_barang.equals("IDS.178/05")) {
+            imgChild = "foto_barang/img_1.png";
+        }
+        if (kode_barang.equals("IDS.179/05")) {
+            imgChild = "foto_barang/img_1.png";
+        }
+        if (kode_barang.equals("IDS.202/11")) {
+            imgChild = "foto_barang/img_22.png";
+        }
+        if (kode_barang.equals("IDS.219/09")) {
+            imgChild = "foto_barang/img_16.png";
+        }
+        if (kode_barang.equals("IDS135A/01")) {
+            imgChild = "foto_barang/img_26.png";
+        }
+
 
         StorageReference imageRef = storageReference.child(imgChild);
 
