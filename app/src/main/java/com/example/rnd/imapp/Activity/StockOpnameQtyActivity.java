@@ -35,6 +35,7 @@ public class StockOpnameQtyActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private String getCurrentUser;
+    private  String kodeCabang = "0000";
 
     // Firebase database reference
     DatabaseReference myRootRef = FirebaseDatabase.getInstance().getReferenceFromUrl("https://imapp-99a05.firebaseio.com/stockopname");
@@ -71,7 +72,7 @@ public class StockOpnameQtyActivity extends AppCompatActivity {
                         childBarang = "barang1";
                     if (kodeBarang.equals("KK0048"))
                         childBarang = "barang2";
-                    if (kodeBarang.equals("KK0049"))
+                    if (kodeBarang.equals("094-KK0051"))
                         childBarang = "barang3";
                     if (kodeBarang.equals("IDS.220/15"))
                         childBarang = "barang4";
@@ -131,6 +132,7 @@ public class StockOpnameQtyActivity extends AppCompatActivity {
                     insertToStockArray();
 
                     getCurrentUser = user.getEmail();
+                    Log.i("User email",getCurrentUser);
                 } else {
                     // User is signed out
                     //Log.d(TAG, "onAuthStateChanged:signed_out");
@@ -164,6 +166,12 @@ public class StockOpnameQtyActivity extends AppCompatActivity {
         listViewQty.setAdapter(fireSisaStokList);
         // End of firebase list view
 
+        // Set kode cabang
+        /*if ( getCurrentUser.equals("kcpkemanggisan@domain.com"))
+            kodeCabang = "5500";
+        if ( getCurrentUser.equals("kcppalmerah@domain.com"))
+            kodeCabang = "0229";*/
+
         btnRescan = (Button) findViewById(R.id.rescanButton);
         btnCalculate = (Button) findViewById(R.id.calculateButton);
 
@@ -179,7 +187,7 @@ public class StockOpnameQtyActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 final AlertDialog.Builder builder = new AlertDialog.Builder(StockOpnameQtyActivity.this);
-                builder.setTitle("Konfirmasi")
+                builder.setTitle(kodeCabang)
                     .setMessage("Apakah Anda yakin data stock opname yang telah Anda masukkan sudah benar? " +
                             "(iMapp akan melakukan order secara otomatis berdasarkan stock opname yang Anda masukkan)")
                         .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
@@ -217,7 +225,7 @@ public class StockOpnameQtyActivity extends AppCompatActivity {
                     StockOpname soRekap = soSnapshot.getValue(StockOpname.class);
 
                     // Input data to array
-                    i++;
+
                     stockArray[i] = new StockOpname();
                     stockArray[i].setNama_cabang(getCurrentUser);
                     stockArray[i].setId_jenis_barang(soRekap.getId_jenis_barang());
@@ -225,6 +233,7 @@ public class StockOpnameQtyActivity extends AppCompatActivity {
                     stockArray[i].setKode_barang(soRekap.getKode_barang());
                     stockArray[i].setQuantity(soRekap.getQuantity());
                     stockArray[i].setSatuan(soRekap.getSatuan());
+                    i++;
                 }
             }
 
@@ -237,7 +246,13 @@ public class StockOpnameQtyActivity extends AppCompatActivity {
     }
 
     public void calculationFormula() {
-        String kodeCabang = "0084";
+
+        if ( getCurrentUser.equals("kcpkemanggisan@domain.com"))
+            kodeCabang = "5500";
+        if ( getCurrentUser.equals("kcppalmerah@domain.com"))
+            kodeCabang = "0229";
+
+        Log.i("Kode Cabang",kodeCabang);
 
         DatabaseReference myCabangAvg = myAverageRef.child(kodeCabang);
 
@@ -251,9 +266,9 @@ public class StockOpnameQtyActivity extends AppCompatActivity {
                 for (DataSnapshot avgSnapshot: dataSnapshot.getChildren()) {
                     Rerata rerataRekap = avgSnapshot.getValue(Rerata.class);
 
-                    i++;
+
                     if (rerataRekap.getKode_barang().equals(stockArray[i].getKode_barang())) {
-                        qty_order = (((8.0 / 3.0)*Double.parseDouble(rerataRekap.getrerata())) - Integer.parseInt(stockArray[i].getQuantity()));
+                        qty_order = ((6*Double.parseDouble(rerataRekap.getrerata())) - Integer.parseInt(stockArray[i].getQuantity()));
 
                         if (qty_order < 0){
                             qty_order = 0;
@@ -269,6 +284,7 @@ public class StockOpnameQtyActivity extends AppCompatActivity {
                         else
                             myVMIOrder.push().setValue(stockArray[i]);
                     }
+                    i++;
                 }
             }
 

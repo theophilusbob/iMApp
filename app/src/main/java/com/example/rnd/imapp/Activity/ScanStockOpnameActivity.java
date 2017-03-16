@@ -38,7 +38,7 @@ public class ScanStockOpnameActivity extends BaseScannerActivity implements ZBar
                 childBarang = "barang1";
             if (kodeBarang.equals("KK0048"))
                 childBarang = "barang2";
-            if (kodeBarang.equals("KK0049"))
+            if (kodeBarang.equals("094-KK0051"))
                 childBarang = "barang3";
             if (kodeBarang.equals("IDS.220/15"))
                 childBarang = "barang4";

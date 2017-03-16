@@ -65,13 +65,13 @@ public class InputQtyActivity extends AppCompatActivity {
         if (kode_barang.equals("KK0048")) {
             imgChild = "foto_barang/img_9.png";
         }
-        if (kode_barang.equals("KK0049")) {
+        if (kode_barang.equals("094-KK0051")) {
             imgChild = "foto_barang/img_9.png"; //Image 10 belum ada
         }
         if (kode_barang.equals("IDS.220/15")) {
             imgChild = "foto_barang/img_6.png";
         }
-        if (kode_barang.equals("IDS.221/7")) {
+        if (kode_barang.equals("IDS.221/15")) {
             imgChild = "foto_barang/img_7.png";
         }
         if (kode_barang.equals("IDS.207/11")) {
@@ -125,10 +125,10 @@ public class InputQtyActivity extends AppCompatActivity {
         if (kode_barang.equals("IDS.177/05")) {
             imgChild = "foto_barang/img_19.png";
         }
-        if (kode_barang.equals("IDS.178/05")) {
+        if (kode_barang.equals("IDS.178/05")) { //NO IMG BAN UANG 50.000,-
             imgChild = "foto_barang/img_1.png";
         }
-        if (kode_barang.equals("IDS.179/05")) {
+        if (kode_barang.equals("IDS.179/05")) { //NO IMG BAN UANG 100.000,-
             imgChild = "foto_barang/img_1.png";
         }
         if (kode_barang.equals("IDS.202/11")) {
