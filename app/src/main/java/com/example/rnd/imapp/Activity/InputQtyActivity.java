@@ -66,13 +66,13 @@ public class InputQtyActivity extends AppCompatActivity {
             imgChild = "foto_barang/img_9.png";
         }
         if (kode_barang.equals("094-KK0051")) {
-            imgChild = "foto_barang/img_9.png"; //Image 10 belum ada
+            imgChild = "foto_barang/094-KK.png"; //Image 10 belum ada
         }
         if (kode_barang.equals("IDS.220/15")) {
-            imgChild = "foto_barang/img_6.png";
+            imgChild = "foto_barang/tahapan_bca.png";
         }
         if (kode_barang.equals("IDS.221/15")) {
-            imgChild = "foto_barang/img_7.png";
+            imgChild = "foto_barang/tahapan_gold.png";
         }
         if (kode_barang.equals("IDS.207/11")) {
             imgChild = "foto_barang/img_4.png";
@@ -87,7 +87,7 @@ public class InputQtyActivity extends AppCompatActivity {
             imgChild = "foto_barang/img_23.png";
         }
         if (kode_barang.equals("IDS.229/10")) {
-            imgChild = "foto_barang/img_23.png"; // Image 24 belum ada
+            imgChild = "foto_barang/Bukti_Setoran_Kliring.png"; // Image 24 belum ada
         }
         if (kode_barang.equals("IDS.401/94")) {
             imgChild = "foto_barang/img_25.png";
@@ -126,10 +126,10 @@ public class InputQtyActivity extends AppCompatActivity {
             imgChild = "foto_barang/img_19.png";
         }
         if (kode_barang.equals("IDS.178/05")) { //NO IMG BAN UANG 50.000,-
-            imgChild = "foto_barang/img_1.png";
+            imgChild = "foto_barang/Ban_Uang_50ribu.png";
         }
         if (kode_barang.equals("IDS.179/05")) { //NO IMG BAN UANG 100.000,-
-            imgChild = "foto_barang/img_1.png";
+            imgChild = "foto_barang/Ban_Uang_100ribu.png";
         }
         if (kode_barang.equals("IDS.202/11")) {
             imgChild = "foto_barang/img_22.png";
@@ -180,7 +180,7 @@ public class InputQtyActivity extends AppCompatActivity {
                 backToScanIntent.putExtra("QUANTITY",fieldQty.getText().toString());
                 backToScanIntent.putExtra("KODE_BARANG", kode_barang);
                 startActivity(backToScanIntent);
-
+                finish();
             }
         });
 
@@ -191,6 +191,7 @@ public class InputQtyActivity extends AppCompatActivity {
                 intent.putExtra("QUANTITY",fieldQty.getText().toString());
                 intent.putExtra("KODE_BARANG", kode_barang);
                 startActivity(intent);
+                finish();
             }
         });
 

@@ -187,7 +187,7 @@ public class StockOpnameQtyActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 final AlertDialog.Builder builder = new AlertDialog.Builder(StockOpnameQtyActivity.this);
-                builder.setTitle(kodeCabang)
+                builder.setTitle("Konfirmasi order")
                     .setMessage("Apakah Anda yakin data stock opname yang telah Anda masukkan sudah benar? " +
                             "(iMapp akan melakukan order secara otomatis berdasarkan stock opname yang Anda masukkan)")
                         .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
@@ -247,10 +247,26 @@ public class StockOpnameQtyActivity extends AppCompatActivity {
 
     public void calculationFormula() {
 
-        if ( getCurrentUser.equals("kcpkemanggisan@domain.com"))
+        if ( getCurrentUser.equals("bna@imapp.com"))
+            kodeCabang = "5270";
+        if ( getCurrentUser.equals("cdb@imapp.com"))
+            kodeCabang = "0397";
+        if ( getCurrentUser.equals("kms@imapp.com"))
             kodeCabang = "5500";
-        if ( getCurrentUser.equals("kcppalmerah@domain.com"))
+        if ( getCurrentUser.equals("kst@imapp.com"))
+            kodeCabang = "5260";
+        if ( getCurrentUser.equals("mdr@imapp.com"))
+            kodeCabang = "0398";
+        if ( getCurrentUser.equals("psp@imapp.com"))
             kodeCabang = "0229";
+        if ( getCurrentUser.equals("tmg@imapp.com"))
+            kodeCabang = "0310";
+        if ( getCurrentUser.equals("wbp@imapp.com"))
+            kodeCabang = "5435";
+        if ( getCurrentUser.equals("wsl@imapp.com"))
+            kodeCabang = "0482";
+        if ( getCurrentUser.equals("wsa@imapp.com"))
+            kodeCabang = "0084";
 
         Log.i("Kode Cabang",kodeCabang);
 

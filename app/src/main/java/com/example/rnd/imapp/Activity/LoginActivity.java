@@ -120,6 +120,7 @@ public class LoginActivity extends AppCompatActivity {
                                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                         startActivity(intent);
+                                        finish();
                                     } else {
                                         hidePDialog();
                                         AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);

@@ -55,4 +55,5 @@
     <string name="tampilkan_surat_jalan">Tampilkan surat jalan</string>
     <string name="ack">ACK</string>
     <string name="ack_info">Klik button di bawah untuk menampilkan data surat jalan yang ada</string>
+    <string name="log_out">Log Out</string>
 </resources>

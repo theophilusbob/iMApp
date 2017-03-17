@@ -1,8 +1,10 @@
 package com.example.rnd.imapp.Activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
@@ -36,58 +38,59 @@ public class ScanStockOpnameActivity extends BaseScannerActivity implements ZBar
         if (kodeBarang != null && !kodeBarang.isEmpty()) {
             if (kodeBarang.equals("CCC.901/15"))
                 childBarang = "barang1";
-            if (kodeBarang.equals("KK0048"))
+            else if (kodeBarang.equals("KK0048"))
                 childBarang = "barang2";
-            if (kodeBarang.equals("094-KK0051"))
+            else if (kodeBarang.equals("094-KK0051"))
                 childBarang = "barang3";
-            if (kodeBarang.equals("IDS.220/15"))
+            else if (kodeBarang.equals("IDS.220/15"))
                 childBarang = "barang4";
-            if (kodeBarang.equals("IDS.221/15"))
+            else if (kodeBarang.equals("IDS.221/15"))
                 childBarang = "barang5";
-            if (kodeBarang.equals("IDS.207/11"))
+            else if (kodeBarang.equals("IDS.207/11"))
                 childBarang = "barang6";
-            if (kodeBarang.equals("IDS.209/11"))
+            else if (kodeBarang.equals("IDS.209/11"))
                 childBarang = "barang7";
-            if (kodeBarang.equals("IDS.601/94"))
+            else if (kodeBarang.equals("IDS.601/94"))
                 childBarang = "barang8";
-            if (kodeBarang.equals("IDS.226/10"))
+            else if (kodeBarang.equals("IDS.226/10"))
                 childBarang = "barang9";
-            if (kodeBarang.equals("IDS.229/10"))
+            else if (kodeBarang.equals("IDS.229/10"))
                 childBarang = "barang10";
-            if (kodeBarang.equals("IDS.401/94"))
+            else if (kodeBarang.equals("IDS.401/94"))
                 childBarang = "barang11";
-            if (kodeBarang.equals("ITS.501/15"))
+            else if (kodeBarang.equals("ITS.501/15"))
                 childBarang = "barang12";
-            if (kodeBarang.equals("IDS-206/11"))
+            else if (kodeBarang.equals("IDS-206/11"))
                 childBarang = "barang13";
-            if (kodeBarang.equals("IDS-208/11"))
+            else if (kodeBarang.equals("IDS-208/11"))
                 childBarang = "barang14";
-            if (kodeBarang.equals("UMM.742/07"))
+            else if (kodeBarang.equals("UMM.742/07"))
                 childBarang = "barang15";
-            if (kodeBarang.equals("UMM.744/07"))
+            else if (kodeBarang.equals("UMM.744/07"))
                 childBarang = "barang16";
-            if (kodeBarang.equals("UMM.749/07"))
+            else if (kodeBarang.equals("UMM.749/07"))
                 childBarang = "barang17";
-            if (kodeBarang.equals("UMM.751/07"))
+            else if (kodeBarang.equals("UMM.751/07"))
                 childBarang = "barang18";
-            if (kodeBarang.equals("UMM913A/06"))
+            else if (kodeBarang.equals("UMM913A/06"))
                 childBarang = "barang19";
-            if (kodeBarang.equals("IDS.175/05"))
+            else if (kodeBarang.equals("IDS.175/05"))
                 childBarang = "barang20";
-            if (kodeBarang.equals("IDS.176/05"))
+            else if (kodeBarang.equals("IDS.176/05"))
                 childBarang = "barang21";
-            if (kodeBarang.equals("IDS.177/05"))
+            else if (kodeBarang.equals("IDS.177/05"))
                 childBarang = "barang22";
-            if (kodeBarang.equals("IDS.178/05"))
+            else if (kodeBarang.equals("IDS.178/05"))
                 childBarang = "barang23";
-            if (kodeBarang.equals("IDS.179/05"))
+            else if (kodeBarang.equals("IDS.179/05"))
                 childBarang = "barang24";
-            if (kodeBarang.equals("IDS.202/11"))
+            else if (kodeBarang.equals("IDS.202/11"))
                 childBarang = "barang25";
-            if (kodeBarang.equals("IDS.219/09"))
+            else if (kodeBarang.equals("IDS.219/09"))
                 childBarang = "barang26";
-            if (kodeBarang.equals("IDS135A/01"))
+            else if (kodeBarang.equals("IDS135A/01"))
                 childBarang = "barang27";
+
 
 
             DatabaseReference myQuantityRef = myRootRef.child(childBarang).child("quantity");
@@ -132,8 +135,24 @@ public class ScanStockOpnameActivity extends BaseScannerActivity implements ZBar
                 //mScannerView.resumeCameraPreview(SOFragment.this);
                 Intent intent = new Intent(ScanStockOpnameActivity.this, InputQtyActivity.class);
 
-                intent.putExtra("KODE_BARANG", rawResult.getContents());
-                startActivity(intent);
+                /*if (childBarang.equals("unknownItem")) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(ScanStockOpnameActivity.this);
+                    builder.setMessage("Barcode tidak ditemukan. Silahkan melakukan scan ulang.")
+                            .setCancelable(false)
+                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    //do things
+                                    dialog.dismiss();
+                                }
+                            });
+                    AlertDialog alert = builder.create();
+                    alert.show();
+                }*/
+                //else {
+                    intent.putExtra("KODE_BARANG", rawResult.getContents());
+                    startActivity(intent);
+                    finish();
+                //}
             }
         }, 2000);
     }

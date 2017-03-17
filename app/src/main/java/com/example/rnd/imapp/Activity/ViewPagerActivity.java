@@ -8,6 +8,8 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.ImageView;
 
 import com.example.rnd.imapp.R;
@@ -31,6 +33,29 @@ public class ViewPagerActivity extends AppCompatActivity{
     // [END declare_auth_listener]
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.signout, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_log_out:
+                Log.i("Current User", FirebaseAuth.getInstance().getCurrentUser().getEmail());
+                startActivity(new Intent(ViewPagerActivity.this, LoginActivity.class).putExtra("last_email_logged_in", FirebaseAuth.getInstance().getCurrentUser().getEmail()));
+                finish();
+                FirebaseAuth.getInstance().signOut();
+                return true;
+
+            default:
+                // If we got here, the user's action was not recognized.
+                // Invoke the superclass to handle it.
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_pager);
@@ -50,11 +75,11 @@ public class ViewPagerActivity extends AppCompatActivity{
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putString("domain_email",  user.getEmail());
                     editor.apply();
-                } else {
+                }/* else {
                     // User is signed out
                     startActivity(new Intent(ViewPagerActivity.this, LoginActivity.class).putExtra("last_email_logged_in", user.getEmail()));
                     finish();
-                }
+                }*/
             }
         };
         // [END auth_state_listener]
