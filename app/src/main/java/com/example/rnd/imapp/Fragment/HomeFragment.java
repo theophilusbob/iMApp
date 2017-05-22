@@ -44,10 +44,11 @@ public class HomeFragment extends Fragment {
     protected TextView tabSCM, tabVMI, txtHalo, txtNoOrder;
     FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     private FirebaseAuth.AuthStateListener mAuthListener;
-    private String getCurrentUser;
+    private String getCurrentUser, kodeCabang;
 
-    DatabaseReference myRootRef = FirebaseDatabase.getInstance().getReferenceFromUrl("https://imapp-99a05.firebaseio.com/orders");
-    DatabaseReference myUserRef = FirebaseDatabase.getInstance().getReferenceFromUrl("https://imapp-99a05.firebaseio.com/users");
+    DatabaseReference myRootRef = FirebaseDatabase.getInstance().getReferenceFromUrl("https://imapp-443a6.firebaseio.com/orders");
+    DatabaseReference myUserRef = FirebaseDatabase.getInstance().getReferenceFromUrl("https://imapp-443a6.firebaseio.com/users");
+    DatabaseReference myStockRef = FirebaseDatabase.getInstance().getReferenceFromUrl("https://imapp-443a6.firebaseio.com/stockopname");
     DatabaseReference mySCMLastOrderRef = myRootRef.child("SCM");
     DatabaseReference myVMILastOrderRef = myRootRef.child("VMI");
     //private FirebaseUser user;
@@ -152,6 +153,7 @@ public class HomeFragment extends Fragment {
         FirebaseUser user = firebaseAuth.getCurrentUser();
         if (user != null) {
             txtHalo.setText("Halo, " + user.getEmail());
+            getCurrentUser = user.getEmail();
         } else {
             txtHalo.setText("Halo, " + "no user found!");
         }
@@ -223,9 +225,29 @@ public class HomeFragment extends Fragment {
         list_view_last_order_scm = (ListView) v.findViewById(R.id.lastOrderSCMList);
         list_view_last_order_vmi = (ListView) v.findViewById(R.id.lastOrderVMIList) ;
 
+        if ( getCurrentUser.equals("bna@imapp.com"))
+            kodeCabang = "5270";
+        if ( getCurrentUser.equals("cdb@imapp.com"))
+            kodeCabang = "0397";
+        if ( getCurrentUser.equals("kms@imapp.com"))
+            kodeCabang = "5500";
+        if ( getCurrentUser.equals("kst@imapp.com"))
+            kodeCabang = "5260";
+        if ( getCurrentUser.equals("mdr@imapp.com"))
+            kodeCabang = "0398";
+        if ( getCurrentUser.equals("psp@imapp.com"))
+            kodeCabang = "0229";
+        if ( getCurrentUser.equals("tmg@imapp.com"))
+            kodeCabang = "0310";
+        if ( getCurrentUser.equals("wbp@imapp.com"))
+            kodeCabang = "5435";
+        if ( getCurrentUser.equals("wsl@imapp.com"))
+            kodeCabang = "0482";
+        if ( getCurrentUser.equals("wsa@imapp.com"))
+            kodeCabang = "0084";
+
         FirebaseListAdapter<StockOpname> lastOrderFireList = new FirebaseListAdapter<StockOpname>(
-                getActivity(), StockOpname.class, R.layout.list_row, mySCMLastOrderRef.orderByChild("nama_cabang").equalTo(user.getEmail())
-        ) {
+                getActivity(), StockOpname.class, R.layout.list_row, myStockRef.child(kodeCabang)) {
 
             @Override
             protected void populateView(View v, StockOpname stockOpnameSCM, int position) {
@@ -247,7 +269,7 @@ public class HomeFragment extends Fragment {
             }
         };
 
-        FirebaseListAdapter<StockOpname> lastOrderVMIFireList = new FirebaseListAdapter<StockOpname>(
+        /*FirebaseListAdapter<StockOpname> lastOrderVMIFireList = new FirebaseListAdapter<StockOpname>(
                 getActivity(), StockOpname.class, R.layout.list_row, myVMILastOrderRef.orderByChild("nama_cabang").equalTo(user.getEmail())
         ) {
 
@@ -261,9 +283,9 @@ public class HomeFragment extends Fragment {
 
             }
         };
-
+           */
         list_view_last_order_scm.setAdapter(lastOrderFireList);
-        list_view_last_order_vmi.setAdapter(lastOrderVMIFireList);
+       // list_view_last_order_vmi.setAdapter(lastOrderVMIFireList);
 
         return v;
     }

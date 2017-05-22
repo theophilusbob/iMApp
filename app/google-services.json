@@ -1,27 +1,27 @@
 {
   "project_info": {
-    "project_number": "941377556917",
-    "firebase_url": "https://imapp-99a05.firebaseio.com",
-    "project_id": "imapp-99a05",
-    "storage_bucket": "imapp-99a05.appspot.com"
+    "project_number": "366687314626",
+    "firebase_url": "https://imapp-443a6.firebaseio.com",
+    "project_id": "imapp-443a6",
+    "storage_bucket": "imapp-443a6.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:941377556917:android:33088ae55e1d7e95",
+        "mobilesdk_app_id": "1:366687314626:android:33088ae55e1d7e95",
         "android_client_info": {
           "package_name": "com.example.rnd.imapp"
         }
       },
       "oauth_client": [
         {
-          "client_id": "941377556917-dfk0c7jjtqeqds77eodupfsh6djqifvo.apps.googleusercontent.com",
+          "client_id": "366687314626-b7jhbj9uvtmpklpnrkjj8hol0g1123gq.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyD34Fgk_iGvyFzWBswW45zzXPUzepCoHbw"
+          "current_key": "AIzaSyAdgXDkk8hFpR243tQoatLdrRcHSk6mF6I"
         }
       ],
       "services": {
@@ -29,13 +29,8 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 2,
-          "other_platform_oauth_client": [
-            {
-              "client_id": "941377556917-dfk0c7jjtqeqds77eodupfsh6djqifvo.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "status": 1,
+          "other_platform_oauth_client": []
         },
         "ads_service": {
           "status": 2

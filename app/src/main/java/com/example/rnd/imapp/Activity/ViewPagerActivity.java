@@ -43,7 +43,7 @@ public class ViewPagerActivity extends AppCompatActivity{
         switch (item.getItemId()) {
             case R.id.action_log_out:
                 Log.i("Current User", FirebaseAuth.getInstance().getCurrentUser().getEmail());
-                startActivity(new Intent(ViewPagerActivity.this, LoginActivity.class).putExtra("last_email_logged_in", FirebaseAuth.getInstance().getCurrentUser().getEmail()));
+                startActivity(new Intent(ViewPagerActivity.this, LoginActivity.class).putExtra("last_email_logged_in", FirebaseAuth.getInstance().getCurrentUser().getEmail()).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
                 finish();
                 FirebaseAuth.getInstance().signOut();
                 return true;

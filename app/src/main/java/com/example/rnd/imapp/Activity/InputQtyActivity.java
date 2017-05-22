@@ -43,8 +43,8 @@ public class InputQtyActivity extends AppCompatActivity {
     private Button btnLanjut, btnSelesai;
     private EditText fieldQty;
 
-    DatabaseReference myStockDataRef = FirebaseDatabase.getInstance().getReferenceFromUrl("https://imapp-99a05.firebaseio.com");
-    DatabaseReference myBarangRef = FirebaseDatabase.getInstance().getReferenceFromUrl("https://imapp-99a05.firebaseio.com/barang");
+    DatabaseReference myStockDataRef = FirebaseDatabase.getInstance().getReferenceFromUrl("https://imapp-443a6.firebaseio.com");
+    DatabaseReference myBarangRef = FirebaseDatabase.getInstance().getReferenceFromUrl("https://imapp-443a6.firebaseio.com/barang");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +57,7 @@ public class InputQtyActivity extends AppCompatActivity {
         imageView = (ImageView) findViewById(R.id.productImageContainer);
         txtSatuan = (TextView) findViewById(R.id.satuanTextView);
 
-        StorageReference storageReference = FirebaseStorage.getInstance().getReferenceFromUrl("gs://imapp-99a05.appspot.com/");
+        StorageReference storageReference = FirebaseStorage.getInstance().getReferenceFromUrl("gs://imapp-443a6.appspot.com/");
 
         if (kode_barang.equals("CCC.901/15")) {
             imgChild = "foto_barang/img_1.png";
@@ -177,6 +177,7 @@ public class InputQtyActivity extends AppCompatActivity {
             public void onClick(View view) {
                 //Toast.makeText(InputQtyActivity.this, "Kode Barang: " + kode_barang + "Qty: " +fieldQty.getText().toString(), Toast.LENGTH_SHORT).show();
                 Intent backToScanIntent = new Intent(InputQtyActivity.this, ScanStockOpnameActivity.class);
+                backToScanIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 backToScanIntent.putExtra("QUANTITY",fieldQty.getText().toString());
                 backToScanIntent.putExtra("KODE_BARANG", kode_barang);
                 startActivity(backToScanIntent);
@@ -188,6 +189,7 @@ public class InputQtyActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(InputQtyActivity.this, StockOpnameQtyActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 intent.putExtra("QUANTITY",fieldQty.getText().toString());
                 intent.putExtra("KODE_BARANG", kode_barang);
                 startActivity(intent);

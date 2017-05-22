@@ -12,13 +12,15 @@ import com.example.rnd.imapp.R;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.io.IOException;
+
 import me.dm7.barcodescanner.zbar.Result;
 import me.dm7.barcodescanner.zbar.ZBarScannerView;
 
 public class ScanStockOpnameActivity extends BaseScannerActivity implements ZBarScannerView.ResultHandler {
     private ZBarScannerView mScannerView;
     private String sisaStok, kodeBarang, childBarang;
-    DatabaseReference myRootRef = FirebaseDatabase.getInstance().getReferenceFromUrl("https://imapp-99a05.firebaseio.com/stockopname");
+    DatabaseReference myRootRef = FirebaseDatabase.getInstance().getReferenceFromUrl("https://imapp-443a6.firebaseio.com/stockopname");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -128,12 +130,17 @@ public class ScanStockOpnameActivity extends BaseScannerActivity implements ZBar
         // * On older devices continuously stopping and resuming camera preview can result in freezing the app.
         // * I don't know why this is the case but I don't have the time to figure out.
         Handler handler = new Handler();
+
+
+
+
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 mScannerView.stopCameraPreview();
                 //mScannerView.resumeCameraPreview(SOFragment.this);
                 Intent intent = new Intent(ScanStockOpnameActivity.this, InputQtyActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
 
                 /*if (childBarang.equals("unknownItem")) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(ScanStockOpnameActivity.this);
@@ -147,12 +154,20 @@ public class ScanStockOpnameActivity extends BaseScannerActivity implements ZBar
                             });
                     AlertDialog alert = builder.create();
                     alert.show();
-                }*/
+                }
+
+                try {
+
+                } catch (Exception e) {
+
+                }
+
+                */
                 //else {
-                    intent.putExtra("KODE_BARANG", rawResult.getContents());
-                    startActivity(intent);
-                    finish();
-                //}
+                intent.putExtra("KODE_BARANG", rawResult.getContents());
+                startActivity(intent);
+                finish();
+
             }
         }, 2000);
     }

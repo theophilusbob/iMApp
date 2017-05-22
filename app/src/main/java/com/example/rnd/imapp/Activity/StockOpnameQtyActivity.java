@@ -3,6 +3,7 @@ package com.example.rnd.imapp.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.icu.util.Calendar;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -31,18 +32,17 @@ public class StockOpnameQtyActivity extends AppCompatActivity {
     public String nama_cabang;
     private ListView listViewQty;
     private Button btnRescan,btnCalculate;
-    private StockOpname[] stockArray = new StockOpname[27];
+    private StockOpname[] stockArray = new StockOpname[31];
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private String getCurrentUser;
-    private  String kodeCabang = "0000";
+    private String kodeCabang = "0000";
 
     // Firebase database reference
-    DatabaseReference myRootRef = FirebaseDatabase.getInstance().getReferenceFromUrl("https://imapp-99a05.firebaseio.com/stockopname");
-    DatabaseReference myUserRef = FirebaseDatabase.getInstance().getReferenceFromUrl("https://imapp-99a05.firebaseio.com/users");
-    DatabaseReference myAverageRef = FirebaseDatabase.getInstance().getReferenceFromUrl("https://imapp-99a05.firebaseio.com/average");
-    DatabaseReference myOrderRef = FirebaseDatabase.getInstance().getReferenceFromUrl("https://imapp-99a05.firebaseio.com/orders");
-    DatabaseReference barangRef = FirebaseDatabase.getInstance().getReferenceFromUrl("https://imapp-99a05.firebaseio.com/stockopname");
+    DatabaseReference myRootRef = FirebaseDatabase.getInstance().getReferenceFromUrl("https://imapp-443a6.firebaseio.com/stockopname");
+    DatabaseReference myUserRef = FirebaseDatabase.getInstance().getReferenceFromUrl("https://imapp-443a6.firebaseio.com/users");
+    DatabaseReference myAverageRef = FirebaseDatabase.getInstance().getReferenceFromUrl("https://imapp-443a6.firebaseio.com/average");
+    DatabaseReference myOrderRef = FirebaseDatabase.getInstance().getReferenceFromUrl("https://imapp-443a6.firebaseio.com/orders");
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
     @Override
@@ -67,6 +67,11 @@ public class StockOpnameQtyActivity extends AppCompatActivity {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user != null) {
                     // User is signed in
+
+                    getCurrentUser = user.getEmail();
+                    Log.i("User email",getCurrentUser);
+
+                    // Assign kode barang
 
                     if (kodeBarang.equals("CCC.901/15"))
                         childBarang = "barang1";
@@ -123,16 +128,17 @@ public class StockOpnameQtyActivity extends AppCompatActivity {
                     if (kodeBarang.equals("IDS135A/01"))
                         childBarang = "barang27";
 
-                    // Read & write to firebase database
-                    DatabaseReference myQuantityRef = myRootRef.child(childBarang).child("quantity");
+                    // Read & write to stock opname database
+                    DatabaseReference myStockRef = myRootRef.child(cekKodeCabang());
+                    DatabaseReference myQuantityRef = myStockRef.child(childBarang).child("quantity");
                     myQuantityRef.setValue(sisaStok);
-                    // End of read & write
+
+                    Log.i("Kodecabang", kodeCabang);
 
                     // Method to store temporary stock opname data to be used by calculation fx
-                    insertToStockArray();
+                    //insertToStockArray();
 
-                    getCurrentUser = user.getEmail();
-                    Log.i("User email",getCurrentUser);
+
                 } else {
                     // User is signed out
                     //Log.d(TAG, "onAuthStateChanged:signed_out");
@@ -143,7 +149,7 @@ public class StockOpnameQtyActivity extends AppCompatActivity {
 
         // Firebase List View displaying rekapan stok opname
         FirebaseListAdapter<StockOpname> fireSisaStokList = new FirebaseListAdapter<StockOpname>(
-                this, StockOpname.class, R.layout.list_qty_stock_opname, barangRef
+                this, StockOpname.class, R.layout.list_qty_stock_opname, myRootRef.child(cekKodeCabang())
         ) {
             @Override
             protected void populateView(View v, StockOpname soReview, int position) {
@@ -166,12 +172,6 @@ public class StockOpnameQtyActivity extends AppCompatActivity {
         listViewQty.setAdapter(fireSisaStokList);
         // End of firebase list view
 
-        // Set kode cabang
-        /*if ( getCurrentUser.equals("kcpkemanggisan@domain.com"))
-            kodeCabang = "5500";
-        if ( getCurrentUser.equals("kcppalmerah@domain.com"))
-            kodeCabang = "0229";*/
-
         btnRescan = (Button) findViewById(R.id.rescanButton);
         btnCalculate = (Button) findViewById(R.id.calculateButton);
 
@@ -179,6 +179,7 @@ public class StockOpnameQtyActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent backToScanIntent = new Intent(StockOpnameQtyActivity.this, ScanStockOpnameActivity.class);
+                backToScanIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(backToScanIntent);
             }
         });
@@ -188,17 +189,18 @@ public class StockOpnameQtyActivity extends AppCompatActivity {
             public void onClick(View view) {
                 final AlertDialog.Builder builder = new AlertDialog.Builder(StockOpnameQtyActivity.this);
                 builder.setTitle("Konfirmasi order")
-                    .setMessage("Apakah Anda yakin data stock opname yang telah Anda masukkan sudah benar? " +
-                            "(iMapp akan melakukan order secara otomatis berdasarkan stock opname yang Anda masukkan)")
+                    .setMessage("Apakah Anda yakin data stock opname yang telah Anda masukkan sudah benar?" )
                         .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
 
                                 // Calling calculation formula method
-                                calculationFormula();
+                                //calculationFormula();
 
                                 // Back to home and display last orders
+
                                 Intent backToHomeIntent = new Intent(StockOpnameQtyActivity.this, ViewPagerActivity.class);
+                                backToHomeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                                 startActivity(backToHomeIntent);
                             }
                         })
@@ -227,7 +229,7 @@ public class StockOpnameQtyActivity extends AppCompatActivity {
                     // Input data to array
 
                     stockArray[i] = new StockOpname();
-                    stockArray[i].setNama_cabang(getCurrentUser);
+                    stockArray[i].setNama_cabang(user.getEmail());
                     stockArray[i].setId_jenis_barang(soRekap.getId_jenis_barang());
                     stockArray[i].setNama_barang(soRekap.getNama_barang());
                     stockArray[i].setKode_barang(soRekap.getKode_barang());
@@ -245,32 +247,36 @@ public class StockOpnameQtyActivity extends AppCompatActivity {
         });
     }
 
-    public void calculationFormula() {
-
-        if ( getCurrentUser.equals("bna@imapp.com"))
+    public String cekKodeCabang() {
+        if ( user.getEmail().equals("bna@imapp.com"))
             kodeCabang = "5270";
-        if ( getCurrentUser.equals("cdb@imapp.com"))
+        if (  user.getEmail().equals("cdb@imapp.com"))
             kodeCabang = "0397";
-        if ( getCurrentUser.equals("kms@imapp.com"))
+        if (  user.getEmail().equals("kms@imapp.com"))
             kodeCabang = "5500";
-        if ( getCurrentUser.equals("kst@imapp.com"))
+        if (  user.getEmail().equals("kst@imapp.com"))
             kodeCabang = "5260";
-        if ( getCurrentUser.equals("mdr@imapp.com"))
+        if (  user.getEmail().equals("mdr@imapp.com"))
             kodeCabang = "0398";
-        if ( getCurrentUser.equals("psp@imapp.com"))
+        if (  user.getEmail().equals("psp@imapp.com"))
             kodeCabang = "0229";
-        if ( getCurrentUser.equals("tmg@imapp.com"))
+        if (  user.getEmail().equals("tmg@imapp.com"))
             kodeCabang = "0310";
-        if ( getCurrentUser.equals("wbp@imapp.com"))
+        if (  user.getEmail().equals("wbp@imapp.com"))
             kodeCabang = "5435";
-        if ( getCurrentUser.equals("wsl@imapp.com"))
+        if (  user.getEmail().equals("wsl@imapp.com"))
             kodeCabang = "0482";
-        if ( getCurrentUser.equals("wsa@imapp.com"))
+        if (  user.getEmail().equals("wsa@imapp.com"))
             kodeCabang = "0084";
 
-        Log.i("Kode Cabang",kodeCabang);
+        return kodeCabang;
+    }
 
-        DatabaseReference myCabangAvg = myAverageRef.child(kodeCabang);
+    public void calculationFormula() {
+
+        //Log.i("Kode Cabang",kodeCabang);
+
+        DatabaseReference myCabangAvg = myAverageRef.child(cekKodeCabang());
 
         myCabangAvg.addValueEventListener(new ValueEventListener() {
             @Override
@@ -281,7 +287,6 @@ public class StockOpnameQtyActivity extends AppCompatActivity {
 
                 for (DataSnapshot avgSnapshot: dataSnapshot.getChildren()) {
                     Rerata rerataRekap = avgSnapshot.getValue(Rerata.class);
-
 
                     if (rerataRekap.getKode_barang().equals(stockArray[i].getKode_barang())) {
                         qty_order = ((6*Double.parseDouble(rerataRekap.getrerata())) - Integer.parseInt(stockArray[i].getQuantity()));
