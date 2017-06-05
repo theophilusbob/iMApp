@@ -29,17 +29,21 @@
                 android:id="@+id/homeIcon"
                 android:layout_width="90dp"
                 android:layout_height="match_parent"
-                android:src="@drawable/icon_home_active"/>
+                android:src="@drawable/icon_home_active"
+                />
+
             <ImageView
                 android:id="@+id/soIcon"
                 android:layout_width="90dp"
                 android:layout_height="match_parent"
-                android:src="@drawable/icon_stockopname"/>
+                android:src="@drawable/icon_stockopname"
+               />
             <ImageView
                 android:id="@+id/ackIcon"
                 android:layout_width="90dp"
                 android:layout_height="match_parent"
-                android:src="@drawable/icon_ack"/>
+                android:src="@drawable/icon_ack"
+                />
             <ImageView
                 android:id="@+id/historyIcon"
                 android:layout_width="90dp"

@@ -145,8 +145,8 @@ public class HomeFragment extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_home, container, false);
         txtHalo = (TextView) v.findViewById(R.id.haloTxt);
-        txtNoOrder = (TextView)  v.findViewById(R.id.txtNoOrder);
-        infoTab = (LinearLayout) v.findViewById(R.id.infoTab);
+        //txtNoOrder = (TextView)  v.findViewById(R.id.txtNoOrder);
+        //infoTab = (LinearLayout) v.findViewById(R.id.infoTab);
         tabSCM = (TextView) v.findViewById(R.id.tabSCM);
         tabVMI = (TextView) v.findViewById(R.id.tabVMI);
 
@@ -200,21 +200,21 @@ public class HomeFragment extends Fragment {
         tabSCM.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               /* String no_order = myRootRef
+                /*String no_order = myRootRef
                                         .orderByChild("no_order")
                                         .limitToFirst(1);*/
 
-                infoTab.setBackgroundResource(R.color.blue);
+                //infoTab.setBackgroundResource(R.color.blue);
                 list_view_last_order_vmi.setVisibility(View.INVISIBLE);
                 list_view_last_order_scm.setVisibility(View.VISIBLE);
-                txtNoOrder.setText("A0/16/04/3079");
+                //txtNoOrder.setText("A0/16/04/3079");
             }
         });
 
         tabVMI.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                infoTab.setBackgroundResource(R.color.lightBlue);
+                //infoTab.setBackgroundResource(R.color.lightBlue);
                 list_view_last_order_scm.setVisibility(View.INVISIBLE);
                 list_view_last_order_vmi.setVisibility(View.VISIBLE);
             }
@@ -247,19 +247,10 @@ public class HomeFragment extends Fragment {
             kodeCabang = "0084";
 
         FirebaseListAdapter<StockOpname> lastOrderFireList = new FirebaseListAdapter<StockOpname>(
-                getActivity(), StockOpname.class, R.layout.list_row, myStockRef.child(kodeCabang)) {
+                getActivity(), StockOpname.class, R.layout.list_row, myStockRef.child(kodeCabang).orderByChild("id_jenis_barang").equalTo("1")) {
 
             @Override
             protected void populateView(View v, StockOpname stockOpnameSCM, int position) {
-                /*if (stockOpnameSCM.getNama_cabang().equals(user.getEmail())) {
-                    ((TextView)v.findViewById(R.id.nama_barang)).setText(stockOpnameSCM.getNama_barang());
-                    ((TextView)v.findViewById(R.id.kode_barang)).setText(stockOpnameSCM.getKode_barang());
-                    ((TextView)v.findViewById(R.id.qty)).setText(stockOpnameSCM.getQuantity());
-                    ((TextView)v.findViewById(R.id.satuan_pack)).setText(stockOpnameSCM.getSatuan());
-                }
-                else {
-                    System.out.println("No data found");
-                }*/
 
                     ((TextView)v.findViewById(R.id.nama_barang)).setText(stockOpnameSCM.getNama_barang());
                     ((TextView)v.findViewById(R.id.kode_barang)).setText(stockOpnameSCM.getKode_barang());
@@ -269,9 +260,8 @@ public class HomeFragment extends Fragment {
             }
         };
 
-        /*FirebaseListAdapter<StockOpname> lastOrderVMIFireList = new FirebaseListAdapter<StockOpname>(
-                getActivity(), StockOpname.class, R.layout.list_row, myVMILastOrderRef.orderByChild("nama_cabang").equalTo(user.getEmail())
-        ) {
+        FirebaseListAdapter<StockOpname> lastOrderVMIFireList = new FirebaseListAdapter<StockOpname>(
+                getActivity(), StockOpname.class, R.layout.list_row,  myStockRef.child(kodeCabang).orderByChild("id_jenis_barang").equalTo("2")) {
 
             @Override
             protected void populateView(View v, final StockOpname stockOpnameVMI, int position) {
@@ -283,9 +273,8 @@ public class HomeFragment extends Fragment {
 
             }
         };
-           */
         list_view_last_order_scm.setAdapter(lastOrderFireList);
-       // list_view_last_order_vmi.setAdapter(lastOrderVMIFireList);
+        list_view_last_order_vmi.setAdapter(lastOrderVMIFireList);
 
         return v;
     }

@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.example.rnd.imapp.R;
@@ -140,6 +141,8 @@ public class ViewPagerActivity extends AppCompatActivity{
             public void onPageScrollStateChanged(int state) {
 
             }
+
+
         });
 
         // Tab icon
@@ -147,6 +150,13 @@ public class ViewPagerActivity extends AppCompatActivity{
         soIcon = (ImageView) findViewById(R.id.soIcon);
         ackIcon = (ImageView) findViewById(R.id.ackIcon);
         historyIcon = (ImageView) findViewById(R.id.historyIcon);
+
+        homeIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
 
         // Countdown timer
         logoutTimer = new LogoutTimer(10000, 1000);
